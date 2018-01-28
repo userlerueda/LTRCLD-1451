@@ -45,8 +45,7 @@
 # Lecture
 # Lab Environment Walkthrough
 
-
-B
+A
 
 # Logistics
 
