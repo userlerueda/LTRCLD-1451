@@ -45,13 +45,47 @@
 # Lecture
 # Lab Environment Walkthrough
 
+---
+
+# Logistics
+
+## Welcome
+* Speaker intro: Luis Rueda, Gopal Naganaboyina
+* What are your expectations? Any specific areas to focus?
+* We tried to give emphasis to networking aspect.
+
+## Time management
+* There are 10 Sections, with an estimated completion time of 3 hr. 30 min.
+* Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
+* Please plan a 5 min break, as needed, around 2 hr. mark or after completing sectio-X !!![comeback to edit]
+
+## Questions
+* Questions are most welcome. We ** request ** you to ask questions and make the session interactive.
+* Self exploration is fun. At the end of each section, take a few minutes to review and ask questions if you have any.
+
+---
+
+# Introduction to Openstack
+
+Refer to slides presented.
+
+---
+
+# Credentials
+
+You will be given a paper copy of IP addresses, username, password info.
+
+---
+
+# Lab Connectivity
+
 All the tasks in this guide can be done using OpenStack CLI or OpenStack Horizon's Dashboard, the examples will be using either one of them and it is up to the student to explore the different ways of doing it using the alternate method.
 
 *Note: It is also possible to do things using other methods such as API or high level python libraries.*
 
 Please note that a typical production NFV system or Openstack cloud includes components such as exclusive storage, DPDK network connectivity with PCIe or SR-IOv, OSS/BSS system, VNF management system, and Orchestration systems. In this lab, we have Openstack alone, which makes up ETSI model’s Virtual Infrastructure Manager (VIM).
 
-The lab is built with 7 Cisco UCS C240 servers. The lab is behind a VPN server. To access the lab, you need to VPN into the VPN server. The VPN server and the lab are in US and the access to VPN server is over Internet.
+The lab is built with 7 Cisco UCS C240 servers. The lab is behind a VPN server. To access the lab, you need to VPN into the VPN server. The VPN server and the lab are in USA and the access to VPN server is over Internet.
 
 ## HW topology
 
@@ -75,21 +109,36 @@ Below is a representation of Openstack cloud connectivity to the external networ
 
 ## Testing VPN Lab Connectivity
 
-- VPN into lab gateway - Using Cisco Any Connect VPN client app, VPN into the lab gateway. It will setup a VPN tunnel and will install a few routes in your workstation.
+- VPN into lab gateway: Using Cisco Any Connect VPN client app, VPN into the lab gateway. It will setup a VPN tunnel and will install a few routes in your workstation. Use below details:
 
-	- Details: `{IP: 152.22.242.56, Username: cisco, Password: cisco.123 }`
-	![Cisco VPN](./images/lab_walkthrough_connectivity_step_01.png)
+	- IP address: Refer credentials doc
+	- Username: Refer credentials doc
+	- Password: Refer credentials doc
+	
+![Cisco VPN](./images/lab_walkthrough_connectivity_step_01.png)
 
 - Verify routing on your desktop and check connectivity to Openstack controller
 
 	- $ `ip route` (or `netstat -nr`)  //you should have route to 172.31.56.0/24
-	- `ping 172.31.56.216`
-	- From your browser, go [here](http://172.31.56.216)
-
+	- $ `ping 172.31.56.216`
+	- From your browser, go [http://172.31.56.216](http://172.31.56.216)
 
 - Review the section and discuss if you have any questions or comments.
 
-## Browse overall OpenStack cloud (some OpenStack CLI (host list etc), access computes etc)
+---
+
+# Openstack basic verification
+
+Use command line interface (CLI) and Horizon dashboard and make basic verifications.
+
+## Command line interface (CLI)
+
+* ```ssh userxxx@172.31.56.216```
+* 
+Browse overall OpenStack cloud (some OpenStack CLI (host list etc), access computes etc)
+
+---
+
 # Admin Tasks
 
 ## Scenario (1 minute)
@@ -408,9 +457,8 @@ Step 3 - A green notification should appear on the top-right corner indicating s
 In order for our CSR1Kv instance to work properly, we have to create a security group and allow all inbound traffic that is desired. For the purpose of our lab, we will create multiple security groups so that they can be easily identifiable.
 
 The following table lists the security groups that need to be created:
-
 | Security Group Name  | Rule | Direction | Remote | CIDR |
-|----------------------|:----:|:---------:|--------|-----:|
+|----------------------|------|-----------|--------|------|
 | tenantXXX-allow_ssh  | SSH  | N/A       | CIDR   | 0.0.0.0/0 |
 | tenantXXX-allow_icmp | ALL ICMP | Ingress | CIDR | 0.0.0.0/0 |
 
