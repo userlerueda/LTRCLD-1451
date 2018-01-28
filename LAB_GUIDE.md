@@ -63,6 +63,9 @@
 * Questions are most welcome. We ** request ** you to ask questions and make the session interactive.
 * Self exploration is fun. At the end of each section, take a few minutes to review and ask questions if you have any.
 
+## Openstack installation
+* Openstack installation is not included in this session to make efficient use of time.
+* Successful installtion 
 ---
 
 # Introduction to Openstack
