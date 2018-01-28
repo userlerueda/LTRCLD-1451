@@ -45,7 +45,7 @@
 # Lecture
 # Lab Environment Walkthrough
 
-A
+---
 
 # Logistics
 
@@ -66,6 +66,7 @@ A
 ## Openstack installation
 * Openstack installation is not included in this session to make efficient use of time.
 * Successful installtion 
+
 ---
 
 # Introduction to Openstack
@@ -459,8 +460,9 @@ Step 3 - A green notification should appear on the top-right corner indicating s
 In order for our CSR1Kv instance to work properly, we have to create a security group and allow all inbound traffic that is desired. For the purpose of our lab, we will create multiple security groups so that they can be easily identifiable.
 
 The following table lists the security groups that need to be created:
+
 | Security Group Name  | Rule | Direction | Remote | CIDR |
-|----------------------|------|-----------|--------|------|
+|----------------------|:------:|:-----------:|:--------:|------|
 | tenantXXX-allow_ssh  | SSH  | N/A       | CIDR   | 0.0.0.0/0 |
 | tenantXXX-allow_icmp | ALL ICMP | Ingress | CIDR | 0.0.0.0/0 |
 
