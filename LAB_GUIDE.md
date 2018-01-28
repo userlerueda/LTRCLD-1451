@@ -72,7 +72,6 @@
 
 Refer to slides presented.
 
----
 
 # Credentials
 
