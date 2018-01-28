@@ -527,28 +527,28 @@ In order to test connectivity from behind the CSR1Kv, we will be creating a Cirr
 This time we will launch the CirrOS VM from the horizon dashboard.
 
 Step 1 - Go to Project -> Compute -> Instances and click on **Laumch Instance**
-![Step 1](./images/member_instance_create_step_01.png)
+![Step 1](./images/member_create_instance_step_01.png)
 
 Step 2 - Fill in all the details and click on **Next** button
-![Step 2](./images/member_instance_create_step_02.png)
+![Step 2](./images/member_create_instance_step_02.png)
 
 Step 3 - Fill in all the details for source and click on **Next** button
-![Step 3](./images/member_instance_create_step_03.png)
+![Step 3](./images/member_create_instance_step_03.png)
 
 Step 4 - Fill in all the details for flavor and click on **Next** button
-![Step 4](./images/member_instance_create_step_04.png)
+![Step 4](./images/member_create_instance_step_04.png)
 
 Step 5 - Fill in all the details for networks and click on **Next** button
-![Step 5](./images/member_instance_create_step_05.png)
+![Step 5](./images/member_create_instance_step_05.png)
 
 Step 6 - Don't fill anything on Network Ports and click on **Next** button
-![Step 6](./images/member_instance_create_step_06.png)
+![Step 6](./images/member_create_instance_step_06.png)
 
 Step 7 - Add the security groups and click on **Launch Instance** button
-![Step 7](./images/member_instance_create_step_07.png)
+![Step 7](./images/member_create_instance_step_07.png)
 
 Step 8 - A green notification should appear on the top-right corner indicating successful creation of the instance
-![Step 8](./images/member_instance_create_step_08.png)
+![Step 8](./images/member_create_instance_step_08.png)
 
 ## Allowed Address Pairs
 
