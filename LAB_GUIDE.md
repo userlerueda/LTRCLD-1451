@@ -623,19 +623,52 @@ $ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
 
 Step 3 - Set the allowed address pairs to 0.0.0.0/0 for the port using the `openstack port set` command
 ```
-$ openstack port set --allowed-address ip-address=0.0.0.0/0 0aa5db92-f80f-40e4-a15b-ee6aaa
+$ openstack port set --allowed-address ip-address=0.0.0.0/0 32be354d-010e-4182-b72e-bfa587732aa7
 ```
 
-*Note: repeat for the other two ports*
+Step 4 - Check again using the `openstack port show` command
+```
+$ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
++-----------------------+------------------------------------------------------------------------------+
+| Field                 | Value                                                                        |
++-----------------------+------------------------------------------------------------------------------+
+| admin_state_up        | UP                                                                           |
+| allowed_address_pairs | ip_address='0.0.0.0/0', mac_address='fa:16:3e:2c:12:8c'                      |
+| binding_host_id       | None                                                                         |
+| binding_profile       | None                                                                         |
+| binding_vif_details   | None                                                                         |
+| binding_vif_type      | None                                                                         |
+| binding_vnic_type     | normal                                                                       |
+| created_at            | 2018-01-25T18:52:38Z                                                         |
+| data_plane_status     | None                                                                         |
+| description           |                                                                              |
+| device_id             | 12a00eb4-5198-4fde-933c-4c6d1d047cda                                         |
+| device_owner          | compute:nova                                                                 |
+| dns_assignment        | None                                                                         |
+| dns_name              | None                                                                         |
+| extra_dhcp_opts       |                                                                              |
+| fixed_ips             | ip_address='192.168.255.1', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43' |
+| id                    | 32be354d-010e-4182-b72e-bfa587732aa7                                         |
+| ip_address            | None                                                                         |
+| mac_address           | fa:16:3e:2c:12:8c                                                            |
+| name                  |                                                                              |
+| network_id            | 2f25227b-80b0-4f31-b11b-9b2d8066127c                                         |
+| option_name           | None                                                                         |
+| option_value          | None                                                                         |
+| port_security_enabled | True                                                                         |
+| project_id            | 1e2b5c63d1f14091b237acf064cc9db6                                             |
+| qos_policy_id         | None                                                                         |
+| revision_number       | 8                                                                            |
+| security_group_ids    | b0ab9379-bb17-432f-be23-c06fd765f719                                         |
+| status                | ACTIVE                                                                       |
+| subnet_id             | None                                                                         |
+| tags                  |                                                                              |
+| trunk_details         | None                                                                         |
+| updated_at            | 2018-01-28T17:06:47Z                                                         |
++-----------------------+------------------------------------------------------------------------------+
+```
 
-### Required neutron customizations
-- mac address changes
-### Remote ssh access and verification tasks
-### Openstack review tasks (infra, neutron, nova focus)
-### Openstack API features
-# Openstack orchestration
-## HEAT templates?
-- try doing some of the tasks that were done manually
+*Note: Don't forget to repeat for the other two ports*
 
 # Neutron Intensive Tasks
 
