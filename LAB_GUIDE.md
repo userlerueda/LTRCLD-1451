@@ -565,11 +565,60 @@ To do that we will use the OpenStack CLI.
 Step 1 - Identify the port that requires changes (since our CSR1Kv VNF has three ports, we will need to execute the procedure in each one of them)
 ```
 $ openstack port list
++--------------------------------------+------+-------------------+------------------------------------------------------------------------------+--------+
+| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                           | Status |
++--------------------------------------+------+-------------------+------------------------------------------------------------------------------+--------+
+| 325e6e70-eccf-4f72-a262-e0a23b0e99e9 |      | fa:16:3e:65:52:29 | ip_address='192.168.254.1', subnet_id='49eaed11-788e-41dd-8823-12964c9f90e5' | ACTIVE |
+| 32be354d-010e-4182-b72e-bfa587732aa7 |      | fa:16:3e:2c:12:8c | ip_address='192.168.255.1', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43' | ACTIVE |
+| 35c5e71d-7187-4fbe-94e9-cf4225df5ef7 |      | fa:16:3e:91:a5:86 | ip_address='172.16.99.10', subnet_id='e7210532-3d56-4eaf-9826-0711756ad3f4'  | ACTIVE |
+| 53a086d6-80af-4956-8705-4cd54129022d |      | fa:16:3e:b7:fd:e7 | ip_address='172.16.99.2', subnet_id='e7210532-3d56-4eaf-9826-0711756ad3f4'   | ACTIVE |
+| 61b803dc-36ad-4949-aa80-0b4b73b0a69d |      | fa:16:3e:d9:b1:92 | ip_address='192.168.254.6', subnet_id='49eaed11-788e-41dd-8823-12964c9f90e5' | ACTIVE |
+| bc7c49fb-1acc-4af4-b4bc-5485f6962aea |      | fa:16:3e:fd:60:72 | ip_address='192.168.255.2', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43' | ACTIVE |
+| e770a957-be50-46c1-b90a-ec2aa90da38b |      | fa:16:3e:40:6a:d1 | ip_address='192.168.255.5', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43' | ACTIVE |
+| e9566f29-0f7a-4cdb-81d4-237f412b2cfd |      | fa:16:3e:af:21:1a | ip_address='192.168.254.2', subnet_id='49eaed11-788e-41dd-8823-12964c9f90e5' | ACTIVE |
++--------------------------------------+------+-------------------+------------------------------------------------------------------------------+--------+
 ```
 
 Step 2 - After getting the port ID from the above command, execute the `openstack port show <ID>` command to see the current configuration for the port
 ```
-$ openstack port show
+$ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
++-----------------------+------------------------------------------------------------------------------+
+| Field                 | Value                                                                        |
++-----------------------+------------------------------------------------------------------------------+
+| admin_state_up        | UP                                                                           |
+| allowed_address_pairs |                                                                              |
+| binding_host_id       | None                                                                         |
+| binding_profile       | None                                                                         |
+| binding_vif_details   | None                                                                         |
+| binding_vif_type      | None                                                                         |
+| binding_vnic_type     | normal                                                                       |
+| created_at            | 2018-01-25T18:52:38Z                                                         |
+| data_plane_status     | None                                                                         |
+| description           |                                                                              |
+| device_id             | 12a00eb4-5198-4fde-933c-4c6d1d047cda                                         |
+| device_owner          | compute:nova                                                                 |
+| dns_assignment        | None                                                                         |
+| dns_name              | None                                                                         |
+| extra_dhcp_opts       |                                                                              |
+| fixed_ips             | ip_address='192.168.255.1', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43' |
+| id                    | 32be354d-010e-4182-b72e-bfa587732aa7                                         |
+| ip_address            | None                                                                         |
+| mac_address           | fa:16:3e:2c:12:8c                                                            |
+| name                  |                                                                              |
+| network_id            | 2f25227b-80b0-4f31-b11b-9b2d8066127c                                         |
+| option_name           | None                                                                         |
+| option_value          | None                                                                         |
+| port_security_enabled | True                                                                         |
+| project_id            | 1e2b5c63d1f14091b237acf064cc9db6                                             |
+| qos_policy_id         | None                                                                         |
+| revision_number       | 6                                                                            |
+| security_group_ids    | b0ab9379-bb17-432f-be23-c06fd765f719                                         |
+| status                | ACTIVE                                                                       |
+| subnet_id             | None                                                                         |
+| tags                  |                                                                              |
+| trunk_details         | None                                                                         |
+| updated_at            | 2018-01-25T18:52:44Z                                                         |
++-----------------------+------------------------------------------------------------------------------+
 ```
 
 Step 3 - Set the allowed address pairs to 0.0.0.0/0 for the port using the `openstack port set` command
