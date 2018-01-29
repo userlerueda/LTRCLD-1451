@@ -1,42 +1,53 @@
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Logistics](#logistics)
-- [Introduction to OpenStack](#introduction-to-openstack)
-- [OpenStack Installation](#openstack-installation)
-- [Lecture](#lecture)
-- [Lab Environment Walkthrough](#lab-environment-walkthrough)
+	- [Welcome](#welcome)
+	- [Time management](#time-management)
+	- [Questions](#questions)
+	- [Openstack installation](#openstack-installation)
+	- [Join the discussion at Cisco Spark](#join-the-discussion-at-cisco-spark)
+- [Introduction to Openstack](#introduction-to-openstack)
+- [Credentials](#credentials)
+- [Lab Connectivity](#lab-connectivity)
 	- [HW topology](#hw-topology)
 	- [Layer 3 Topology](#layer-3-topology)
 	- [Connectivity](#connectivity)
 	- [Testing VPN Lab Connectivity](#testing-vpn-lab-connectivity)
-	- [Browse overall OpenStack cloud (some openstack CLI (host list etc), access computes etc)](#browse-overall-openstack-cloud-some-openstack-cli-host-list-etc-access-computes-etc)
+- [Openstack cloud high level view](#openstack-cloud-high-level-view)
+	- [Command line interface (CLI)](#command-line-interface-cli)
+	- [Horizon dashboard](#horizon-dashboard)
 - [Admin Tasks](#admin-tasks)
-	- [Scenario (1 minute)](#scenario-1-minute)
-	- [Create Flavors (5 minutes)](#create-flavors-5-minutes)
-	- [Create Networks and Subnets (5 minutes)](#create-networks-and-subnets-5-minutes)
-	- [Create images (5 minutes)](#create-images-5-minutes)
-	- [Create Floating IP Pool (5 minutes)](#create-floating-ip-pool-5-minutes)
+	- [Scenario](#scenario)
+	- [Source keystone_adminrc file](#source-keystoneadminrc-file)
+	- [Create Flavors](#create-flavors)
+	- [Create Networks and Subnets](#create-networks-and-subnets)
+	- [Create images](#create-images)
+	- [Create Floating IP Pool](#create-floating-ip-pool)
 - [Tenant Tasks](#tenant-tasks)
-	- [Create Networks and Subnets (5 minutes)](#create-networks-and-subnets-5-minutes)
-	- [Create Internet Network and Subnet (3 minutes)](#create-internet-network-and-subnet-3-minutes)
-	- [Create Internal Network and Subnet (2 minutes)](#create-internal-network-and-subnet-2-minutes)
-	- [Create OpenStack Router (5 minutes)](#create-openstack-router-5-minutes)
+	- [Create Networks and Subnets](#create-networks-and-subnets)
+	- [Create Internet Network and Subnet](#create-internet-network-and-subnet)
+	- [Create Internal Network and Subnet](#create-internal-network-and-subnet)
+	- [Create OpenStack Router](#create-openstack-router)
 		- [Attach router to provider network](#attach-router-to-provider-network)
-	- [Launch Instances (10 minutes)](#launch-instances-10-minutes)
+	- [Launch Instances](#launch-instances)
 		- [Security Groups](#security-groups)
 		- [Launch CSR1Kv Instance](#launch-csr1kv-instance)
 		- [Launch CirrOS Instance](#launch-cirros-instance)
 	- [Allowed Address Pairs](#allowed-address-pairs)
-		- [Required neutron customizations](#required-neutron-customizations)
-		- [Remote ssh access and verification tasks](#remote-ssh-access-and-verification-tasks)
-		- [Openstack review tasks (infra, neutron, nova focus)](#openstack-review-tasks-infra-neutron-nova-focus)
-		- [Openstack API features](#openstack-api-features)
-- [Openstack orchestration](#openstack-orchestration)
-	- [HEAT templates?](#heat-templates)
+	- [Set Return Routes for Router](#set-return-routes-for-router)
 - [Neutron Intensive Tasks](#neutron-intensive-tasks)
+	- [Topology](#topology)
+	- [Packet path](#packet-path)
+	- [Packet tracing tasks](#packet-tracing-tasks)
 - [OpenStack Review Tasks](#openstack-review-tasks)
 - [Resources](#resources)
-	- [Cisco DEvnet: OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1](#cisco-devnet-openstack-on-your-laptop-httpslearninglabsciscocomlabopenstack-installstep1)
+	- [Openstack Neutron VOD](#openstack-neutron-vod)
+	- [Cisco Devnet](#cisco-devnet)
+	- [Openstack lab video](#openstack-lab-video)
+	- [Video on Neutron](#video-on-neutron)
+	- [Openstack solutions at cisco](#openstack-solutions-at-cisco)
+
+<!-- /TOC -->
 
 ---
 
@@ -170,7 +181,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 ---
 
 # Admin Tasks
-*Estimated time to complete: 30 min.*
+*Estimated time to complete: 45 min.*
 
 ## Scenario
 
