@@ -40,7 +40,7 @@
 
 <!-- /TOC -->
 
-<!--
+<!-- 
 # Logistics
 # Introduction to OpenStack
 # Credentials
@@ -82,7 +82,7 @@
 
 Refer to slides presented.
 
----
+--- 
 
 # Credentials
 
@@ -130,7 +130,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 	- IP address: Refer credentials doc
 	- Username: Refer credentials doc
 	- Password: Refer credentials doc
-
+	
 ![Cisco VPN](./images/lab_walkthrough_connectivity_step_01.png)
 
 - Verify routing on your desktop and check connectivity to Openstack controller
@@ -172,7 +172,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 * On the left pane, go to: "Admin"/"Overview"
 	* Observe VCPUs, RAM, etc. resource usage.
 * On the left pane, go to: "Admin"/"Compute"/"Hypervisors"
-	* On the "Hypervisor" tab, observe total and used resources.
+	* On the "Hypervisor" tab, observe total and used resources. 
 	* On the "Compute host" tab, observe "Status" of different hosts.
 
 *Review the section and discuss if you have any questions or comments.*
@@ -822,7 +822,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `openstack image list`
 	* `openstack server list --all-projects`
 	* `openstack quota show <project name>`
-
+	
 * Network overview
 	* `openstack network list`
 	* `openstack network show <net name or ID>`
@@ -875,19 +875,18 @@ ID
 ## Openstack Neutron VOD
 - [Cisco Webinar video](https://learningnetwork.cisco.com/docs/DOC-30375)
 - cisco.com account needed to access this link.
-- Click "Access the recording" and accept Flash as reader.
+- Click "Access the recording" and accept Flash as reader. 
 ## Cisco Devnet
 - OpenStack on your Laptop [openstack-on-laptop](https://learninglabs.cisco.com/lab/openstack-install/step/1)
 ## Openstack lab video
 - https://www.openstack.org/videos/austin-2016/hands-on-lab-test-drive-your-openstack-network
-- Covers nova features using Horizon navigation.
+- Covers nova features using Horizon navigation. 
 ## Video on Neutron
 - Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares [neutron-video](https://www.youtube.com/watch?v=B17qcaSglHA)
 ## Openstack solutions at cisco
 - [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
 
 <p align="center">
-**End of session**
+End of session
 </p>
-
 ---
