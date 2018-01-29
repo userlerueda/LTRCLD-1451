@@ -39,11 +39,15 @@
 	- [Cisco DEvnet: OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1](#cisco-devnet-openstack-on-your-laptop-httpslearninglabsciscocomlabopenstack-installstep1)
 
 <!-- /TOC -->
+
+<!-- 
 # Logistics
 # Introduction to OpenStack
 # Credentials
-# OpenStack Installation
 # Lab Environment Walkthrough
+# Openstack cloud high level view
+# Resources
+-->
 
 ---
 
@@ -60,13 +64,13 @@
 * Please plan a 5 min break, as needed, around 2 hr. mark or after completing sectio-X !!![comeback to edit]
 
 ## Questions
-* Questions are most welcome. We ** request ** you to ask questions and make the session interactive.
+* Questions are most welcome. We **request** you to ask questions and make the session interactive.
 * Self exploration is fun. At the end of each section, take a few minutes to review and ask questions if you have any.
 
 ## Openstack installation
 * Openstack installation is not included in this session to make efficient use of time.
 * If installation is successful, there is not much to learn. If not successful, there won't be enough time within this session to troubleshoot.
-* For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller
+* For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller and 6 Compute nodes. One biggest problem we encountered was copy-time-out.
 
 ---
 
@@ -134,14 +138,16 @@ Below is a representation of Openstack cloud connectivity to the external networ
 
 ---
 
-# Openstack basic verification
+# Openstack cloud high level view
 
-Use command line interface (CLI) and Horizon dashboard and make basic verifications.
+Use command line interface (CLI) and Horizon dashboard and try to get a overall view of the Openstack cloud that we are going to use.
 
 ## Command line interface (CLI)
 
-* ```ssh userxxx@172.31.56.216```
-* 
+* login into Controller node: `ssh tenantXXX@172.31.56.216`
+* Change/add environment parameters for Openstack access: `source keystonerc_admin130`
+
+
 Browse overall OpenStack cloud (some OpenStack CLI (host list etc), access computes etc)
 
 ---
@@ -808,4 +814,26 @@ openstack user list
 ```
 
 # Resources
-## Cisco DEvnet: OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1
+## Cisco Devnet
+- OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1
+
+## Labguide doc
+- http://www.netlabsug.org/documentum/Openstack-Laboratory-Guide_v5.0.1-Pike-Release.pdf
+- Covers step by step instructions with good intro in each section.
+
+## Openstack lab video
+- https://www.openstack.org/videos/austin-2016/hands-on-lab-test-drive-your-openstack-network
+- Covers nova features using Horizon navigation. Basic level.
+
+## Cisco devnet lab
+- Launching Openstack instance: https://learninglabs.cisco.com/labs?keywords=openstack
+- Click on "Metacloud: Create an instance"
+- This doc work as a good example of document formatting. Nice text code boxes etc.
+
+Nova focus hands-on: https://gbraad.gitbooks.io/openstack-handsonlabs/content/neutron/building-multitier-application.html
+  lab guide with MD format
+
+Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares: https://www.youtube.com/watch?v=B17qcaSglHA
+  Neutron focus. Youtube video
+  
+  
