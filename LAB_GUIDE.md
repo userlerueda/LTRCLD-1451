@@ -135,12 +135,12 @@ Below is a representation of Openstack cloud connectivity to the external networ
 	- If ping succeeds, open the following link in a new tab: [http://172.31.56.216](http://172.31.56.216)
 	- If ping fails, check if you have 1) successfully VPN into the lab VPN-server and 2) you have a route to 172.31.56.0/24. Windows command to list route table: `route print`
 
-- Review the section and discuss if you have any questions or comments.
+*Review the section and discuss if you have any questions or comments.*
 
 ---
 
 # Openstack cloud high level view
-* Estimated time to complete: 15 min.
+*Estimated time to complete: 15 min.*
 
 Use command line interface (CLI) and Horizon dashboard and try to get a overall view of the Openstack cloud that we are going to use.
 
@@ -151,7 +151,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 	* IP address: `172.31.56.216`
 	* username: `tenantXXX`
 	* password: `cisco.123`
-* Change/add environment parameters for Openstack access:$ `source keystonerc_admin130`
+* Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
 * Try the below commands:
 	* `openstack-status`
 	* `openstack-service list`
@@ -171,11 +171,12 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 	* On the "Hypervisor" tab, observe total and used resources. 
 	* On the "Compute host" tab, observe "Status" of different hosts.
 
-Review the section and discuss if you have any questions or comments.
+*Review the section and discuss if you have any questions or comments.*
 
 ---
 
 # Admin Tasks
+*Estimated time to complete: 30 min.*
 
 ## Scenario
 
@@ -359,7 +360,12 @@ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57
 +---------------------+--------------------------------------+
 ```
 
+*Review the section and discuss if you have any questions or comments.*
+
+---
+
 # Tenant Tasks
+*Estimated time to complete: 60 min.*
 
 ## Create Networks and Subnets
 
@@ -703,21 +709,31 @@ $ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
 
 *Note: Don't forget to repeat for the other two ports*
 
+*Review the section and discuss if you have any questions or comments.*
+
+---
+
 # Neutron Intensive Tasks
+*Estimated time to complete: 30 min.*
+
+Review the section and discuss if you have any questions or comments.
+
+---
 
 # OpenStack Review Tasks
+*Estimated time to complete: 30 min.*
 
-In this concluding section, you will try to get an overall view of the Openstack cloud that you just worked on. Try to make sense of the output of each command. These some commonly used monitoring commands. Not every command and out may have a direct connection to the work that you did so far. The goal is to get an overall idea, not necessarily a detailed one.
+In this concluding section, you will try to get an overall view of the Openstack cloud that you just worked on. Try to make sense of the output of each command. These are some commonly used monitoring commands. Not every command and output may have a direct connection to the work that you did so far. The goal is to get an overall idea, not necessarily a detailed one.
 
 Please note that a typical production NFV system or Openstack cloud includes components such as exclusive storage, high performance network connectivity with PCIe or SR-IOv, OSS/BSS system, VNF management system, and Orchestration systems. In this lab, we have Openstack alone, which makes up ETSI model’s Virtual Infrastructure Manager (VIM).
 
-1.1.	Acquire admin environment parameters (discuss with Luis)
-
-```
-$ source ~/keystonerc_admin
-```
-
-1.2.	Cloud overview
+* login into Controller node: `ssh tenantXXX@172.31.56.216`
+	* Use **putty** app provided in your lab laptop
+	* IP address: `172.31.56.216`
+	* username: `tenantXXX`
+	* password: `cisco.123`
+* Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
+* Cloud overview
 ```
 $ openstack-service list
 ```
