@@ -92,7 +92,7 @@ You will be given a paper copy of IP addresses, username, password info.
 ---
 
 # Lab Connectivity
-* Estimated time to complete: 15 min.
+*Estimated time to complete: 15 min.*
 
 All the tasks in this guide can be done using OpenStack CLI or OpenStack Horizon's Dashboard, the examples will be using either one of them and it is up to the student to explore the different ways of doing it using the alternate method.
 
@@ -102,13 +102,13 @@ Please note that a typical production NFV system or Openstack cloud includes com
 
 The lab is built with 7 Cisco UCS C240 servers. The lab is behind a VPN server. To access the lab, you need to VPN into the VPN server. The VPN server and the lab are in USA and the access to VPN server is over Internet.
 
-## HW topology
+## Physical topology
 
 Access to the lab is over VPN tunnel. When you create the tunnel, VPN server will advertise a few routes to your laptop.
 
 ![Physical Toplogy](./images/lab_walkthrough_hw_topology_00.png)
 
-## Layer 3 Topology
+## Logical Topology
 
 Openstack Controller has connectivity to external-VLAN but not any Computes. Your access to Openstack cloud, which include Computes is through Controller.
 
@@ -891,7 +891,7 @@ There were 4 failed login attempts since the last successful login.
 ---
 
 # OpenStack Review Tasks
-*Estimated time to complete: 30 min.*
+*Estimated time to complete: 15 min.*
 
 In this concluding section, you will try to get an overall view of the Openstack cloud that you just worked on. Try to make sense of the output of each command. These are some commonly used monitoring commands. Not every command and output may have a direct connection to the work that you did so far. The goal is to get an overall idea, not necessarily a detailed one.
 
@@ -988,7 +988,7 @@ ID
 - [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
 
 <p align="center">
-**End of session**
+	<b>End of session</b>
 </p>
 
 ---
