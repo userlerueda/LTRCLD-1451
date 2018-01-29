@@ -69,9 +69,9 @@
 
 # Introduction to Openstack
 
-Refer to slides presented.
+Refer to [slides](./pdfs/Introduction_to_OpenStack_v1.pdf) presented.
 
---- 
+---
 
 # Credentials
 
@@ -119,7 +119,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 	- IP address: Refer credentials doc
 	- Username: Refer credentials doc
 	- Password: Refer credentials doc
-	
+
 ![Cisco VPN](./images/lab_walkthrough_connectivity_step_01.png)
 
 - Verify routing on your desktop and check connectivity to Openstack controller
@@ -161,7 +161,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 * On the left pane, go to: "Admin"/"Overview"
 	* Observe VCPUs, RAM, etc. resource usage.
 * On the left pane, go to: "Admin"/"Compute"/"Hypervisors"
-	* On the "Hypervisor" tab, observe total and used resources. 
+	* On the "Hypervisor" tab, observe total and used resources.
 	* On the "Compute host" tab, observe "Status" of different hosts.
 
 *Review the section and discuss if you have any questions or comments.*
@@ -779,12 +779,12 @@ Several linux and Openstack components are involved to make the neutron networki
 	* traffic filtering, shaping, and security
 * OpenVswitch
 	* Openstack L2 agent.
-	* Multilayer L2 switch. 
+	* Multilayer L2 switch.
 * Openstack L3 agent router
 	* Openstack L3 agent.
-The goal of this section is to show networking in the lab cloud. The tasks in this section will help you navigate the path from your virtual machine (VM) to External network. 
+The goal of this section is to show networking in the lab cloud. The tasks in this section will help you navigate the path from your virtual machine (VM) to External network.
 
-* In this section, you need to execute the commands from the host that is hosting your CSR1Kv router-VM. So, the first step would be to find the host that is running your CSR1Kv VM. 
+* In this section, you need to execute the commands from the host that is hosting your CSR1Kv router-VM. So, the first step would be to find the host that is running your CSR1Kv VM.
 * Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also the Controller and a Compute node).
 
 ## Topology
@@ -792,10 +792,10 @@ The goal of this section is to show networking in the lab cloud. The tasks in th
 
 ## Packet path
 
-In this below example diagram, our VM is hosted on a compute node. Here the VM is CSR1Kv router. 
+In this below example diagram, our VM is hosted on a compute node. Here the VM is CSR1Kv router.
 ![neutron-3](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png)
 
-Red dotted line represents path from CSR1Kv to Internet. If you notice, traffic goes to Network node and reaches Internet via the openstack-router. Here, Controller node is functioning as Network node. 
+Red dotted line represents path from CSR1Kv to Internet. If you notice, traffic goes to Network node and reaches Internet via the openstack-router. Here, Controller node is functioning as Network node.
 
 Including Network node, there are 6 nodes in our setup. br-tun bridge would have 5 VXLAN-tunnel interfaces to going to br-tun bridges on the other nodes.
 
@@ -861,7 +861,7 @@ Example: In the example below, PSL-DMZ-C-S2 (compute-2) is the host.
 * Login to Controller node: `ssh tenantXXX@<host-name>`
 	* make sure you are in the **right host** by checking its hostname.
 * Load Openstack environment variables: `source keystonerc_adminXXX`
-	
+
 ```
 [tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh tenant99@PSL-DMZ-C-S2
 tenant99@psl-dmz-c-s2's password:
@@ -871,7 +871,7 @@ There were 4 failed login attempts since the last successful login.
 ```
 * Find the port-id of Internet-facing port
 	* `openstack server list | grep csr`
-	* 
+	*
 
 
 *Review the section and discuss if you have any questions or comments.*
@@ -911,7 +911,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `openstack image list`
 	* `openstack server list --all-projects`
 	* `openstack quota show <project name>`
-	
+
 * Network overview
 	* `openstack network list`
 	* `openstack network show <net name or ID>`
@@ -964,12 +964,12 @@ ID
 ## Openstack Neutron VOD
 - [Cisco Webinar video](https://learningnetwork.cisco.com/docs/DOC-30375)
 - cisco.com account needed to access this link.
-- Click "Access the recording" and accept Flash as reader. 
+- Click "Access the recording" and accept Flash as reader.
 ## Cisco Devnet
 - OpenStack on your Laptop [openstack-on-laptop](https://learninglabs.cisco.com/lab/openstack-install/step/1)
 ## Openstack lab video
 - [lab video](https://www.openstack.org/videos/austin-2016/hands-on-lab-test-drive-your-openstack-network)
-- Covers nova features using Horizon navigation. 
+- Covers nova features using Horizon navigation.
 ## Video on Neutron
 - Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares [neutron-video](https://www.youtube.com/watch?v=B17qcaSglHA)
 ## Openstack solutions at cisco
@@ -980,4 +980,3 @@ ID
 </p>
 
 ---
-
