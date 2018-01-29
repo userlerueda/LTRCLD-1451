@@ -41,8 +41,8 @@
 <!-- /TOC -->
 # Logistics
 # Introduction to OpenStack
+# Credentials
 # OpenStack Installation
-# Lecture
 # Lab Environment Walkthrough
 
 ---
@@ -66,6 +66,7 @@
 ## Openstack installation
 * Openstack installation is not included in this session to make efficient use of time.
 * If installation is successful, there is not much to learn. If not successful, there won't be enough time within this session to troubleshoot.
+* For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller
 
 ---
 
