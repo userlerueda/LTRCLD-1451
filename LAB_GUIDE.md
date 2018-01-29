@@ -808,7 +808,9 @@ The tasks below will navigate packet path, from CSR1Kv to Internet.
 * Find the node which is hosting your CSR1Kv rotuer
 	* `openstack server list`
 	* `openstack server show <csr1kv VM name>`
-Example:	
+
+Example: In the example below, PSL-DMZ-C-S2 (compute-2) is the host.
+
 ```
 [tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list
 +--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
@@ -856,11 +858,18 @@ Example:
 [tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
 ```
 
-Find your CSR1Kv VM name: openstack server list
-Find the host: openstack server show cirros-test
-Find the host from the “OS-EXT-SRV-ATTR:host”
-Login to the host that has your VM: ssh userXXX@<host>
-Ensure that you landed on the right server. Check the server hostname. $hostname
+* Login to Controller node: `ssh tenantXXX@<host-name>`
+	* make sure you are in the **right host** by checking its hostname.
+* Load Openstack environment variables: `source keystonerc_adminXXX`
+	
+```
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh tenant99@PSL-DMZ-C-S2
+tenant99@psl-dmz-c-s2's password:
+There were 4 failed login attempts since the last successful login.
+[tenant99@PSL-DMZ-C-S2 ~]$ source keystonerc_admin99
+[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$
+```
+
 
 
 *Review the section and discuss if you have any questions or comments.*
