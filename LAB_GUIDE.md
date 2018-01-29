@@ -25,8 +25,8 @@
 	- [Create Floating IP Pool](#create-floating-ip-pool)
 - [Tenant Tasks](#tenant-tasks)
 	- [Create Networks and Subnets](#create-networks-and-subnets)
-	- [Create Internet Network and Subnet](#create-internet-network-and-subnet)
-	- [Create Internal Network and Subnet](#create-internal-network-and-subnet)
+		- [Create Internet Network and Subnet](#create-internet-network-and-subnet)
+		- [Create Internal Network and Subnet](#create-internal-network-and-subnet)
 	- [Create OpenStack Router](#create-openstack-router)
 		- [Attach router to provider network](#attach-router-to-provider-network)
 	- [Launch Instances](#launch-instances)
@@ -376,7 +376,7 @@ $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.
 
 As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv
 
-## Create Internet Network and Subnet
+### Create Internet Network and Subnet
 
 Lets start by creating the Internet network.
 
@@ -401,7 +401,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/member_network_internet_create_step_05.png)
 
-## Create Internal Network and Subnet
+### Create Internal Network and Subnet
 
 Lets create now the Internal Network. This time we will do it via OpenStack CLI.
 
