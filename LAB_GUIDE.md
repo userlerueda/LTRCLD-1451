@@ -806,7 +806,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 * Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
 
 * Cloud overview
-	* `openstack-status'
+	* `openstack-status`
 	* `openstack-service list`
 	* `openstack service list`
 	* `openstack hypervisor list`
@@ -817,7 +817,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 * Compute overview
 	* `openstack compute service list`
 		* note that there are 6 Computes. Node PSL-DMZ-C-S6 is hosting Controller, Network, and Compute functions.
-	* `openstack usage list'
+	* `openstack usage list`
 	* `openstack host list`
 	* `openstack host show <host name>`
 	* `openstack flavor list`
@@ -826,7 +826,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `openstack quota show <project name>`
 	
 * Network overview
-	* `openstack network list'
+	* `openstack network list`
 	* `openstack network show <net name or ID>`
 	* `openstack subnet list`
 	* `openstack subnet show <subnet name or ID>`
@@ -868,12 +868,6 @@ ID
 [tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | grep external | awk '{ print $2 }'
 06ca5380-84eb-46b1-b0db-8fa038f72998
 ```
-	
-	
-	
-
-
-
 
 *Review the section and discuss if you have any questions or comments.*
 
@@ -881,25 +875,16 @@ ID
 
 # Resources
 ## Cisco Devnet
-- OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1
-
-## Labguide doc
-- http://www.netlabsug.org/documentum/Openstack-Laboratory-Guide_v5.0.1-Pike-Release.pdf
-- Covers step by step instructions with good intro in each section.
-
+- OpenStack on your Laptop [openstack-on-laptop](https://learninglabs.cisco.com/lab/openstack-install/step/1)
 ## Openstack lab video
 - https://www.openstack.org/videos/austin-2016/hands-on-lab-test-drive-your-openstack-network
-- Covers nova features using Horizon navigation. Basic level.
-
+- Covers nova features using Horizon navigation. 
+- Basic level.
 ## Cisco devnet lab
-- Launching Openstack instance: https://learninglabs.cisco.com/labs?keywords=openstack
+- Launching Openstack instance [launch](https://learninglabs.cisco.com/labs?keywords=openstack)
 - Click on "Metacloud: Create an instance"
-- This doc work as a good example of document formatting. Nice text code boxes etc.
 
-Nova focus hands-on: https://gbraad.gitbooks.io/openstack-handsonlabs/content/neutron/building-multitier-application.html
-  lab guide with MD format
-
-Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares: https://www.youtube.com/watch?v=B17qcaSglHA
-  Neutron focus. Youtube video
+## Video on Neutron
+- Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares [neutron-video](https://www.youtube.com/watch?v=B17qcaSglHA)
   
   
