@@ -145,7 +145,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 	* IP address: `172.31.56.216`
 	* username: `tenantXXX`
 	* password: `cisco.123`
-* Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
+* Load environment parameters for Openstack access: `$ source keystonerc_adminXXX`
 * Try the below commands:
 	* `openstack-status`
 	* `openstack-service list`
