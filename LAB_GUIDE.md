@@ -59,7 +59,7 @@
 * We tried to give emphasis to networking aspect.
 
 ## Time management
-* There are 10 Sections, with an estimated completion time of 3 hr. 30 min.
+* There are 10 Sections, with an estimated completion time of 3 hr. 30 min. !!![edit]
 * Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
 * Please plan a 5 min break, as needed, around 2 hr. mark or after completing sectio-X !!![comeback to edit]
 
@@ -145,16 +145,37 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 ## Command line interface (CLI)
 
 * login into Controller node: `ssh tenantXXX@172.31.56.216`
-* Change/add environment parameters for Openstack access: `source keystonerc_admin130`
+	* Use **putty** app provided in your lab laptop
+	* IP address: `172.31.56.216`
+	* username: `tenantXXX`
+	* password: `cisco.123`
+* Change/add environment parameters for Openstack access:$ `source keystonerc_admin130`
+* Try the below commands:
+	* `openstack-status`
+	* `openstack-service list`
+	* `openstack-service status`
+	* `openstack hypervisor list`
+	* `openstack hypervisor stats show`
+	* `openstack usage list`
+
+## Horizon dashboard
+
+* Login into Horizon dashboard using the credentials below:
+	* username: `adminXXX`
+	* password: `cisco.123`
+* On the left pane, go to: Admin Overview
 
 
-Browse overall OpenStack cloud (some OpenStack CLI (host list etc), access computes etc)
+	
+
+
+
 
 ---
 
 # Admin Tasks
 
-## Scenario (1 minute)
+## Scenario
 
 In this section, you would assume the role of an administrator of an OpenStack cloud. The goal is to create all the necessary elements for your users to be able to later create a virtual machine and make some basic verifications. This exercise exposes typical OpenStack admin environment.
 
@@ -171,7 +192,7 @@ For all the commands that are executed using OpenStack CLI the first thing that 
 $ source ~/keystonerc_adminXXX
 ```
 
-## Create Flavors (5 minutes)
+## Create Flavors
 Lets start by creating some flavors that will be required for our VNFs (Virtual Machines).
 
 A flavor is required for each of the following:
@@ -206,7 +227,7 @@ $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --priv
 
 *Note: Replace XXX with your POD number. You will have this in your handout page*
 
-## Create Networks and Subnets (5 minutes)
+## Create Networks and Subnets
 
 Let's start by creating the provider network, this is the only one that must be created using an admin user because it is the one that needs to provide values that only the OpenStack cloud administrator would have.
 
@@ -261,7 +282,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/admin_network_provider_create_05.png)
 
-## Create images (5 minutes)
+## Create images
 
 We need to create the following images in glance.
 
@@ -303,7 +324,7 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 +------------------+------------------------------------------------------+
 ```
 
-## Create Floating IP Pool (5 minutes)
+## Create Floating IP Pool
 
 Step 1 - Go to Admin -> Network -> Floating IPs an click on **Allocate IP To Project**
 ![Step 1](./images/admin_floating_ip_pool_create_01.png)
@@ -338,11 +359,11 @@ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57
 
 # Tenant Tasks
 
-## Create Networks and Subnets (5 minutes)
+## Create Networks and Subnets
 
 As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv
 
-## Create Internet Network and Subnet (3 minutes)
+## Create Internet Network and Subnet
 
 Lets start by creating the Internet network.
 
@@ -367,7 +388,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/member_network_internet_create_step_05.png)
 
-## Create Internal Network and Subnet (2 minutes)
+## Create Internal Network and Subnet
 
 Lets create now the Internal Network. This time we will do it via OpenStack CLI.
 
@@ -440,7 +461,7 @@ Since the Internal network does not have connectivity to the outside world eithe
 |----------|------------------|---------------|---------------------------------|
 | TenantXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
 
-## Create OpenStack Router (5 minutes)
+## Create OpenStack Router
 - tenantXX-router
 
 Step 1 - Go to Project -> Network -> Routers and click on **Create Router**
@@ -463,7 +484,7 @@ Step 2 - Select tenantXX-internet from the drop-down list of subnets and click o
 Step 3 - A green notification should appear on the top-right corner indicating successful attach of the subnet to the router
 ![Step 3](./images/member_routers_attach_interface_internet_step_03.png)
 
-## Launch Instances (10 minutes)
+## Launch Instances
 
 ### Security Groups
 
