@@ -65,7 +65,7 @@
 
 ## Openstack installation
 * Openstack installation is not included in this session to make efficient use of time.
-* Successful installtion 
+* If installation is successful, there is not much to learn. If not successful, there won't be enough time within this session to troubleshoot.
 
 ---
 
@@ -73,6 +73,7 @@
 
 Refer to slides presented.
 
+--- 
 
 # Credentials
 
@@ -122,9 +123,10 @@ Below is a representation of Openstack cloud connectivity to the external networ
 
 - Verify routing on your desktop and check connectivity to Openstack controller
 
-	- $ `ip route` (or `netstat -nr`)  //you should have route to 172.31.56.0/24
-	- $ `ping 172.31.56.216`
-	- From your browser, go [http://172.31.56.216](http://172.31.56.216)
+	- `ping 172.31.56.216`
+	- If ping succeeds, go to: [http://172.31.56.216](http://172.31.56.216)
+	- If ping fails, check if you have 1) successfully VPN into the lab VPN-server and 2) you have a route to 172.31.56.0/24
+	- Windows command to list route table: `route print`
 
 - Review the section and discuss if you have any questions or comments.
 
