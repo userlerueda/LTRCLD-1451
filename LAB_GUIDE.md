@@ -799,7 +799,7 @@ Red dotted line represents path from CSR1Kv to Internet. If you notice, traffic 
 
 Including Network node, there are 6 nodes in our setup. br-tun bridge would have 5 VXLAN-tunnel interfaces to going to br-tun bridges on the other nodes.
 
-The tasks below will navigate packet path, from CSR1Kv to Internet.
+The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram may be needed for reference while you are working on the steps below. You may want to open this [diagram](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png) in a new tab (right click and "open in a new tab").
 
 ## Packet tracing tasks
 
@@ -869,7 +869,9 @@ There were 4 failed login attempts since the last successful login.
 [tenant99@PSL-DMZ-C-S2 ~]$ source keystonerc_admin99
 [tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$
 ```
-
+* Find the port-id of Internet-facing port
+	* `openstack server list | grep csr`
+	* 
 
 
 *Review the section and discuss if you have any questions or comments.*
