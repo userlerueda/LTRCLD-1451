@@ -59,9 +59,8 @@
 * We tried to give emphasis to networking aspect.
 
 ## Time management
-* There are 10 Sections, with an estimated completion time of 3 hr. 30 min. !!![edit]
+* There are 6 hands-on sections, with an estimated completion time of 3 hr. 30 min. 
 * Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
-* Please plan a 5 min break, as needed, around 2 hr. mark or after completing sectio-X !!![comeback to edit]
 
 ## Questions
 * Questions are most welcome. We **request** you to ask questions and make the session interactive.
