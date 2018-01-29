@@ -781,7 +781,9 @@ $ openstack router show tenant99-router
 # Neutron Intensive Tasks
 *Estimated time to complete: 30 min.*
 
-Review the section and discuss if you have any questions or comments.
+!!![import stuff]
+
+*Review the section and discuss if you have any questions or comments.*
 
 ---
 
@@ -798,124 +800,61 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* username: `tenantXXX`
 	* password: `cisco.123`
 * Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
+
 * Cloud overview
-```
-$ openstack-service list
-```
+	* `openstack-status'
+	* `openstack-service list`
+	* `openstack service list`
+	* `openstack hypervisor list`
+	* `openstack hypervisor stats show`
+	* `openstack host list`
+	* `openstack host show <host name>`
 
-```
-$ openstack-service status
-```
+* Compute overview
+	* `openstack compute service list`
+		* note that there are 6 Computes. Node PSL-DMZ-C-S6 is hosting Controller, Network, and Compute functions.
+	* `openstack usage list'
+	* `openstack host list`
+	* `openstack host show <host name>`
+	* `openstack flavor list`
+	* `openstack image list`
+	* `openstack server list --all-projects`
+	* `openstack quota show <project name>`
+	
+* Network overview
+	* `openstack network list'
+	* `openstack network show <net name or ID>`
+	* `openstack subnet list`
+	* `openstack subnet show <subnet name or ID>`
+	* `openstack router list`
+	* `openstack network agent list`
+	* `openstack port list`
+	* `sudo ovs-vsctl show`
+	* `sudo ovs-vsctl list-br`
 
-```
-$ source keystonerc_admin
-```
+* Identity overview
+	* `openstack project list`
+	* `openstack role list`
+	* `openstack user list`
 
-1.3.	Miscellaneous
-```
-openstack command list
-```
+* Miscellaneous
+	* `openstack command list`
+	* `openstack command list --group openstack.compute.v2`
+	* `openstack command list --group openstack.network.v2`
+	* `brctl show`
+	* `ip netns'
+	* show only second column of the output, "openstack network list"
+	* ```
+	openstack network list | awk '{ print $2 }'
+	```
+	
 
-```
-openstack command list --group openstack.compute.v2
-```
 
-```
-openstack command list --group openstack.network.v2
-```
 
-```
-brctl show
-```
 
-```
-ovs-vsctl show
-```
+*Review the section and discuss if you have any questions or comments.*
 
-```
-ovs-vsctl list-br
-```
-
-```
-ip netns
-```
-
-1.4.	Compute
-```
-openstack compute service list
-```
-
-```
-openstack hypervisor list
-```
-
-```
-openstack hypervisor stats show
-```
-
-```
-openstack hypervisor show <hypervisor>
-```
-
-```
-openstack usage list
-```
-
-```
-openstack host list
-```
-
-```
-openstack host show <host name>
-```
-
-```
-openstack flavor list
-```
-
-```
-openstack server list --all-projects
-```
-```
-openstack quota show Great-Customer
-```
-
-1.5.	Network
-```
-ovs-vsctl list-br
-```
-```
-openstack network list
-```
-```
-openstack network <net name or ID>
-```
-```
-openstack subnet list
-```
-```
-openstack subnet <subnet name or ID>
-```
-```
-openstack router list
-```
-```
-openstack network agent list
-```
-```
-openstack port list
-```
-
-1.6.	Identity
-```
-openstack project list
-```
-```
-openstack role list
-```
-```
-openstack user list
-```
+---
 
 # Resources
 ## Cisco Devnet
