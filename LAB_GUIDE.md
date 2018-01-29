@@ -38,20 +38,6 @@
 - [Resources](#resources)
 	- [Cisco DEvnet: OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1](#cisco-devnet-openstack-on-your-laptop-httpslearninglabsciscocomlabopenstack-installstep1)
 
-<!-- /TOC -->
-
-<!-- 
-# Logistics
-# Introduction to OpenStack
-# Credentials
-# Lab Environment Walkthrough
-# Admin tasks
-# Tenant tasks
-# Neutron intensive tasks
-# Openstack cloud high level view
-# Resources
--->
-
 ---
 
 # Logistics
@@ -794,6 +780,7 @@ The goal of this section is to show networking in the lab cloud. The tasks in th
 * Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also the Controller and a Compute node).
 
 ## Topology
+![neutron-1](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-network-1.png)
 
 
 
