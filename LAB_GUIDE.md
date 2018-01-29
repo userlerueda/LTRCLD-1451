@@ -74,7 +74,7 @@
 
 Refer to slides presented.
 
---- 
+---
 
 # Credentials
 
@@ -121,7 +121,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 	- IP address: Refer credentials doc
 	- Username: Refer credentials doc
 	- Password: Refer credentials doc
-	
+
 ![Cisco VPN](./images/lab_walkthrough_connectivity_step_01.png)
 
 - Verify routing on your desktop and check connectivity to Openstack controller
@@ -141,7 +141,7 @@ Use command line interface (CLI) and Horizon dashboard and make basic verificati
 ## Command line interface (CLI)
 
 * ```ssh userxxx@172.31.56.216```
-* 
+*
 Browse overall OpenStack cloud (some OpenStack CLI (host list etc), access computes etc)
 
 ---
@@ -673,6 +673,69 @@ $ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
 ```
 
 *Note: Don't forget to repeat for the other two ports*
+
+## Set Return Routes for Router
+After setting the allowed address pairs, you will notice that you are able to ping the tenantXXX-internet IPv4 address of the CSR1kv, however you are not able to ping the IPv4 address of tenantXXX-internet's default gateway (which is OpenStack's router), why ?
+
+If you execute the following command you will notice that the line for routes is blank:
+```
+$ openstack router show tenant99-router
++-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Field                   | Value                                                                                                                                                                                    |
++-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| admin_state_up          | UP                                                                                                                                                                                       |
+| availability_zone_hints |                                                                                                                                                                                          |
+| availability_zones      | nova                                                                                                                                                                                     |
+| created_at              | 2018-01-22T00:30:30Z                                                                                                                                                                     |
+| description             |                                                                                                                                                                                          |
+| distributed             | False                                                                                                                                                                                    |
+| external_gateway_info   | {"network_id": "06ca5380-84eb-46b1-b0db-8fa038f72998", "enable_snat": true, "external_fixed_ips": [{"subnet_id": "9b34213c-eff1-4008-a387-d08ee49b5ee0", "ip_address": "172.31.57.11"}]} |
+| flavor_id               | None                                                                                                                                                                                     |
+| ha                      | False                                                                                                                                                                                    |
+| id                      | 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899                                                                                                                                                     |
+| name                    | tenant99-router                                                                                                                                                                          |
+| project_id              | 1e2b5c63d1f14091b237acf064cc9db6                                                                                                                                                         |
+| revision_number         | 8                                                                                                                                                                                        |
+| routes                  |                                                                                                                                                                                          |
+| status                  | ACTIVE                                                                                                                                                                                   |
+| tags                    |                                                                                                                                                                                          |
+| updated_at              | 2018-01-29T10:36:26Z                                                                                                                                                                     |
++-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+OpenStack's router does not know where 192.168.255.0/24 should be routed to, thus it will send traffic destined to 192.168.255.0/24 to its default route which is the internet (if you are curious on how to figure out what routes the OpenStack router has, go to [Neutron Intensive Tasks](#neutron-intensive-tasks))
+
+*Hint: if you don't want to jump ahead to that section, you can execute the following the command to check it:*
+```
+sudo ip netns exec qrouter-`openstack router list | grep -e "tenant.*router" | awk '{ print $2 }'` ip route
+```
+
+In order to the the route you can execute the following command:
+```
+$ openstack router set --route destination=192.168.255.0/24,gateway=192.168.254.6 tenant99-router
+$ openstack router show tenant99-router
++-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Field                   | Value                                                                                                                                                                                    |
++-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| admin_state_up          | UP                                                                                                                                                                                       |
+| availability_zone_hints |                                                                                                                                                                                          |
+| availability_zones      | nova                                                                                                                                                                                     |
+| created_at              | 2018-01-22T00:30:30Z                                                                                                                                                                     |
+| description             |                                                                                                                                                                                          |
+| distributed             | False                                                                                                                                                                                    |
+| external_gateway_info   | {"network_id": "06ca5380-84eb-46b1-b0db-8fa038f72998", "enable_snat": true, "external_fixed_ips": [{"subnet_id": "9b34213c-eff1-4008-a387-d08ee49b5ee0", "ip_address": "172.31.57.11"}]} |
+| flavor_id               | None                                                                                                                                                                                     |
+| ha                      | False                                                                                                                                                                                    |
+| id                      | 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899                                                                                                                                                     |
+| name                    | tenant99-router                                                                                                                                                                          |
+| project_id              | 1e2b5c63d1f14091b237acf064cc9db6                                                                                                                                                         |
+| revision_number         | 7                                                                                                                                                                                        |
+| routes                  | destination='192.168.255.0/24', gateway='192.168.254.6'                                                                                                                                  |
+| status                  | ACTIVE                                                                                                                                                                                   |
+| tags                    |                                                                                                                                                                                          |
+| updated_at              | 2018-01-29T10:08:36Z                                                                                                                                                                     |
++-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
 
 # Neutron Intensive Tasks
 
