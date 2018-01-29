@@ -370,7 +370,7 @@ $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.
 ---
 
 # Tenant Tasks
-*Estimated time to complete: 60 min.*
+*Estimated time to complete: 90 min.*
 
 ## Create Networks and Subnets
 
