@@ -163,13 +163,13 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 * Login into Horizon dashboard using the credentials below:
 	* username: `adminXXX`
 	* password: `cisco.123`
-* On the left pane, go to: Admin Overview
+* On the left pane, go to: "Admin"/"Overview"
+	* Observe VCPUs, RAM, etc. resource usage.
+* On the left pane, go to: "Admin"/"Compute"/"Hypervisors"
+	* On the "Hypervisor" tab, observe total and used resources. 
+	* On the "Compute host" tab, observe "Status" of different hosts.
 
-
-	
-
-
-
+- Review the section and discuss if you have any questions or comments.
 
 ---
 
