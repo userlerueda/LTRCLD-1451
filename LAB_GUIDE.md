@@ -74,7 +74,8 @@
 
 ## Join the discussion at Cisco Spark
 * Go to [spark](http://cs.co/ciscolivebot#LTRCLD-1451) and add your email address
-*
+* Select Spark installed/not-installed based on whether your device (phone/laptop) has Spark or not.
+
 ---
 
 # Introduction to Openstack
@@ -849,12 +850,22 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `openstack network list | awk '{ print $2 }'`
 		* print only second column of the output, "openstack network list". 
 	Example:
-	```
-	openstack network list | awk '{ print $2 }'
-	```
+```
+[tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | awk '{ print $2 }'
+
+ID
+
+04eea3ef-4bd0-4a53-bb41-9ee306fce37f
+06ca5380-84eb-46b1-b0db-8fa038f72998
+2c3d2f04-41ed-4c1a-956d-e57f61758f1e
+2f25227b-80b0-4f31-b11b-9b2d8066127c
+5da13369-b2ea-422b-9b9d-e3c93ec1acdb
+631e32e7-8e1f-42fb-a927-ec1d7dc31293
+90c70132-0ea7-4362-8ab4-aff50986d012
+```
 	* `openstack network list | grep external | awk '{ print $2 }'`
 		* print network-id of the network named, "external"
-	* 
+	
 	
 
 
