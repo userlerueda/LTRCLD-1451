@@ -45,6 +45,9 @@
 # Introduction to OpenStack
 # Credentials
 # Lab Environment Walkthrough
+# Admin tasks
+# Tenant tasks
+# Neutron intensive tasks
 # Openstack cloud high level view
 # Resources
 -->
@@ -783,7 +786,17 @@ $ openstack router show tenant99-router
 # Neutron Intensive Tasks
 *Estimated time to complete: 30 min.*
 
-!!![import stuff]
+The project code-name for networking services is Neutron. OpenStack networking handles the creation and management of virtual networking infrastructure, including networks, switches, subnets, and routers.
+
+The goal of this section is to show networking in the lab cloud. The tasks in this section will help you navigate the path from your virtual machine (VM) to External network. 
+
+* In this section, you need to execute the commands from the host that is hosting your CSR1Kv router-VM. So, the first step would be to find the host that is running your CSR1Kv VM. 
+* Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also the Controller and a Compute node).
+
+## Topology
+
+
+
 
 *Review the section and discuss if you have any questions or comments.*
 
