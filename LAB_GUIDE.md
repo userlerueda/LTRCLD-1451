@@ -111,6 +111,8 @@ Provider data center services and customer’s hypothetical CPE connections are 
 
 Below is a representation of Openstack cloud connectivity to the external networks. You will access the Controller over Internet. And, this cloud uses provider-VLAN (just a name) to reach: 1. Service Provider services, and 2. Customers’ branch office sites.
 
+![Logical Topology](./images/lab-walkthrough-connectivity.png)
+
 ## Testing VPN Lab Connectivity
 
 - VPN into lab gateway: Using Cisco Any Connect VPN client app, VPN into the lab gateway. It will setup a VPN tunnel and will install a few routes in your workstation. Use below details:
