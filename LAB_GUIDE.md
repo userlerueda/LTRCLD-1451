@@ -179,7 +179,7 @@ In this section, you would assume the role of an administrator of an OpenStack c
 Cloud owner name is Great-Cloud. All the participants are Great-Cloud’s administrators.
 
 The following diagram depicts the topology:
-![Topolgy](./images/admin_tasks_topology_01.png)
+![Topolgy](./images/admin_tasks_topology_01.png) TODO: Gopal. Edit the ppt to add the image
 
 ## Source keystone_adminrc file
 
@@ -334,7 +334,7 @@ Step 3 - A green notification should appear on the top-right corner indicating s
 *Note: There is a bug when trying to assign a specific IP from Horizon dashboard, for the moment this must be done from the CLI if a specific IP is required.*
 
 ```
-openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57.1XX external
+$ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57.1XX external
 +---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
