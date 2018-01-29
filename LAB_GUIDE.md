@@ -713,10 +713,6 @@ $ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
 
 *Note: Don't forget to repeat for the other two ports*
 
-*Review the section and discuss if you have any questions or comments.*
-
----
-
 ## Set Return Routes for Router
 After setting the allowed address pairs, you will notice that you are able to ping the tenantXXX-internet IPv4 address of the CSR1kv, however you are not able to ping the IPv4 address of tenantXXX-internet's default gateway (which is OpenStack's router), why ?
 
@@ -779,6 +775,8 @@ $ openstack router show tenant99-router
 | updated_at              | 2018-01-29T10:08:36Z                                                                                                                                                                     |
 +-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ```
+
+*Review the section and discuss if you have any questions or comments.*
 
 ---
 
@@ -888,4 +886,5 @@ ID
 ## Openstack solutions at cisco
 - [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
 
-  
+:End of session:
+---
