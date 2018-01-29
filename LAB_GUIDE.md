@@ -801,6 +801,66 @@ Including Network node, there are 6 nodes in our setup. br-tun bridge would have
 
 The tasks below will navigate packet path, from CSR1Kv to Internet.
 
+## Packet tracing tasks
+
+* Login to Controller node: `ssh tenantXXX@172.31.56.216`
+* Load Openstack environment variables: `source keystonerc_adminXXX`
+* Find the node which is hosting your CSR1Kv rotuer
+	* `openstack server list`
+	* `openstack server show <csr1kv VM name>`
+Example:	
+```
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list
++--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
+| ID                                   | Name            | Status | Networks                                                                                         | Image                        | Flavor                |
++--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                  | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
+| 12a00eb4-5198-4fde-933c-4c6d1d047cda | tenant99-csr1kv | ACTIVE | tenant99-internet=192.168.254.6; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 | tenant99-csr1kv-3.16.6s      | tenant99-csr1kv.small |
++--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server show tenant99-csr1kv
++-------------------------------------+--------------------------------------------------------------------------------------------------+
+| Field                               | Value                                                                                            |
++-------------------------------------+--------------------------------------------------------------------------------------------------+
+| OS-DCF:diskConfig                   | MANUAL                                                                                           |
+| OS-EXT-AZ:availability_zone         | nova                                                                                             |
+| **OS-EXT-SRV-ATTR:host**            | **PSL-DMZ-C-S2**                                                                                 |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | compute-2                                                                                        |
+| OS-EXT-SRV-ATTR:instance_name       | instance-00000023                                                                                |
+| OS-EXT-STS:power_state              | Running                                                                                          |
+| OS-EXT-STS:task_state               | None                                                                                             |
+| OS-EXT-STS:vm_state                 | active                                                                                           |
+| OS-SRV-USG:launched_at              | 2018-01-25T18:52:47.000000                                                                       |
+| OS-SRV-USG:terminated_at            | None                                                                                             |
+| accessIPv4                          |                                                                                                  |
+| accessIPv6                          |                                                                                                  |
+| addresses                           | tenant99-internet=192.168.254.6; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 |
+| config_drive                        |                                                                                                  |
+| created                             | 2018-01-25T18:52:34Z                                                                             |
+| flavor                              | tenant99-csr1kv.small (1801fafb-6bce-4e88-ba78-8043bd716224)                                     |
+| hostId                              | fe5a79620cb1788e98ff96e3c47452bff3dac6dc30184c1ec7eab25b                                         |
+| id                                  | 12a00eb4-5198-4fde-933c-4c6d1d047cda                                                             |
+| image                               | tenant99-csr1kv-3.16.6s (3655b9fa-e2c5-421e-b2e1-65410288d28b)                                   |
+| key_name                            | None                                                                                             |
+| name                                | tenant99-csr1kv                                                                                  |
+| progress                            | 0                                                                                                |
+| project_id                          | 1e2b5c63d1f14091b237acf064cc9db6                                                                 |
+| properties                          |                                                                                                  |
+| security_groups                     | name='default'                                                                                   |
+|                                     | name='default'                                                                                   |
+|                                     | name='default'                                                                                   |
+| status                              | ACTIVE                                                                                           |
+| updated                             | 2018-01-25T18:52:47Z                                                                             |
+| user_id                             | 61a72633cdf0432b8c6c69c3bc444e70                                                                 |
+| volumes_attached                    |                                                                                                  |
++-------------------------------------+--------------------------------------------------------------------------------------------------+
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
+```
+
+Find your CSR1Kv VM name: openstack server list
+Find the host: openstack server show cirros-test
+Find the host from the “OS-EXT-SRV-ATTR:host”
+Login to the host that has your VM: ssh userXXX@<host>
+Ensure that you landed on the right server. Check the server hostname. $hostname
 
 
 *Review the section and discuss if you have any questions or comments.*
