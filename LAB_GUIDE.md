@@ -124,7 +124,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 - Verify routing on your desktop and check connectivity to Openstack controller
 
 	- `ping 172.31.56.216`
-	- If ping succeeds, go to: [http://172.31.56.216](http://172.31.56.216)
+	- If ping succeeds, open the following link in a new tab: [http://172.31.56.216](http://172.31.56.216)
 	- If ping fails, check if you have 1) successfully VPN into the lab VPN-server and 2) you have a route to 172.31.56.0/24
 	- Windows command to list route table: `route print`
 
