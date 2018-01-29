@@ -849,7 +849,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `ip netns'
 	* `openstack network list | awk '{ print $2 }'`
 		* print only second column of the output, "openstack network list". 
-	Example:
+Example:
 ```
 [tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | awk '{ print $2 }'
 
@@ -862,6 +862,7 @@ ID
 5da13369-b2ea-422b-9b9d-e3c93ec1acdb
 631e32e7-8e1f-42fb-a927-ec1d7dc31293
 90c70132-0ea7-4362-8ab4-aff50986d012
+
 ```
 	* `openstack network list | grep external | awk '{ print $2 }'`
 		* print network-id of the network named, "external"
