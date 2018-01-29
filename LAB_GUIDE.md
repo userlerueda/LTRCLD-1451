@@ -87,6 +87,7 @@ You will be given a paper copy of IP addresses, username, password info.
 ---
 
 # Lab Connectivity
+* Estimated time to complete: 15 min.
 
 All the tasks in this guide can be done using OpenStack CLI or OpenStack Horizon's Dashboard, the examples will be using either one of them and it is up to the student to explore the different ways of doing it using the alternate method.
 
@@ -139,6 +140,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 ---
 
 # Openstack cloud high level view
+* Estimated time to complete: 15 min.
 
 Use command line interface (CLI) and Horizon dashboard and try to get a overall view of the Openstack cloud that we are going to use.
 
@@ -169,7 +171,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 	* On the "Hypervisor" tab, observe total and used resources. 
 	* On the "Compute host" tab, observe "Status" of different hosts.
 
-- Review the section and discuss if you have any questions or comments.
+Review the section and discuss if you have any questions or comments.
 
 ---
 
