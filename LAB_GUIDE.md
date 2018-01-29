@@ -72,6 +72,9 @@
 * If installation is successful, there is not much to learn. If not successful, there won't be enough time within this session to troubleshoot.
 * For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller and 6 Compute nodes. One biggest problem we encountered was copy-time-out.
 
+## Join the discussion at Cisco Spark
+* Go to [spark](http://cs.co/ciscolivebot#LTRCLD-1451) and add your email address
+*
 ---
 
 # Introduction to Openstack
@@ -843,10 +846,15 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `openstack command list --group openstack.network.v2`
 	* `brctl show`
 	* `ip netns'
-	* show only second column of the output, "openstack network list"
-	* ```
+	* `openstack network list | awk '{ print $2 }'`
+		* print only second column of the output, "openstack network list". 
+	Example:
+	```
 	openstack network list | awk '{ print $2 }'
 	```
+	* `openstack network list | grep external | awk '{ print $2 }'`
+		* print network-id of the network named, "external"
+	* 
 	
 
 
