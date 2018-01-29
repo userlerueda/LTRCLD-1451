@@ -887,6 +887,8 @@ ID
 - [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
 
 <p align="center">
-End of session
+**End of session**
 </p>
+
 ---
+
