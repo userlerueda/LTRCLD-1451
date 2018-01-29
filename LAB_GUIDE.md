@@ -774,6 +774,14 @@ $ openstack router show tenant99-router
 
 The project code-name for networking services is Neutron. OpenStack networking handles the creation and management of virtual networking infrastructure, including networks, switches, subnets, and routers.
 
+Several linux and Openstack components are involved to make the neutron networking work. We will see 3 components in this section.
+* Linux bridge
+	* traffic filtering, shaping, and security
+* OpenVswitch
+	* Openstack L2 agent.
+	* Multilayer L2 switch. 
+* Openstack L3 agent router
+	* Openstack L3 agent.
 The goal of this section is to show networking in the lab cloud. The tasks in this section will help you navigate the path from your virtual machine (VM) to External network. 
 
 * In this section, you need to execute the commands from the host that is hosting your CSR1Kv router-VM. So, the first step would be to find the host that is running your CSR1Kv VM. 
@@ -782,6 +790,16 @@ The goal of this section is to show networking in the lab cloud. The tasks in th
 ## Topology
 ![neutron-1](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-network-1.png)
 
+## Packet path
+
+In this below example diagram, our VM is hosted on a compute node. Here the VM is CSR1Kv router. 
+![neutron-3](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png)
+
+Red dotted line represents path from CSR1Kv to Internet. If you notice, traffic goes to Network node and reaches Internet via the openstack-router. Here, Controller node is functioning as Network node. 
+
+Including Network node, there are 6 nodes in our setup. br-tun bridge would have 5 VXLAN-tunnel interfaces to going to br-tun bridges on the other nodes.
+
+The tasks below will navigate packet path, from CSR1Kv to Internet.
 
 
 
