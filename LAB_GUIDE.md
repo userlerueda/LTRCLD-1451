@@ -334,17 +334,17 @@ Step 3 - A green notification should appear on the top-right corner indicating s
 *Note: There is a bug when trying to assign a specific IP from Horizon dashboard, for the moment this must be done from the CLI if a specific IP is required.*
 
 ```
-$ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57.1XX external
+$ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57.XXX external
 +---------------------+--------------------------------------+
 | Field               | Value                                |
 +---------------------+--------------------------------------+
 | created_at          | 2018-01-21T22:46:21Z                 |
 | description         |                                      |
 | fixed_ip_address    | None                                 |
-| floating_ip_address | 172.31.57.199                        |
+| floating_ip_address | 172.31.57.99                        |
 | floating_network_id | 06ca5380-84eb-46b1-b0db-8fa038f72998 |
 | id                  | 958a5fd7-72ef-426a-9aef-dd6bbbac6501 |
-| name                | 172.31.57.199                        |
+| name                | 172.31.57.99                        |
 | port_id             | None                                 |
 | project_id          | 1e2b5c63d1f14091b237acf064cc9db6     |
 | revision_number     | 0                                    |
