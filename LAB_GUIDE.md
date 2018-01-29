@@ -39,11 +39,15 @@
 	- [Cisco DEvnet: OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1](#cisco-devnet-openstack-on-your-laptop-httpslearninglabsciscocomlabopenstack-installstep1)
 
 <!-- /TOC -->
+
+<!--
 # Logistics
 # Introduction to OpenStack
 # Credentials
-# OpenStack Installation
 # Lab Environment Walkthrough
+# Openstack cloud high level view
+# Resources
+-->
 
 ---
 
@@ -55,18 +59,22 @@
 * We tried to give emphasis to networking aspect.
 
 ## Time management
-* There are 10 Sections, with an estimated completion time of 3 hr. 30 min.
+* There are 10 Sections, with an estimated completion time of 3 hr. 30 min. !!![edit]
 * Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
 * Please plan a 5 min break, as needed, around 2 hr. mark or after completing sectio-X !!![comeback to edit]
 
 ## Questions
-* Questions are most welcome. We ** request ** you to ask questions and make the session interactive.
+* Questions are most welcome. We **request** you to ask questions and make the session interactive.
 * Self exploration is fun. At the end of each section, take a few minutes to review and ask questions if you have any.
 
 ## Openstack installation
 * Openstack installation is not included in this session to make efficient use of time.
 * If installation is successful, there is not much to learn. If not successful, there won't be enough time within this session to troubleshoot.
-* For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller
+* For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller and 6 Compute nodes. One biggest problem we encountered was copy-time-out.
+
+## Join the discussion at Cisco Spark
+* Go to [spark](http://cs.co/ciscolivebot#LTRCLD-1451) and add your email address
+* Select Spark installed/not-installed based on whether your device (phone/laptop) has Spark or not.
 
 ---
 
@@ -83,6 +91,7 @@ You will be given a paper copy of IP addresses, username, password info.
 ---
 
 # Lab Connectivity
+* Estimated time to complete: 15 min.
 
 All the tasks in this guide can be done using OpenStack CLI or OpenStack Horizon's Dashboard, the examples will be using either one of them and it is up to the student to explore the different ways of doing it using the alternate method.
 
@@ -130,25 +139,50 @@ Below is a representation of Openstack cloud connectivity to the external networ
 	- If ping succeeds, open the following link in a new tab: [http://172.31.56.216](http://172.31.56.216)
 	- If ping fails, check if you have 1) successfully VPN into the lab VPN-server and 2) you have a route to 172.31.56.0/24. Windows command to list route table: `route print`
 
-- Review the section and discuss if you have any questions or comments.
+*Review the section and discuss if you have any questions or comments.*
 
 ---
 
-# Openstack basic verification
+# Openstack cloud high level view
+*Estimated time to complete: 15 min.*
 
-Use command line interface (CLI) and Horizon dashboard and make basic verifications.
+Use command line interface (CLI) and Horizon dashboard and try to get a overall view of the Openstack cloud that we are going to use.
 
 ## Command line interface (CLI)
 
-* ```ssh userxxx@172.31.56.216```
-*
-Browse overall OpenStack cloud (some OpenStack CLI (host list etc), access computes etc)
+* login into Controller node: `ssh tenantXXX@172.31.56.216`
+	* Use **putty** app provided in your lab laptop
+	* IP address: `172.31.56.216`
+	* username: `tenantXXX`
+	* password: `cisco.123`
+* Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
+* Try the below commands:
+	* `openstack-status`
+	* `openstack-service list`
+	* `openstack-service status`
+	* `openstack hypervisor list`
+	* `openstack hypervisor stats show`
+	* `openstack usage list`
+
+## Horizon dashboard
+
+* Login into Horizon dashboard using the credentials below:
+	* username: `adminXXX`
+	* password: `cisco.123`
+* On the left pane, go to: "Admin"/"Overview"
+	* Observe VCPUs, RAM, etc. resource usage.
+* On the left pane, go to: "Admin"/"Compute"/"Hypervisors"
+	* On the "Hypervisor" tab, observe total and used resources.
+	* On the "Compute host" tab, observe "Status" of different hosts.
+
+*Review the section and discuss if you have any questions or comments.*
 
 ---
 
 # Admin Tasks
+*Estimated time to complete: 30 min.*
 
-## Scenario (1 minute)
+## Scenario
 
 In this section, you would assume the role of an administrator of an OpenStack cloud. The goal is to create all the necessary elements for your users to be able to later create a virtual machine and make some basic verifications. This exercise exposes typical OpenStack admin environment.
 
@@ -165,7 +199,7 @@ For all the commands that are executed using OpenStack CLI the first thing that 
 $ source ~/keystonerc_adminXXX
 ```
 
-## Create Flavors (5 minutes)
+## Create Flavors
 Lets start by creating some flavors that will be required for our VNFs (Virtual Machines).
 
 A flavor is required for each of the following:
@@ -200,7 +234,7 @@ $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --priv
 
 *Note: Replace XXX with your POD number. You will have this in your handout page*
 
-## Create Networks and Subnets (5 minutes)
+## Create Networks and Subnets
 
 Let's start by creating the provider network, this is the only one that must be created using an admin user because it is the one that needs to provide values that only the OpenStack cloud administrator would have.
 
@@ -255,7 +289,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/admin_network_provider_create_05.png)
 
-## Create images (5 minutes)
+## Create images
 
 We need to create the following images in glance.
 
@@ -297,7 +331,7 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 +------------------+------------------------------------------------------+
 ```
 
-## Create Floating IP Pool (5 minutes)
+## Create Floating IP Pool
 
 Step 1 - Go to Admin -> Network -> Floating IPs an click on **Allocate IP To Project**
 ![Step 1](./images/admin_floating_ip_pool_create_01.png)
@@ -330,13 +364,18 @@ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57
 +---------------------+--------------------------------------+
 ```
 
-# Tenant Tasks
+*Review the section and discuss if you have any questions or comments.*
 
-## Create Networks and Subnets (5 minutes)
+---
+
+# Tenant Tasks
+*Estimated time to complete: 60 min.*
+
+## Create Networks and Subnets
 
 As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv
 
-## Create Internet Network and Subnet (3 minutes)
+## Create Internet Network and Subnet
 
 Lets start by creating the Internet network.
 
@@ -361,7 +400,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/member_network_internet_create_step_05.png)
 
-## Create Internal Network and Subnet (2 minutes)
+## Create Internal Network and Subnet
 
 Lets create now the Internal Network. This time we will do it via OpenStack CLI.
 
@@ -434,7 +473,7 @@ Since the Internal network does not have connectivity to the outside world eithe
 |----------|------------------|---------------|---------------------------------|
 | TenantXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
 
-## Create OpenStack Router (5 minutes)
+## Create OpenStack Router
 - tenantXX-router
 
 Step 1 - Go to Project -> Network -> Routers and click on **Create Router**
@@ -457,7 +496,7 @@ Step 2 - Select tenantXX-internet from the drop-down list of subnets and click o
 Step 3 - A green notification should appear on the top-right corner indicating successful attach of the subnet to the router
 ![Step 3](./images/member_routers_attach_interface_internet_step_03.png)
 
-## Launch Instances (10 minutes)
+## Launch Instances
 
 ### Security Groups
 
@@ -737,138 +776,118 @@ $ openstack router show tenant99-router
 +-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ```
 
+*Review the section and discuss if you have any questions or comments.*
+
+---
+
 # Neutron Intensive Tasks
+*Estimated time to complete: 30 min.*
+
+!!![import stuff]
+
+*Review the section and discuss if you have any questions or comments.*
+
+---
 
 # OpenStack Review Tasks
+*Estimated time to complete: 30 min.*
 
-In this concluding section, you will try to get an overall view of the Openstack cloud that you just worked on. Try to make sense of the output of each command. These some commonly used monitoring commands. Not every command and out may have a direct connection to the work that you did so far. The goal is to get an overall idea, not necessarily a detailed one.
+In this concluding section, you will try to get an overall view of the Openstack cloud that you just worked on. Try to make sense of the output of each command. These are some commonly used monitoring commands. Not every command and output may have a direct connection to the work that you did so far. The goal is to get an overall idea, not necessarily a detailed one.
 
 Please note that a typical production NFV system or Openstack cloud includes components such as exclusive storage, high performance network connectivity with PCIe or SR-IOv, OSS/BSS system, VNF management system, and Orchestration systems. In this lab, we have Openstack alone, which makes up ETSI model’s Virtual Infrastructure Manager (VIM).
 
-1.1.	Acquire admin environment parameters (discuss with Luis)
+* login into Controller node: `ssh tenantXXX@172.31.56.216`
+	* Use **putty** app provided in your lab laptop
+	* IP address: `172.31.56.216`
+	* username: `tenantXXX`
+	* password: `cisco.123`
+* Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
 
-```
-$ source ~/keystonerc_admin
-```
+* Cloud overview
+	* `openstack-status`
+	* `openstack-service list`
+	* `openstack service list`
+	* `openstack hypervisor list`
+	* `openstack hypervisor stats show`
+	* `openstack host list`
+	* `openstack host show <host name>`
 
-1.2.	Cloud overview
-```
-$ openstack-service list
-```
+* Compute overview
+	* `openstack compute service list`
+		* note that there are 6 Computes. Node PSL-DMZ-C-S6 is hosting Controller, Network, and Compute functions.
+	* `openstack usage list`
+	* `openstack host list`
+	* `openstack host show <host name>`
+	* `openstack flavor list`
+	* `openstack image list`
+	* `openstack server list --all-projects`
+	* `openstack quota show <project name>`
 
-```
-$ openstack-service status
-```
+* Network overview
+	* `openstack network list`
+	* `openstack network show <net name or ID>`
+	* `openstack subnet list`
+	* `openstack subnet show <subnet name or ID>`
+	* `openstack router list`
+	* `openstack network agent list`
+	* `openstack port list`
+	* `sudo ovs-vsctl show`
+	* `sudo ovs-vsctl list-br`
 
-```
-$ source keystonerc_admin
-```
+* Identity overview
+	* `openstack project list`
+	* `openstack role list`
+	* `openstack user list`
 
-1.3.	Miscellaneous
+* Miscellaneous
+	* `openstack command list`
+	* `openstack command list --group openstack.compute.v2`
+	* `openstack command list --group openstack.network.v2`
+	* `brctl show`
+	* `ip netns'
+	* `openstack network list | awk '{ print $2 }'`
+		* print only second column of the output, "openstack network list".
+	* `openstack network list | grep external | awk '{ print $2 }'`
+		* print network-id of the network named, "external"
+Example:
 ```
-openstack command list
-```
+[tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | awk '{ print $2 }'
 
-```
-openstack command list --group openstack.compute.v2
-```
+ID
 
-```
-openstack command list --group openstack.network.v2
-```
+04eea3ef-4bd0-4a53-bb41-9ee306fce37f
+06ca5380-84eb-46b1-b0db-8fa038f72998
+2c3d2f04-41ed-4c1a-956d-e57f61758f1e
+2f25227b-80b0-4f31-b11b-9b2d8066127c
+5da13369-b2ea-422b-9b9d-e3c93ec1acdb
+631e32e7-8e1f-42fb-a927-ec1d7dc31293
+90c70132-0ea7-4362-8ab4-aff50986d012
 
-```
-brctl show
-```
-
-```
-ovs-vsctl show
-```
-
-```
-ovs-vsctl list-br
-```
-
-```
-ip netns
-```
-
-1.4.	Compute
-```
-openstack compute service list
-```
-
-```
-openstack hypervisor list
-```
-
-```
-openstack hypervisor stats show
-```
-
-```
-openstack hypervisor show <hypervisor>
-```
-
-```
-openstack usage list
-```
-
-```
-openstack host list
+[tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | grep external | awk '{ print $2 }'
+06ca5380-84eb-46b1-b0db-8fa038f72998
 ```
 
-```
-openstack host show <host name>
-```
+*Review the section and discuss if you have any questions or comments.*
 
-```
-openstack flavor list
-```
-
-```
-openstack server list --all-projects
-```
-```
-openstack quota show Great-Customer
-```
-
-1.5.	Network
-```
-ovs-vsctl list-br
-```
-```
-openstack network list
-```
-```
-openstack network <net name or ID>
-```
-```
-openstack subnet list
-```
-```
-openstack subnet <subnet name or ID>
-```
-```
-openstack router list
-```
-```
-openstack network agent list
-```
-```
-openstack port list
-```
-
-1.6.	Identity
-```
-openstack project list
-```
-```
-openstack role list
-```
-```
-openstack user list
-```
+---
 
 # Resources
-## Cisco DEvnet: OpenStack on your Laptop https://learninglabs.cisco.com/lab/openstack-install/step/1
+## Openstack Neutron VOD
+- [Cisco Webinar video](https://learningnetwork.cisco.com/docs/DOC-30375)
+- cisco.com account needed to access this link.
+- Click "Access the recording" and accept Flash as reader.
+## Cisco Devnet
+- OpenStack on your Laptop [openstack-on-laptop](https://learninglabs.cisco.com/lab/openstack-install/step/1)
+## Openstack lab video
+- https://www.openstack.org/videos/austin-2016/hands-on-lab-test-drive-your-openstack-network
+- Covers nova features using Horizon navigation.
+## Video on Neutron
+- Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares [neutron-video](https://www.youtube.com/watch?v=B17qcaSglHA)
+## Openstack solutions at cisco
+- [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
+
+<p align="center">
+**End of session**
+</p>
+
+---
