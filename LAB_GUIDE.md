@@ -886,5 +886,7 @@ ID
 ## Openstack solutions at cisco
 - [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
 
-:End of session:
+<p align="center">
+End of session
+</p>
 ---
