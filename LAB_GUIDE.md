@@ -115,7 +115,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 
 ## Testing VPN Lab Connectivity
 
-- VPN into lab gateway: Using Cisco Any Connect VPN client app, VPN into the lab gateway. It will setup a VPN tunnel and will install a few routes in your workstation. Use below details:
+- VPN into lab gateway: Using **Cisco AnyConnect VPN** client app, VPN into the lab gateway. It will setup a VPN tunnel and will install a few routes in your workstation. Use below details:
 
 	- IP address: Refer credentials doc
 	- Username: Refer credentials doc
