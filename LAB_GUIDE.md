@@ -874,17 +874,18 @@ ID
 ---
 
 # Resources
+## Openstack Neutron VOD
+- [Cisco Webinar video](https://learningnetwork.cisco.com/docs/DOC-30375)
+- cisco.com account needed to access this link.
+- Click "Access the recording" and accept Flash as reader. 
 ## Cisco Devnet
 - OpenStack on your Laptop [openstack-on-laptop](https://learninglabs.cisco.com/lab/openstack-install/step/1)
 ## Openstack lab video
 - https://www.openstack.org/videos/austin-2016/hands-on-lab-test-drive-your-openstack-network
 - Covers nova features using Horizon navigation. 
-- Basic level.
-## Cisco devnet lab
-- Launching Openstack instance [launch](https://learninglabs.cisco.com/labs?keywords=openstack)
-- Click on "Metacloud: Create an instance"
-
 ## Video on Neutron
 - Neutron Network Know-How: A Hands-On Workshop for Solving Neutron Nightmares [neutron-video](https://www.youtube.com/watch?v=B17qcaSglHA)
-  
+## Openstack solutions at cisco
+- [Openstack@Cisco](https://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html)
+
   
