@@ -933,7 +933,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `openstack command list --group openstack.compute.v2`
 	* `openstack command list --group openstack.network.v2`
 	* `brctl show`
-	* `ip netns'
+	* `ip netns`
 	* `openstack network list | awk '{ print $2 }'`
 		* print only second column of the output, "openstack network list".
 	* `openstack network list | grep external | awk '{ print $2 }'`
