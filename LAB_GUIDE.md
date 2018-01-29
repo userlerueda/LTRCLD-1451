@@ -62,6 +62,7 @@
 * For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller and 6 Compute nodes. One biggest problem we encountered was copy-time-out.
 
 ## Join the discussion at Cisco Spark
+A spark room has been created and will be kept for X days after the session. Please share any questions, comments or feedback.
 * Go to [spark](http://cs.co/ciscolivebot#LTRCLD-1451) and add your email address
 * Select Spark installed/not-installed based on whether your device (phone/laptop) has Spark or not.
 
