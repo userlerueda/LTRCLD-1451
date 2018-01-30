@@ -1,12 +1,11 @@
-<p align="center">
-	<b>Openstack for network Engineers
 
-	Intructor Led Lab (#LTRCLD-1451
+# Openstack for network Engineers
+# Intructor Led Lab (#LTRCLD-1451
+# Cisco Live 2018
+# Barcelona
 
-	Cisco Live 2018
+|:Luis Rueda|Gopal Naganaboyina:|
 
-	Barcelona</b>
-</p>
 ---
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
