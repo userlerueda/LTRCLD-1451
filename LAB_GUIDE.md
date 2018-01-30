@@ -642,9 +642,9 @@ Step 2 - Change the IPv4 address for GigabitEthernet2
 ```
 configure terminal
 interface GigabitEthernet 2
-ip address 172.16.99.10 255.255.255.0
+ip address 172.16.YXX.10 255.255.255.0
 exit
-ip route 172.16.0.0 255.255.0.0 172.16.99.1
+ip route 172.16.0.0 255.255.0.0 172.16.YXX.1
 end
 copy running-config startup-config
 
