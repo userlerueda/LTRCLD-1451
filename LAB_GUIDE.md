@@ -936,6 +936,8 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 
 ## Packet Tracing Tasks
 
+Execute the below tasks:
+
 * Generate traffic from tenantxxx-pc to Internet
 	* Login to Controller node: `ssh tenantXXX@172.31.56.216`
 	* Load Openstack environment variables: `source keystonerc_userXXX`
@@ -1055,11 +1057,11 @@ Last login: Tue Jan 30 10:18:58 2018 from controller
 
 * Trace packets on Linux Q bridge
 	* Find the associated interface on the q bridge. Refer to the 2nd neutron diagram for reference.
-		* # `brctl show`
-		* # `brctl show  | grep <port id of cirros VM. Use first 8 digits>`
+		* `brctl show`
+		* `brctl show  | grep <port id of cirros VM. Use first 8 digits>`
 	* Last column lists interfaces on the bridge. Find the interface with prefix, "tap"
 	* Confirm that the Compute node has that interface
-		* # `ifconfig tap<first10digits-of-port>`
+		* `ifconfig tap<first10digits-of-port>`
 	* Monitor icmp packets: # `tcpdump -i <tap interface> icmp`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
 
@@ -1088,10 +1090,10 @@ listening on tape770a957-be, link-type EN10MB (Ethernet), capture size 262144 by
 
 * Trace packets on OVS bridge
 	* Refer to neutron-2 diagram
-	* # `ovs-vsctl list-br`
-	* # `ovs-vsctl list-ports br-int | grep <first 8 digits of cirros port-id>`
-	* Verify if the interface exists. # `ifconfig qvo<10digits-of-port>`
-	* Monitor packets. # `tcpdump -i <interface-id> icmp`
+	* `ovs-vsctl list-br`
+	* `ovs-vsctl list-ports br-int | grep <first 8 digits of cirros port-id>`
+	* Verify if the interface exists. `ifconfig qvo<10digits-of-port>`
+	* Monitor packets. `tcpdump -i <interface-id> icmp`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
 
 Example:
@@ -1119,8 +1121,8 @@ listening on qvoe770a957-be, link-type EN10MB (Ethernet), capture size 262144 by
 * Monitor packets on vxlan tunnel interface
 	* Refer to neutron-2 diagram
 	* Important: This is applicable only if the Compute node is not same as the Controller node (PSL-DMZ-C-S6). If your VM is running on PSL-DMZ-C-S6, please skip this subsection. As you can see in the topology diagram, vxlan tunnel interface is used for packets going from VM's on S1 though S5 Compute nodes to Internet.
-	* # `ifconfig enp14s0f0`
-	* Monitor packets. # `tcpdump -i enp14s0f0 icmp`
+	* `ifconfig enp14s0f0`
+	* Monitor packets. `tcpdump -i enp14s0f0 icmp`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
 
 Example:
