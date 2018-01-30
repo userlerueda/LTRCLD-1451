@@ -1013,24 +1013,18 @@ qbr197f181e-e9		8000.0abd3b2bf064	no		qvb197f181e-e9
 [tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ brctl show | grep f0c682c0-a1
 qbrf0c682c0-a1		8000.220fad503c73	no		qvbf0c682c0-a1
 							tapf0c682c0-a1
+[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ ifconfig tapf0c682c0-a1
+tapf0c682c0-a1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
+        inet6 fe80::fc16:3eff:fe42:7dbe  prefixlen 64  scopeid 0x20<link>
+        ether fe:16:3e:42:7d:be  txqueuelen 1000  (Ethernet)
+        RX packets 482  bytes 46773 (45.6 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 607  bytes 49886 (48.7 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
+* Generate traffic from CSR1Kv VM to Internet
+	* 
 
-
-
-* Login to Controller node: `ssh tenantXXX@<host-name>`
-	* make sure you are in the **right host** by checking its hostname.
-* Load Openstack environment variables: `source keystonerc_adminXXX`
-
-```
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh tenant99@PSL-DMZ-C-S2
-tenant99@psl-dmz-c-s2's password:
-There were 4 failed login attempts since the last successful login.
-[tenant99@PSL-DMZ-C-S2 ~]$ source keystonerc_admin99
-[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$
-```
-* Find the port-id of Internet-facing port
-	* `openstack server list | grep csr`
-	*
 
 
 *Review the section and discuss if you have any questions or comments.*
