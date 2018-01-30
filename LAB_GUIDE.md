@@ -575,6 +575,7 @@ openstack server create \
    --nic net-id=2f25227b-80b0-4f31-b11b-9b2d8066127c,v4-fixed-ip=192.168.255.1 \
    --security-group tenant99-allow_ssh \
    --security-group tenant99-allow_icmp \
+	 --security-group default \	 
    --config-drive True \
    --file iosxe_config.txt=csr1kv-day0.txt \
    tenant99-csr1kv
@@ -969,7 +970,7 @@ Example:
 * Find the port-ID on the router that is connected to Internet-facing network (tenantXXX-internet, subnet=192.168.254.0/24)
 	* Find the IP address of router's interface that is in tenantXXX-internet subnet.
 		* `openstack server list | grep csr`
-	* Find the port-id 
+	* Find the port-id
 		* 'openstack port list | grep <ip address of router in subnet, tenantXXX-internet>
 		* Find the first 10 digits of the port-id. This will be used as port-ID across the linux and Openstack bridges, with different prefixes. In the below example, it is f0c682c0-a1.
 			* Note down this 10 digit number.
@@ -999,7 +1000,7 @@ Last login: Mon Jan 29 10:58:53 2018 from controller
 	* brctl show
 	* brctl show | grep <first 10 digits of port-id>
 	* ifconfig tap<first 10 digits of port-id>
-	
+
 ```
 [tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ brctl show
 bridge name	bridge id		STP enabled	interfaces
@@ -1023,7 +1024,7 @@ tapf0c682c0-a1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 * Generate traffic from CSR1Kv VM to Internet
-	* 
+	*
 
 
 
