@@ -182,6 +182,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 ## Horizon dashboard
 
 * Login into Horizon dashboard using the credentials below:
+	* URL: `http://172.31.56.216`
 	* username: `adminXXX`
 	* password: `cisco.123`
 * On the left pane, go to Admin -> Overview
