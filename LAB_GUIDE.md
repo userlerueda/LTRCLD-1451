@@ -867,8 +867,8 @@ sudo ip netns exec qrouter-`openstack router list | grep -e "tenant.*router" | a
 
 In order to the the route you can execute the following command:
 ```
-$ openstack router set --route destination=192.168.255.0/24,gateway=192.168.254.6 tenant99-router
-$ openstack router show tenant99-router
+$ openstack router set --route destination=192.168.255.0/24,gateway=192.168.254.10 tenantXXX-router
+$ openstack router show tenantXXX-router
 +-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Field                   | Value                                                                                                                                                                                    |
 +-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -882,7 +882,7 @@ $ openstack router show tenant99-router
 | flavor_id               | None                                                                                                                                                                                     |
 | ha                      | False                                                                                                                                                                                    |
 | id                      | 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899                                                                                                                                                     |
-| name                    | tenant99-router                                                                                                                                                                          |
+| name                    | tenantXXX-router                                                                                                                                                                          |
 | project_id              | 1e2b5c63d1f14091b237acf064cc9db6                                                                                                                                                         |
 | revision_number         | 7                                                                                                                                                                                        |
 | routes                  | destination='192.168.255.0/24', gateway='192.168.254.6'                                                                                                                                  |
