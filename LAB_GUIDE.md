@@ -53,9 +53,9 @@
 
 ---
 
-# Logistics
+# Welcome
 
-## Welcome
+## Introduction
 * Speaker intro: Luis Rueda, Gopal Naganaboyina
 * What are your expectations? Any specific areas to focus?
 * We tried to give emphasis to networking aspect.
@@ -904,7 +904,10 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 * Load Openstack environment variables: `source keystonerc_adminXXX`
 * Find the node which is hosting your CSR1Kv rotuer
 	* `openstack server list`
-	* `openstack server show <csr1kv VM name>`
+	* `openstack server show <csr1kv VM name>` or,
+	'''
+	openstack server show `openstack server list | awk '{ print $4 }' | grep csr`
+	'''
 
 Example: In the example below, PSL-DMZ-C-S2 (compute-2) is the host.
 
