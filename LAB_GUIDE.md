@@ -703,7 +703,15 @@ Step 8 - A green notification should appear on the top-right corner indicating s
 
 ## Allowed Address Pairs
 
-Now lets go to CirrOS instance and try to execute a ping from it to the CSR1Kv interface, you will notice that ping will work (if this is not working, ensure that you attached the allow_icmp security group, if everything else fails, go [here](#neutron-intensive-tasks)).
+Now lets go to CirrOS console and try to execute a ping from it to the CSR1Kv interface.
+
+Step 1 - Go to Project -> Compute -> Instances and click on the drop down box at the right of the tenantXXX-pc instance and select **Console**
+![Step 1](./images/member_cirros_console_01.png)
+
+Step 2 - Click on the gray bar (cursor will not change but click on it), you will be at the instance's console.
+![Step 2](./images/member_cirros_console_02.png)
+
+You will notice that ping will work (if this is not working, ensure that you attached the allow_icmp security group, if everything else fails, go [here](#neutron-intensive-tasks)).
 
 However if from the CirrOS instance you try to ping the IPv4 address of tenantXXX-provider network, it will fail. Can you figure out why it is failing ? Hint: It does not have anything to do with routing.
 
