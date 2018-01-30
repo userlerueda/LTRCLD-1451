@@ -575,7 +575,7 @@ openstack server create \
    tenant99-csr1kv
 ```
 
-*Note: for tenantXX-provider replace the IPv4 address with an appropiate network from the tenantXX-provider network.*
+*Note: for tenantXXX-provider replace the IPv4 address with the correct network from the tenantXXX-provider network.*
 
 #### Additional CSR1Kv Configuration
 
@@ -665,7 +665,7 @@ Step 8 - A green notification should appear on the top-right corner indicating s
 
 Now let's go to CirrOS instance and try to execute a ping from it to the CSR1Kv interface, you will notice that ping will work (if this is not working, ensure that you attached the allow_icmp security group, if everything else fails, go [here](#neutron-intensive-tasks)).
 
-However if from the CirrOS instance you try to ping the IPv4 address of tenantXX-provider network, it will fail. Can you figure out why it is failing ? Hint: It does not have anything to do with routing.
+However if from the CirrOS instance you try to ping the IPv4 address of tenantXXX-provider network, it will fail. Can you figure out why it is failing ? Hint: It does not have anything to do with routing.
 
 The problem happens because by default OpenStack will create a rule for the newly created port, stating that only traffic going to the port's IPv4 address is allowed. This behavior although desired when using OpenStack for server instances, is not desirable for VNFs because traffic may be routed through the VNF but may not be intended to the VNF itself (think of a router that routes IPv4 packets destined to other networks).
 
