@@ -33,6 +33,7 @@
 		- [Security Groups](#security-groups)
 		- [CSR1Kv Instance](#csr1kv-instance)
 			- [Additional CSR1Kv Configuration](#additional-csr1kv-configuration)
+			- [Assign Floating IP to CSR1Kv](#assign-floating-ip-to-csr1kv)
 		- [CirrOS Instance](#cirros-instance)
 	- [Allowed Address Pairs](#allowed-address-pairs)
 	- [Return Routes for OpenStack Router](#return-routes-for-openstack-router)
@@ -295,16 +296,16 @@ Step 5 - A green notification should appear on the top-right corner indicating s
 
 We need to create the following images in glance.
 
-| Image Name | Format | Shared | File Name |
-|--------------|-------|-----------|------------|
-| tenantXXX-csr1kv-3.16.6s | qcow2 | No | csr3.16.6s.qcow2 |
-| tenantXXX-cirros-0.4.0-x86_64 | qcow2 | No | cirros-0.4.0-x86_64-disk.img |
+| Image Name | Format | Shared | File Name | Disk Format |
+|--------------|-------|-----------|------------|-----------|
+| tenantXXX-csr1kv-3.16.6s | qcow2 | No | csr3.16.6s.qcow2 | qcow2 |
+| tenantXXX-cirros-0.4.0-x86_64 | qcow2 | No | cirros-0.4.0-x86_64-disk.img | qcow2 |
 
 Next you will find the steps to upload the image either via Horizon or OpenStack CLI.
 
 *Note: You need to execute the procedure for all the images in the table. The procedure is explained for one image but the same procedure is valid for all of them.*
 
-The files can be downloaded from this [link](http://172.31.56.131/download/) and from the command line they can be downloaded using wget (e.g. `wget http://172.31.56.131/download/cirros-0.4.0-x86_64-disk.img`
+The files can be downloaded from this [link](http://172.31.56.131/download/) and from the command line they can be downloaded using wget (e.g. `wget http://172.31.56.131/download/cirros-0.4.0-x86_64-disk.img` and `wget http://172.31.56.131/download/csr3.16.6s.qcow2`)
 
 Upload image using single OpenStack CLI command:
 ```
@@ -334,6 +335,10 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 ```
 
 ## Floating IP Pool
+
+We will be assigning a floating IP for our CSR1Kv, in order to do so we first need to create one. Lets create a floating IP for later assignment to CSR1Kv.
+
+For the actual IPv4 address you can either assign a fixed one (use 172.31.57.XXX and replace XXX for your POD number e.g. POD 131 would use 172.31.57.131) or let OpenStack select the IPv4 that will be assigned.
 
 Step 1 - Go to Admin -> Network -> Floating IPs an click on **Allocate IP To Project**
 ![Step 1](./images/admin_floating_ip_pool_create_01.png)
@@ -630,6 +635,11 @@ Building configuration...
 [OK]
 ```
 *Note: it is also possible to do this by getting to the NoVNC console but it will be simpler to just past the commands via ssh. Please adjust the IPv4 address to the same IPv4 address used when creating the CSR1Kv instance.*
+
+#### Assign Floating IP to CSR1Kv
+In order for someone to be able to access CSR1Kv from the Internet, we need to assign the floating IP created before to our CSR1Kv. Lets assign the floating IP to our instance.
+
+Step 1 -
 
 ### CirrOS Instance
 
