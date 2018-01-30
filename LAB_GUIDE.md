@@ -55,12 +55,16 @@
 <p align="center">
 <b>
 Openstack for network Engineers
-Intructor Led Lab (#LTRCLD-1451)
+
+Intructor Led Lab (#LTRCLD-1451
+
 Cisco Live 2018
+
 Barcelona
 </b>
 </p>
 ---
+
 # Welcome
 
 ## Introduction
@@ -68,10 +72,11 @@ Barcelona
 * What are your expectations? Any specific areas to focus?
 * This is OpenStack from a network admin/engineer perspective
 
-## Time Management
+## Lab structure
 * There are 6 hands-on sections, with an estimated completion time of 3 hr. 30 min.
 * Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
 * We recommend you to take a quick break at 2 hr. mark, at 4:00PM.
+* Overall idea and flow of the lab
 
 ## Questions
 * Questions are most welcome. We **request** you to ask questions and make the session interactive.
