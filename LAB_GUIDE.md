@@ -2,43 +2,43 @@
 
 - [Logistics](#logistics)
 	- [Welcome](#welcome)
-	- [Time management](#time-management)
+	- [Time Management](#time-management)
 	- [Questions](#questions)
-	- [Openstack installation](#openstack-installation)
-	- [Join the discussion at Cisco Spark](#join-the-discussion-at-cisco-spark)
-- [Introduction to Openstack](#introduction-to-openstack)
+	- [Openstack Installation](#openstack-installation)
+	- [Join the Discussion at Cisco Spark](#join-the-discussion-at-cisco-spark)
+- [Introduction to OpenStack](#introduction-to-openstack)
 - [Credentials](#credentials)
 - [Lab Connectivity](#lab-connectivity)
-	- [HW topology](#hw-topology)
-	- [Layer 3 Topology](#layer-3-topology)
+	- [Physical Topology](#physical-topology)
+	- [Logical Topology](#logical-topology)
 	- [Connectivity](#connectivity)
 	- [Testing VPN Lab Connectivity](#testing-vpn-lab-connectivity)
-- [Openstack cloud high level view](#openstack-cloud-high-level-view)
-	- [Command line interface (CLI)](#command-line-interface-cli)
+- [Openstack Cloud High Level View](#openstack-cloud-high-level-view)
+	- [Command Line Interface (CLI)](#command-line-interface-cli)
 	- [Horizon dashboard](#horizon-dashboard)
 - [Admin Tasks](#admin-tasks)
 	- [Scenario](#scenario)
-	- [Source keystone_adminrc file](#source-keystoneadminrc-file)
-	- [Create Flavors](#create-flavors)
-	- [Create Networks and Subnets](#create-networks-and-subnets)
-	- [Create images](#create-images)
-	- [Create Floating IP Pool](#create-floating-ip-pool)
+	- [Source `keystone_adminrc` File](#source-keystoneadminrc-file)
+	- [Flavors](#flavors)
+	- [Provider Network and Subnet](#provider-network-and-subnet)
+	- [Images](#images)
+	- [Floating IP Pool](#floating-ip-pool)
 - [Tenant Tasks](#tenant-tasks)
-	- [Create Networks and Subnets](#create-networks-and-subnets)
-		- [Create Internet Network and Subnet](#create-internet-network-and-subnet)
-		- [Create Internal Network and Subnet](#create-internal-network-and-subnet)
-	- [Create OpenStack Router](#create-openstack-router)
-		- [Attach router to provider network](#attach-router-to-provider-network)
-	- [Launch Instances](#launch-instances)
+	- [Tenant Networks and Subnets](#tenant-networks-and-subnets)
+		- [Internet Network and Subnet](#internet-network-and-subnet)
+		- [Internal Network and Subnet](#internal-network-and-subnet)
+	- [OpenStack Router](#openstack-router)
+		- [Provider Network on OpenStack Router](#provider-network-on-openstack-router)
+	- [Instances](#instances)
 		- [Security Groups](#security-groups)
-		- [Launch CSR1Kv Instance](#launch-csr1kv-instance)
-		- [Launch CirrOS Instance](#launch-cirros-instance)
+		- [CSR1Kv Instance](#csr1kv-instance)
+		- [CirrOS Instance](#cirros-instance)
 	- [Allowed Address Pairs](#allowed-address-pairs)
-	- [Set Return Routes for Router](#set-return-routes-for-router)
+	- [Return Routes for OpenStack Router](#return-routes-for-openstack-router)
 - [Neutron Intensive Tasks](#neutron-intensive-tasks)
 	- [Topology](#topology)
-	- [Packet path](#packet-path)
-	- [Packet tracing tasks](#packet-tracing-tasks)
+	- [Packet Path](#packet-path)
+	- [Packet Tracing Tasks](#packet-tracing-tasks)
 - [OpenStack Review Tasks](#openstack-review-tasks)
 - [Resources](#resources)
 	- [Openstack Neutron VOD](#openstack-neutron-vod)
@@ -58,27 +58,27 @@
 * What are your expectations? Any specific areas to focus?
 * We tried to give emphasis to networking aspect.
 
-## Time management
-* There are 6 hands-on sections, with an estimated completion time of 3 hr. 30 min. 
+## Time Management
+* There are 6 hands-on sections, with an estimated completion time of 3 hr. 30 min.
 * Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
 
 ## Questions
 * Questions are most welcome. We **request** you to ask questions and make the session interactive.
 * Self exploration is fun. At the end of each section, take a few minutes to review and ask questions if you have any.
 
-## Openstack installation
+## Openstack Installation
 * Openstack installation is not included in this session to make efficient use of time.
 * If installation is successful, there is not much to learn. If not successful, there won't be enough time within this session to troubleshoot.
 * For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller and 6 Compute nodes. One biggest problem we encountered was copy-time-out.
 
-## Join the discussion at Cisco Spark
+## Join the Discussion at Cisco Spark
 A spark room has been created and will be kept for X days after the session. Please share any questions, comments or feedback.
 * Go to [spark](http://cs.co/ciscolivebot#LTRCLD-1451) and add your email address
 * Select Spark installed/not-installed based on whether your device (phone/laptop) has Spark or not.
 
 ---
 
-# Introduction to Openstack
+# Introduction to OpenStack
 
 Refer to [slides](./pdfs/Introduction_to_OpenStack_v1.pdf) presented.
 
@@ -101,7 +101,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 
 The lab is built with 7 Cisco UCS C240 servers. The lab is behind a VPN server. To access the lab, you need to VPN into the VPN server. The VPN server and the lab are in USA and the access to VPN server is over Internet.
 
-## Physical topology
+## Physical Topology
 
 Access to the lab is over VPN tunnel. When you create the tunnel, VPN server will advertise a few routes to your laptop.
 
@@ -143,12 +143,12 @@ Below is a representation of Openstack cloud connectivity to the external networ
 
 ---
 
-# Openstack cloud high level view
+# Openstack Cloud High Level View
 *Estimated time to complete: 15 min.*
 
 Use command line interface (CLI) and Horizon dashboard and try to get a overall view of the Openstack cloud that we are going to use.
 
-## Command line interface (CLI)
+## Command Line Interface (CLI)
 
 * login into Controller node: `ssh tenantXXX@172.31.56.216`
 	* Use **putty** app provided in your lab laptop
@@ -191,7 +191,7 @@ Cloud owner name is Great-Cloud. All the participants are Great-Cloud’s admini
 The following diagram depicts the topology:
 ![Topolgy](./images/admin_tasks_topology_01.png) TODO: Gopal. Edit the ppt to add the image
 
-## Source keystone_adminrc file
+## Source `keystone_adminrc` File
 
 For all the commands that are executed using OpenStack CLI the first thing that need to be done is to source all the necessary variables that will allow us to authenticate with OpenStack.
 
@@ -199,7 +199,7 @@ For all the commands that are executed using OpenStack CLI the first thing that 
 $ source ~/keystonerc_adminXXX
 ```
 
-## Create Flavors
+## Flavors
 Lets start by creating some flavors that will be required for our VNFs (Virtual Machines).
 
 A flavor is required for each of the following:
@@ -234,7 +234,7 @@ $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --priv
 
 *Note: Replace XXX with your POD number. You will have this in your handout page*
 
-## Create Networks and Subnets
+## Provider Network and Subnet
 
 Let's start by creating the provider network, this is the only one that must be created using an admin user because it is the one that needs to provide values that only the OpenStack cloud administrator would have.
 
@@ -289,7 +289,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/admin_network_provider_create_05.png)
 
-## Create images
+## Images
 
 We need to create the following images in glance.
 
@@ -331,7 +331,7 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 +------------------+------------------------------------------------------+
 ```
 
-## Create Floating IP Pool
+## Floating IP Pool
 
 Step 1 - Go to Admin -> Network -> Floating IPs an click on **Allocate IP To Project**
 ![Step 1](./images/admin_floating_ip_pool_create_01.png)
@@ -371,11 +371,11 @@ $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.
 # Tenant Tasks
 *Estimated time to complete: 90 min.*
 
-## Create Networks and Subnets
+## Tenant Networks and Subnets
 
 As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv
 
-### Create Internet Network and Subnet
+### Internet Network and Subnet
 
 Lets start by creating the Internet network.
 
@@ -400,7 +400,7 @@ Step 4 - Fill in all the values for the subnet details and click on **Create**
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/member_network_internet_create_step_05.png)
 
-### Create Internal Network and Subnet
+### Internal Network and Subnet
 
 Lets create now the Internal Network. This time we will do it via OpenStack CLI.
 
@@ -473,7 +473,7 @@ Since the Internal network does not have connectivity to the outside world eithe
 |----------|------------------|---------------|---------------------------------|
 | TenantXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
 
-## Create OpenStack Router
+## OpenStack Router
 - tenantXX-router
 
 Step 1 - Go to Project -> Network -> Routers and click on **Create Router**
@@ -485,7 +485,7 @@ Step 2 - Fill in all the values for the router and click on **Create Router** bu
 Step 3 - A green notification should appear on the top-right corner indicating successful creation of the router
 ![Step 3](./images/member_routers_create_step_03.png)
 
-### Attach router to provider network
+### Provider Network on OpenStack Router
 
 Step 1 - Go to Project -> Network -> Routers and click on the router that was created in the previous step, go to the Interfaces tab and click on **Add Interface**
 ![Step 1](./images/member_routers_attach_interface_internet_step_01.png)
@@ -496,7 +496,7 @@ Step 2 - Select tenantXX-internet from the drop-down list of subnets and click o
 Step 3 - A green notification should appear on the top-right corner indicating successful attach of the subnet to the router
 ![Step 3](./images/member_routers_attach_interface_internet_step_03.png)
 
-## Launch Instances
+## Instances
 
 ### Security Groups
 
@@ -532,7 +532,7 @@ Step 7 - A green notification should appear on the top-right corner indicating s
 
 We will be attaching the security groups to the instance when creating the instance.
 
-### Launch CSR1Kv Instance
+### CSR1Kv Instance
 
 There are several steps required to create the instance, and there are multiple ways to do this. The suggested way is via OpenStack CLI, this will allow us to create the instance with a single command and provide all the proper IPv4 addresses.
 
@@ -563,7 +563,7 @@ openstack server create --flavor tenant99-csr1kv.small --image tenant99-csr1kv-3
 
 *Note: for tenantXX-provider replace the IPv4 address with an appropiate network from the tenantXX-provider network.*
 
-### Launch CirrOS Instance
+### CirrOS Instance
 
 In order to test connectivity from behind the CSR1Kv, we will be creating a CirrOS instance that will act as our PC in the topology.
 
@@ -713,7 +713,7 @@ $ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
 
 *Note: Don't forget to repeat for the other two ports*
 
-## Set Return Routes for Router
+## Return Routes for OpenStack Router
 After setting the allowed address pairs, you will notice that you are able to ping the tenantXXX-internet IPv4 address of the CSR1kv, however you are not able to ping the IPv4 address of tenantXXX-internet's default gateway (which is OpenStack's router), why ?
 
 If you execute the following command you will notice that the line for routes is blank:
@@ -801,7 +801,7 @@ The goal of this section is to show networking in the lab cloud. The tasks in th
 ## Topology
 ![neutron-1](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-network-1.png)
 
-## Packet path
+## Packet Path
 
 In this below example diagram, our VM is hosted on a compute node. Here the VM is CSR1Kv router.
 ![neutron-3](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png)
@@ -812,7 +812,7 @@ Including Network node, there are 6 nodes in our setup. br-tun bridge would have
 
 The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram may be needed for reference while you are working on the steps below. You may want to open this [diagram](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png) in a new tab (right click and "open in a new tab").
 
-## Packet tracing tasks
+## Packet Tracing Tasks
 
 * Login to Controller node: `ssh tenantXXX@172.31.56.216`
 * Load Openstack environment variables: `source keystonerc_adminXXX`
