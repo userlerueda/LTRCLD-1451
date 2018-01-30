@@ -330,7 +330,7 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 | id               | 51b8a82f-339a-4fb9-89f5-79a557321510                 |
 | min_disk         | 0                                                    |
 | min_ram          | 0                                                    |
-| name             | tenant99-cirros-0.4.0-x86_64                         |
+| name             | tenantXXX-cirros-0.4.0-x86_64                         |
 | owner            | 1e2b5c63d1f14091b237acf064cc9db6                     |
 | protected        | False                                                |
 | schema           | /v2/schemas/image                                    |
@@ -594,7 +594,7 @@ openstack server create \
 	 --security-group default \	 
    --config-drive True \
    --file iosxe_config.txt=csr1kv-day0.txt \
-   tenant99-csr1kv
+   tenantXXX-csr1kv
 ```
 
 *Note: for tenantXXX-provider replace the IPv4 address with the correct network from the tenantXXX-provider network.*
@@ -834,7 +834,7 @@ After setting the allowed address pairs, you will notice that you are able to pi
 
 If you execute the following command you will notice that the line for routes is blank:
 ```
-$ openstack router show tenant99-router
+$ openstack router show tenantXXX-router
 +-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Field                   | Value                                                                                                                                                                                    |
 +-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -848,7 +848,7 @@ $ openstack router show tenant99-router
 | flavor_id               | None                                                                                                                                                                                     |
 | ha                      | False                                                                                                                                                                                    |
 | id                      | 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899                                                                                                                                                     |
-| name                    | tenant99-router                                                                                                                                                                          |
+| name                    | tenantXXX-router                                                                                                                                                                          |
 | project_id              | 1e2b5c63d1f14091b237acf064cc9db6                                                                                                                                                         |
 | revision_number         | 8                                                                                                                                                                                        |
 | routes                  |                                                                                                                                                                                          |
@@ -933,7 +933,7 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 
 * Generate traffic from tenantxxx-pc to Internet
 	* Login to Controller node: `ssh tenantXXX@172.31.56.216`
-	* Load Openstack environment variables: `source keystonerc_adminXXX`
+	* Load Openstack environment variables: `source keystonerc_userXXX`
 	* Find your router's ID: `openstack router list | grep <tenantXXX>`
 	* Find your router name space ID: `ip netns | grep <router-id>`
 	* Find IP address of you PC VM: `openstack server list | grep <tenantXXX-pc>`
@@ -943,18 +943,18 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 
 Example:
 ```
-GNAGANAB-M-J0A4:~ gnaganab$ ssh tenant99@172.31.56.216
-tenant99@172.31.56.216's password:
+GNAGANAB-M-J0A4:~ gnaganab$ ssh tenantXXX@172.31.56.216
+tenantXXX@172.31.56.216's password:
 Last login: Tue Jan 30 08:49:58 2018 from 172.31.56.35
-[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_admin99
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack router list | grep tenant99
-| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenant99-router  | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ip netns | grep 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+[tenantXXX@PSL-DMZ-C-S6 ~]$ source keystonerc_adminXXX
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack router list | grep tenantXXX
+| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenantXXX-router  | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ ip netns | grep 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
 qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep tenant99-pc
-| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                                 | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 ssh cirros@192.168.255.5
-[sudo] password for tenant99:
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack server list | grep tenantXXX-pc
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenantXXX-pc     | ACTIVE | tenantXXX-internal=192.168.255.5                                                                                 | tenantXXX-cirros-0.4.0-x86_64 | tenantXXX-m1.nano      |
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 ssh cirros@192.168.255.5
+[sudo] password for tenantXXX:
 The authenticity of host '192.168.255.5 (192.168.255.5)' can't be established.
 ECDSA key fingerprint is SHA256:I6Z4pRgJdnXcm/G5z0ZfL8e5mTVXnEYBcg59nuf2wuE.
 ECDSA key fingerprint is MD5:dd:bc:1a:db:20:90:60:22:14:03:d6:9e:aa:ff:de:e1.
@@ -975,15 +975,15 @@ PING 8.8.8.8 (8.8.8.8): 56 data bytes
 
 Example:
 ```
-GNAGANAB-M-J0A4:~ gnaganab$ ssh tenant99@172.31.56.216
-tenant99@172.31.56.216's password:
+GNAGANAB-M-J0A4:~ gnaganab$ ssh tenantXXX@172.31.56.216
+tenantXXX@172.31.56.216's password:
 Last login: Tue Jan 30 10:43:45 2018 from 172.31.56.35
-[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_user99
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ openstack server list | grep pc
-| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                                 | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ openstack port list | grep 192.168.255.5
+[tenantXXX@PSL-DMZ-C-S6 ~]$ source keystonerc_userXXX
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$ openstack server list | grep pc
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenantXXX-pc     | ACTIVE | tenantXXX-internal=192.168.255.5                                                                                 | tenantXXX-cirros-0.4.0-x86_64 | tenantXXX-m1.nano      |
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$ openstack port list | grep 192.168.255.5
 | e770a957-be50-46c1-b90a-ec2aa90da38b |      | fa:16:3e:40:6a:d1 | ip_address='192.168.255.5', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43'  | ACTIVE |
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$
 ```
 
 * SSH into the compute node of interest
@@ -996,13 +996,13 @@ Last login: Tue Jan 30 10:43:45 2018 from 172.31.56.35
 
 Example:
 ```
-GNAGANAB-M-J0A4:~ gnaganab$ ssh tenant99@172.31.56.216
-tenant99@172.31.56.216's password:
+GNAGANAB-M-J0A4:~ gnaganab$ ssh tenantXXX@172.31.56.216
+tenantXXX@172.31.56.216's password:
 Last login: Tue Jan 30 10:18:23 2018 from 172.31.56.35
-[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_admin99
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep pc
-| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                                 | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server show tenant99-pc
+[tenantXXX@PSL-DMZ-C-S6 ~]$ source keystonerc_adminXXX
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack server list | grep pc
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenantXXX-pc     | ACTIVE | tenantXXX-internal=192.168.255.5                                                                                 | tenantXXX-cirros-0.4.0-x86_64 | tenantXXX-m1.nano      |
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack server show tenantXXX-pc
 +-------------------------------------+---------------------------------------------------------------------+
 | Field                               | Value                                                               |
 +-------------------------------------+---------------------------------------------------------------------+
@@ -1018,29 +1018,29 @@ Last login: Tue Jan 30 10:18:23 2018 from 172.31.56.35
 | OS-SRV-USG:terminated_at            | None                                                                |
 | accessIPv4                          |                                                                     |
 | accessIPv6                          |                                                                     |
-| addresses                           | tenant99-internal=192.168.255.5                                     |
+| addresses                           | tenantXXX-internal=192.168.255.5                                     |
 | config_drive                        |                                                                     |
 | created                             | 2018-01-28T16:15:58Z                                                |
-| flavor                              | tenant99-m1.nano (8a116bb5-25f0-492d-8712-56b45fc8a8d9)             |
+| flavor                              | tenantXXX-m1.nano (8a116bb5-25f0-492d-8712-56b45fc8a8d9)             |
 | hostId                              | 6f5bfa46838f81f07379af4460b1caa965c5282ea76d83695d07ba2a            |
 | id                                  | 9de2e138-9d5c-49c4-8d4d-b0a981fda859                                |
-| image                               | tenant99-cirros-0.4.0-x86_64 (aaac0de7-2248-46f3-a283-775891ab888e) |
+| image                               | tenantXXX-cirros-0.4.0-x86_64 (aaac0de7-2248-46f3-a283-775891ab888e) |
 | key_name                            | None                                                                |
-| name                                | tenant99-pc                                                         |
+| name                                | tenantXXX-pc                                                         |
 | progress                            | 0                                                                   |
 | project_id                          | 1e2b5c63d1f14091b237acf064cc9db6                                    |
 | properties                          |                                                                     |
-| security_groups                     | name='tenant99-allow_ssh'                                           |
-|                                     | name='tenant99-allow_icmp'                                          |
+| security_groups                     | name='tenantXXX-allow_ssh'                                           |
+|                                     | name='tenantXXX-allow_icmp'                                          |
 |                                     | name='default'                                                      |
 | status                              | ACTIVE                                                              |
 | updated                             | 2018-01-28T16:16:10Z                                                |
 | user_id                             | 61a72633cdf0432b8c6c69c3bc444e70                                    |
 | volumes_attached                    |                                                                     |
 +-------------------------------------+---------------------------------------------------------------------+
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh root@PSL-DMZ-C-S3
-[sudo] password for tenant99:
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ ssh root@PSL-DMZ-C-S3
+[sudo] password for tenantXXX:
 Last failed login: Tue Jan 30 10:29:45 EST 2018 from controller on ssh:notty
 There were 6 failed login attempts since the last successful login.
 Last login: Tue Jan 30 10:18:58 2018 from controller
@@ -1149,19 +1149,19 @@ Example:
 [root@PSL-DMZ-C-S3 ~]# exit
 logout
 Connection to psl-dmz-c-s3 closed.
-[tenant99@PSL-DMZ-C-S6 ~]$
-[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_user99
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ openstack router list
+[tenantXXX@PSL-DMZ-C-S6 ~]$
+[tenantXXX@PSL-DMZ-C-S6 ~]$ source keystonerc_userXXX
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$ openstack router list
 +--------------------------------------+-----------------+--------+-------+-------------+-------+----------------------------------+
 | ID                                   | Name            | Status | State | Distributed | HA    | Project                          |
 +--------------------------------------+-----------------+--------+-------+-------------+-------+----------------------------------+
-| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenant99-router | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
+| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenantXXX-router | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
 +--------------------------------------+-----------------+--------+-------+-------------+-------+----------------------------------+
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID`
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$ ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID`
 qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 ip addr
-[sudo] password for tenant99:
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 ip addr
+[sudo] password for tenantXXX:
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -1182,8 +1182,8 @@ qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
        valid_lft forever preferred_lft forever
     inet6 fe80::f816:3eff:fe65:5229/64 scope link
        valid_lft forever preferred_lft forever
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$
-[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 tcpdump -i qr-325e6e70-ec icmp
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$
+[tenantXXX@PSL-DMZ-C-S6 ~( userXXX@tenantXXX )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 tcpdump -i qr-325e6e70-ec icmp
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on qr-325e6e70-ec, link-type EN10MB (Ethernet), capture size 262144 bytes
 
@@ -1201,10 +1201,6 @@ In this concluding section, you will try to get an overall view of the Openstack
 Please note that a typical production NFV system or Openstack cloud includes components such as exclusive storage, high performance network connectivity with PCIe or SR-IOv, OSS/BSS system, VNF management system, and Orchestration systems. In this lab, we have Openstack alone, which makes up ETSI model’s Virtual Infrastructure Manager (VIM).
 
 * login into Controller node: `ssh tenantXXX@172.31.56.216`
-	* Use **putty** app provided in your lab laptop
-	* IP address: `172.31.56.216`
-	* username: `tenantXXX`
-	* password: `cisco.123`
 * Load environment parameters for Openstack access:$ `source keystonerc_adminXXX`
 
 * Cloud overview
@@ -1255,7 +1251,7 @@ Please note that a typical production NFV system or Openstack cloud includes com
 		* print network-id of the network named, "external"
 Example:
 ```
-[tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | awk '{ print $2 }'
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack network list | awk '{ print $2 }'
 
 ID
 
@@ -1267,7 +1263,7 @@ ID
 631e32e7-8e1f-42fb-a927-ec1d7dc31293
 90c70132-0ea7-4362-8ab4-aff50986d012
 
-[tenant130@PSL-DMZ-C-S6 ~( admin130@tenant130 )]$ openstack network list | grep external | awk '{ print $2 }'
+[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack network list | grep external | awk '{ print $2 }'
 06ca5380-84eb-46b1-b0db-8fa038f72998
 ```
 
