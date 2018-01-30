@@ -901,6 +901,56 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 
 ## Packet Tracing Tasks
 
+* Generate traffic from tenantxxx-pc to Internet
+	* Login to Controller node: `ssh tenantXXX@172.31.56.216`
+	* Load Openstack environment variables: `source keystonerc_adminXXX`
+	* Find your router's ID: `openstack router list | grep <tenantXXX>`
+	* Find your router name space ID: `ip netns | grep <router-id>`
+	* Find IP address of you PC VM: `openstack server list | grep <tenantXXX-pc>`
+	* Login into your PC VM: In this step, we ssh into your VM from your router. You need to enter sudo password (cisco.123) and then cirros password (gocubsgo): `sudo ip netns exec <router namespace id> ssh cirros@<ip addr of your PC>`
+	* From cirros: `ping 8.8.8.8` 
+
+Example:
+```
+GNAGANAB-M-J0A4:~ gnaganab$ ssh tenant99@172.31.56.216
+tenant99@172.31.56.216's password:
+Last login: Tue Jan 30 08:49:58 2018 from 172.31.56.35
+[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_admin99
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack router list | grep tenant99
+| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenant99-router  | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ip netns | grep 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep tenant99-pc
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                                 | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 ssh cirros@192.168.255.5
+[sudo] password for tenant99:
+The authenticity of host '192.168.255.5 (192.168.255.5)' can't be established.
+ECDSA key fingerprint is SHA256:I6Z4pRgJdnXcm/G5z0ZfL8e5mTVXnEYBcg59nuf2wuE.
+ECDSA key fingerprint is MD5:dd:bc:1a:db:20:90:60:22:14:03:d6:9e:aa:ff:de:e1.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.255.5' (ECDSA) to the list of known hosts.
+cirros@192.168.255.5's password:
+$  ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: seq=0 ttl=58 time=10.653 ms
+64 bytes from 8.8.8.8: seq=1 ttl=58 time=10.587 ms
+```
+
+
+
+
+
+```
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack router list | grep tenant99
+| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenant99-router  | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack router list | grep tenant99 | awk '{print $2}'
+47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ip netns | grep 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
+```
+
+
 * Login to Controller node: `ssh tenantXXX@172.31.56.216`
 * Load Openstack environment variables: `source keystonerc_adminXXX`
 * Find the Compute node which is hosting your CSR1Kv rotuer
@@ -1023,8 +1073,7 @@ tapf0c682c0-a1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
         TX packets 607  bytes 49886 (48.7 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
-* Generate traffic from CSR1Kv VM to Internet
-	*
+
 
 
 
