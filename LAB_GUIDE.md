@@ -4,7 +4,8 @@
 # Cisco Live 2018
 # Barcelona
 
-|:Luis Rueda|Gopal Naganaboyina:|
+|Luis Rueda|Gopal Naganaboyina|
+|:---------|-----------------:|
 
 ---
 
