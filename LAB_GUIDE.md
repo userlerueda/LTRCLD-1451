@@ -886,12 +886,12 @@ The goal of this section is to show networking in the lab cloud. The tasks in th
 * Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also running Controller and a Compute functions).
 
 ## Topology
-![neutron-1](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-network-1.png)
+![neutron-1](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-1.png)
 
 ## Packet Path
 
 In this below example diagram, our VM is hosted on a separate (other than S6 Controller) compute node. If your VM is on S6 node, traffic need not cross vxlan tunnel. Here the VM is CSR1Kv router.
-![neutron-3](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png)
+![neutron-3](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-2.png)
 
 Red dotted line represents path from CSR1Kv to Internet. If you notice, traffic goes to Network node and reaches Internet via the openstack-router. Here, Controller node is functioning as Network node.
 
