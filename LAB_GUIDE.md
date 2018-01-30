@@ -202,8 +202,12 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 
 In this section, you would assume the role of an administrator of an OpenStack cloud. The goal is to create all the necessary elements for your users to be able to later create a virtual machine and make some basic verifications. This exercise exposes typical OpenStack admin environment.
 
-Cloud owner name is Great-Cloud. All the participants are Great-Cloud’s administrators.
-
+* FYI
+	* Your Linux username is: tenantXXX
+	* Your Openstack username/profile with admin privileges: adminXXX
+	* Your Openstack username/profile with member privileges: userXXX
+	* Your project name is: tenantXXX
+	
 The following diagram depicts the topology:
 ![Topolgy](./images/admin_tasks_topology_01.png)
 
