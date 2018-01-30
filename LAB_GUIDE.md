@@ -703,7 +703,7 @@ Step 8 - A green notification should appear on the top-right corner indicating s
 
 ## Allowed Address Pairs
 
-Now lets go to CirrOS console and try to execute a ping from it to the CSR1Kv interface.
+Now lets go to CirrOS console and try to execute a ping from it to the CSR1Kv interface (`ping 192.168.255.1`).
 
 Step 1 - Go to Project -> Compute -> Instances and click on the drop down box at the right of the tenantXXX-pc instance and select **Console**
 ![Step 1](./images/member_cirros_console_01.png)
