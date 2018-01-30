@@ -1,7 +1,7 @@
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Logistics](#logistics)
-	- [Welcome](#welcome)
+- [Welcome](#welcome)
+	- [Introduction](#introduction)
 	- [Time Management](#time-management)
 	- [Questions](#questions)
 	- [Openstack Installation](#openstack-installation)
@@ -192,7 +192,7 @@ In this section, you would assume the role of an administrator of an OpenStack c
 Cloud owner name is Great-Cloud. All the participants are Great-Cloud’s administrators.
 
 The following diagram depicts the topology:
-![Topolgy](./images/admin_tasks_topology_01.png) TODO: Gopal. Edit the ppt to add the image
+![Topolgy](./images/admin_tasks_topology_01.png)
 
 ## Source keystone_adminrc File
 
@@ -239,7 +239,7 @@ $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --priv
 
 ## Provider Network and Subnet
 
-Let's start by creating the provider network, this is the only one that must be created using an admin user because it is the one that needs to provide values that only the OpenStack cloud administrator would have.
+Lets start by creating the provider network, this is the only one that must be created using an admin user because it is the one that needs to provide values that only the OpenStack cloud administrator would have.
 
 The values for Segmentation ID, Network Address, Gateway IP and Allocation Pools can be found in the following table, for **Physical Network** use **physnet1** for all students:
 
@@ -680,7 +680,7 @@ Step 8 - A green notification should appear on the top-right corner indicating s
 
 ## Allowed Address Pairs
 
-Now let's go to CirrOS instance and try to execute a ping from it to the CSR1Kv interface, you will notice that ping will work (if this is not working, ensure that you attached the allow_icmp security group, if everything else fails, go [here](#neutron-intensive-tasks)).
+Now lets go to CirrOS instance and try to execute a ping from it to the CSR1Kv interface, you will notice that ping will work (if this is not working, ensure that you attached the allow_icmp security group, if everything else fails, go [here](#neutron-intensive-tasks)).
 
 However if from the CirrOS instance you try to ping the IPv4 address of tenantXXX-provider network, it will fail. Can you figure out why it is failing ? Hint: It does not have anything to do with routing.
 
@@ -967,7 +967,7 @@ Example:
 ```
 
 * Find the port-ID on the router that is connected to Internet-facing network (tenantXXX-internet, subnet=192.168.254.0/24)
-	* Find the IP address of 
+	* Find the IP address of
 
 * Login to Controller node: `ssh tenantXXX@<host-name>`
 	* make sure you are in the **right host** by checking its hostname.
