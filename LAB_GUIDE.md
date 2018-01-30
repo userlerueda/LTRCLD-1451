@@ -66,7 +66,7 @@ Barcelona
 ## Introduction
 * Speaker intro: Luis Rueda, Gopal Naganaboyina
 * What are your expectations? Any specific areas to focus?
-* We tried to give emphasis to networking aspect.
+* This is OpenStack from a network admin/engineer perspective
 
 ## Time Management
 * There are 6 hands-on sections, with an estimated completion time of 3 hr. 30 min.
@@ -147,7 +147,7 @@ Below is a representation of Openstack cloud connectivity to the external networ
 - Verify routing on your desktop and check connectivity to Openstack controller
 
 	- `ping 172.31.56.216`
-	- If ping succeeds, open the following link in a new tab: [http://172.31.56.216](http://172.31.56.216)
+	- If ping succeeds, open the following link in a new tab: [http://172.31.56.216](http://172.31.56.216), no need to login to the portal, just ensure you get to the login screen.
 	- If ping fails, check if you have 1) successfully VPN into the lab VPN-server and 2) you have a route to 172.31.56.0/24. Windows command to list route table: `route print`
 
 *Review the section and discuss if you have any questions or comments.*
@@ -180,9 +180,9 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 * Login into Horizon dashboard using the credentials below:
 	* username: `adminXXX`
 	* password: `cisco.123`
-* On the left pane, go to: "Admin"/"Overview"
+* On the left pane, go to Admin -> Overview
 	* Observe VCPUs, RAM, etc. resource usage.
-* On the left pane, go to: "Admin"/"Compute"/"Hypervisors"
+* On the left pane, go to: Admin -> Compute -> Hypervisors
 	* On the "Hypervisor" tab, observe total and used resources.
 	* On the "Compute host" tab, observe "Status" of different hosts.
 
@@ -220,7 +220,8 @@ A flavor is required for each of the following:
 | tenantXXX-csr1kv.small | 2 | 4096 | 0 |
 | tenantXXX-m1.nano | 1 | 64 | 1 |
 
-In order to create a flavor with with 1 vCPU, 64 MB of vRAM and 1 GB of vDisk with a name of tenant99-m1.nano available to tenant99, the following command would be used:
+*Note: You need to execute the procedure for all the flavors in the table. The procedure is explained for one flavor but the same procedure is valid for all of them.
+In order to create a flavor with with 1 vCPU, 64 MB of vRAM and 1 GB of vDisk with a name of tenantXXX-m1.nano available to tenantXXX, the following command would be used:
 
 ```
 $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --private tenantXXX-m1.nano
@@ -247,7 +248,7 @@ $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --priv
 
 ## Provider Network and Subnet
 
-Lets start by creating the provider network, this is the only one that must be created using an admin user because it is the one that needs to provide values that only the OpenStack cloud administrator would have.
+Lets start by creating one provider network using the admin user, Only the admin users will have administrative control over the OpenStack Cloud network.
 
 The values for Segmentation ID, Network Address, Gateway IP and Allocation Pools can be found in the following table, for **Physical Network** use **physnet1** for all students:
 
@@ -294,7 +295,7 @@ Step 2 - Fill in all the values for the network and click on **Next**
 Step 3 - Fill in all the values for the subnet and click on **Next**
 ![Step 3](./images/admin_network_provider_create_03.png)
 
-Step 4 - Fill in all the values for the subnet details and click on **Create**
+Step 4 - Fill in all the values for the subnet details (pool is comma separated) and click on **Create**
 ![Step 4](./images/admin_network_provider_create_04.png)
 
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
@@ -342,21 +343,23 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 +------------------+------------------------------------------------------+
 ```
 
+Verify that you have both images just like in the following output:
+```
+$ openstack image list
++--------------------------------------+-----------------------------------+--------+
+| ID                                   | Name                              | Status |
++--------------------------------------+-----------------------------------+--------+
+| aaac0de7-2248-46f3-a283-775891ab888e | tenantXXX-cirros-0.4.0-x86_64     | active |
+| 3655b9fa-e2c5-421e-b2e1-65410288d28b | tenantXXX-csr1kv-3.16.6s          | active |
++--------------------------------------+-----------------------------------+--------+
+```
+*Note: you may see more images from other tenants.*
+
 ## Floating IP Pool
 
 We will be assigning a floating IP for our CSR1Kv, in order to do so we first need to create one. Lets create a floating IP for later assignment to CSR1Kv.
 
 For the actual IPv4 address you can either assign a fixed one (use 172.31.57.XXX and replace XXX for your POD number e.g. POD 131 would use 172.31.57.131) or let OpenStack select the IPv4 that will be assigned.
-
-Step 1 - Go to Admin -> Network -> Floating IPs an click on **Allocate IP To Project**
-![Step 1](./images/admin_floating_ip_pool_create_01.png)
-
-Step 2 - Fill in the values and click on **Allocate Floating IP**
-![Step 2](./images/admin_floating_ip_pool_create_02.png)
-
-Step 3 - A green notification should appear on the top-right corner indicating successful allocation of floating IP
-![Step 3](./images/admin_floating_ip_pool_create_03.png)
-*Note: There is a bug when trying to assign a specific IP from Horizon dashboard, for the moment this must be done from the CLI if a specific IP is required.*
 
 ```
 $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.57.XXX external
@@ -385,6 +388,11 @@ $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.
 
 # Tenant Tasks
 *Estimated time to complete: 90 min.*
+We will now be working as a regular user of the tenant (no longer as admin).
+
+For Horizon Dashboard, sign out of the adminXXX user, and login as userXXX now.
+
+For OpenStack CLI, source keystone_userXXX file, the prompt should be: `[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]#`
 
 ## Tenant Networks and Subnets
 
@@ -409,7 +417,7 @@ Step 2 - Fill in all the values for the network and click on **Next**
 Step 3 - Fill in all the values for the subnet and click on **Next**
 ![Step 3](./images/member_network_internet_create_step_03.png)
 
-Step 4 - Fill in all the values for the subnet details and click on **Create**
+Step 4 - Fill in all the values for the subnet details (pool is comma separated) and click on **Create**
 ![Step 4](./images/member_network_internet_create_step_04.png)
 
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
@@ -916,7 +924,7 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 	* Find your router name space ID: `ip netns | grep <router-id>`
 	* Find IP address of you PC VM: `openstack server list | grep <tenantXXX-pc>`
 	* Login into your PC VM: In this step, we ssh into your VM from your router. You need to enter sudo password (cisco.123) and then cirros password (gocubsgo): `sudo ip netns exec <router namespace id> ssh cirros@<ip addr of your PC>`
-	* From cirros:$ `ping 8.8.8.8` 
+	* From cirros:$ `ping 8.8.8.8`
 	* Let pings go. We will be tracing these packets in the following sections. Do not close this ssh window.
 
 Example:
@@ -969,7 +977,7 @@ Last login: Tue Jan 30 10:43:45 2018 from 172.31.56.35
 	* Load Openstack admin environment variables: `source keystonerc_adminXXX`
 	* Find Compute node that hosts your cirros VM.
 		* `openstack server list | grep pc`
-		* `openstack server show <tenantXXX-pc>` (hostname is in the field, "OS-EXT-SRV-ATTR:host") 
+		* `openstack server show <tenantXXX-pc>` (hostname is in the field, "OS-EXT-SRV-ATTR:host")
 	* SSH into the compute node: `ssh root@<hostname from above output>` (No need to enter root password since ssh key is copied already)
 
 Example:
@@ -1027,7 +1035,7 @@ Last login: Tue Jan 30 10:18:58 2018 from controller
 ```
 
 * Trace packets on Linux Q bridge
-	* Find the associated interface on the q bridge. Refer to the 2nd neutron diagram for reference. 
+	* Find the associated interface on the q bridge. Refer to the 2nd neutron diagram for reference.
 		* # `brctl show`
 		* # `brctl show  | grep <port id of cirros VM. Use first 8 digits>`
 	* Last column lists interfaces on the bridge. Find the interface with prefix, "tap"
@@ -1035,7 +1043,7 @@ Last login: Tue Jan 30 10:18:58 2018 from controller
 		* # `ifconfig tap<first10digits-of-port>`
 	* Monitor icmp packets: # `tcpdump -i <tap interface> icmp`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
-	
+
 Example:
 ```
 [root@PSL-DMZ-C-S3 ~]# brctl show
@@ -1121,7 +1129,7 @@ listening on enp14s0f0, link-type EN10MB (Ethernet), capture size 262144 bytes
 	* Find interface facing cirros VM. `sudo ip netns exec <qrouter-router-id> ip addr`
 	* Monitor packets on the openstack rotuer: `sudo ip netns exec <qrouter-router-id> tcpdump -i <interface-id> icmp`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
-	
+
 Example:
 ```
 [root@PSL-DMZ-C-S3 ~]# exit
