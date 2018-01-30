@@ -971,14 +971,49 @@ Example:
 		* `openstack server list | grep csr`
 	* Find the port-id 
 		* 'openstack port list | grep <ip address of router in subnet, tenantXXX-internet>
-		Example:
+		* Find the first 10 digits of the port-id. This will be used as port-ID across the linux and Openstack bridges, with different prefixes. In the below example, it is f0c682c0-a1.
+			* Note down this 10 digit number.
+Example:
 ```
 [tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep csr
 | 55056993-9d63-4e18-8ab2-e05de69317b5 | tenant99-csr1kv | ACTIVE | tenant99-internet=192.168.254.10, 172.31.57.22; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 | tenant99-csr1kv-3.16.6s      | tenant99-csr1kv.small |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep csr | awk '{ print $2 }'
-55056993-9d63-4e18-8ab2-e05de69317b5
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack port list | grep 192.168.254.10
+| f0c682c0-a185-4f33-ab43-93c3f53ecc6b |      | fa:16:3e:42:7d:be | ip_address='192.168.254.10', subnet_id='49eaed11-788e-41dd-8823-12964c9f90e5' | ACTIVE |
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$!---alternative method---
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack port list | grep 192.168.254.10 | awk '{ print $2}'
+f0c682c0-a185-4f33-ab43-93c3f53ecc6b
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
 ```
-	* Find the first 10 digits of the port-id. This will be used as port-ID across the linux and Openstack bridges, with different prefixes. In the above example, it is 55056993-9d.
+
+* Log into the Compute node where your VM is running. This hostname is from two steps above.
+	* ssh tenantXXX@<hostname>
+```
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh tenant99@PSL-DMZ-C-S2
+tenant99@psl-dmz-c-s2's password:
+Last login: Mon Jan 29 10:58:53 2018 from controller
+[tenant99@PSL-DMZ-C-S2 ~]$
+```
+* Ensure that you landed on the right server. Check the server hostname. $ `hostname` (or, the server prompt)
+* Load environmental parameters. $ 'source keystonerc_adminXXX'
+* Ensure the linux bridge and interface of our interest is present in the server.
+	* brctl show
+	* brctl show | grep <first 10 digits of port-id>
+	* ifconfig tap<first 10 digits of port-id>
+	
+```
+[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ brctl show
+bridge name	bridge id		STP enabled	interfaces
+qbr07a29677-f6		8000.0a7520bbd46d	no		qvb07a29677-f6
+							tap07a29677-f6
+qbr0f359461-54		8000.7a769a1f492f	no		qvb0f359461-54
+							tap0f359461-54
+qbr197f181e-e9		8000.0abd3b2bf064	no		qvb197f181e-e9
+							tap197f181e-e9
+
+[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ brctl show | grep f0c682c0-a1
+qbrf0c682c0-a1		8000.220fad503c73	no		qvbf0c682c0-a1
+							tapf0c682c0-a1
+```
 
 
 
