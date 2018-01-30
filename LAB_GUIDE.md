@@ -905,9 +905,9 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 * Find the node which is hosting your CSR1Kv rotuer
 	* `openstack server list`
 	* `openstack server show <csr1kv VM name>` or,
-	'''
+	```
 	openstack server show `openstack server list | awk '{ print $4 }' | grep csr`
-	'''
+	```
 
 Example: In the example below, PSL-DMZ-C-S2 (compute-2) is the host.
 
