@@ -1127,7 +1127,7 @@ listening on qvoe770a957-be, link-type EN10MB (Ethernet), capture size 262144 by
 	* Refer to neutron-2 diagram
 	* Important: This is applicable only if the Compute node is not same as the Controller node (PSL-DMZ-C-S6). If your VM is running on PSL-DMZ-C-S6, please skip this subsection. As you can see in the topology diagram, vxlan tunnel interface is used for packets going from VM's on S1 though S5 Compute nodes to Internet.
 	* `ifconfig enp14s0f0`
-	* Monitor packets. `tcpdump -i enp14s0f0 icmp`
+	* Monitor packets. `tcpdump -i enp14s0f0`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
 
 Example:
@@ -1142,7 +1142,7 @@ enp14s0f0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 60382  bytes 12711693 (12.1 MiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-[root@PSL-DMZ-C-S3 ~]# tcpdump -i enp14s0f0 icmp
+[root@PSL-DMZ-C-S3 ~]# tcpdump -i enp14s0f0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on enp14s0f0, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
