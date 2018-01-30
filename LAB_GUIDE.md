@@ -611,7 +611,7 @@ openstack server create \
 
 We provided some configuration to the VNF via its Day-0 configuration (csr1kv-day0.txt file), we could pass anything required via that file but in order to show how we would connect to the VNF via SSH, we can ssh to it by taking advantage of the netns command.
 
-Step 1 - Wait until VNF boots with and applied Day 0 configuration
+Step 1 - Wait until VNF boots with and applied Day 0 configuration (this means that you should get a ping reply)
 ```
 $ sudo ip netns exec qrouter-`openstack router list | grep -e "tenant.*router" | awk '{ print $2 }'` ping 192.168.254.10
 ```
