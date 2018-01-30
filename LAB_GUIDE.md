@@ -428,7 +428,7 @@ Step 5 - A green notification should appear on the top-right corner indicating s
 Lets create now the Internal Network. This time we will do it via OpenStack CLI.
 
 ```
-$ openstack network create tenant99-internal
+$ openstack network create tenantXXX-internal
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
 +---------------------------+--------------------------------------+
@@ -444,7 +444,7 @@ $ openstack network create tenant99-internal
 | is_default                | False                                |
 | is_vlan_transparent       | None                                 |
 | mtu                       | 1450                                 |
-| name                      | tenant99-internal                    |
+| name                      | tenantXXX-internal                   |
 | port_security_enabled     | True                                 |
 | project_id                | 1e2b5c63d1f14091b237acf064cc9db6     |
 | provider:network_type     | None                                 |
@@ -461,7 +461,7 @@ $ openstack network create tenant99-internal
 | updated_at                | 2018-01-22T00:27:01Z                 |
 +---------------------------+--------------------------------------+
 
-$ openstack subnet create --network tenant99-internal --subnet-range 192.168.255.0/24 tenant99-internal-subnet
+$ openstack subnet create --network tenantXXX-internal --subnet-range 192.168.255.0/24 tenantXXX-internal-subnet
 +-------------------------+--------------------------------------+
 | Field                   | Value                                |
 +-------------------------+--------------------------------------+
@@ -477,7 +477,7 @@ $ openstack subnet create --network tenant99-internal --subnet-range 192.168.255
 | ip_version              | 4                                    |
 | ipv6_address_mode       | None                                 |
 | ipv6_ra_mode            | None                                 |
-| name                    | tenant99-internal-subnet             |
+| name                    | tenantXXX-internal-subnet            |
 | network_id              | 2f25227b-80b0-4f31-b11b-9b2d8066127c |
 | project_id              | 1e2b5c63d1f14091b237acf064cc9db6     |
 | revision_number         | 0                                    |
@@ -490,11 +490,11 @@ $ openstack subnet create --network tenant99-internal --subnet-range 192.168.255
 +-------------------------+--------------------------------------+
 ```
 
-Since the Internal network does not have connectivity to the outside world either the same value can be reused by all tenants.
+Since the Internal network does not have connectivity to the outside world, the same value can be reused by all tenants.
 
-|  Tenant  | Network Address  |  Gateway IP   |         Allocation Pools        |
-|----------|------------------|---------------|---------------------------------|
-| TenantXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
+|   Tenant  | Network Address  |  Gateway IP   |         Allocation Pools        |
+|-----------|------------------|---------------|---------------------------------|
+| TenantXXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
 
 ## OpenStack Router
 In order to allow connectivity to the Internet, OpenStack allows us to have an external network which would be connected to an OpenStack router that will do NAT as well as some other functions.
@@ -570,27 +570,27 @@ $ wget http://172.31.56.131/download/csr1kv-day0.txt
 Step 2 - Issue the `openstack network list` command to find the IDs for the networks that we want to attach to CSR1Kv.
 ```
 $ openstack network list
-+--------------------------------------+-------------------+--------------------------------------+
-| ID                                   | Name              | Subnets                              |
-+--------------------------------------+-------------------+--------------------------------------+
-| 06ca5380-84eb-46b1-b0db-8fa038f72998 | external          | 9b34213c-eff1-4008-a387-d08ee49b5ee0 |
-| 2c3d2f04-41ed-4c1a-956d-e57f61758f1e | tenant99-internet | 49eaed11-788e-41dd-8823-12964c9f90e5 |
-| 2f25227b-80b0-4f31-b11b-9b2d8066127c | tenant99-internal | 2bb680e4-2da0-4f51-9b52-ad41e006ad43 |
-| 631e32e7-8e1f-42fb-a927-ec1d7dc31293 | tenant-net        | f57b9855-42fb-406a-bb31-c25036078f07 |
-| 90c70132-0ea7-4362-8ab4-aff50986d012 | tenant99-provider | e7210532-3d56-4eaf-9826-0711756ad3f4 |
-+--------------------------------------+-------------------+--------------------------------------+
++--------------------------------------+--------------------+--------------------------------------+
+| ID                                   | Name               | Subnets                              |
++--------------------------------------+--------------------+--------------------------------------+
+| 06ca5380-84eb-46b1-b0db-8fa038f72998 | external           | 9b34213c-eff1-4008-a387-d08ee49b5ee0 |
+| 2c3d2f04-41ed-4c1a-956d-e57f61758f1e | tenantXXX-internet | 49eaed11-788e-41dd-8823-12964c9f90e5 |
+| 2f25227b-80b0-4f31-b11b-9b2d8066127c | tenantXXX-internal | 2bb680e4-2da0-4f51-9b52-ad41e006ad43 |
+| 631e32e7-8e1f-42fb-a927-ec1d7dc31293 | tenant-net         | f57b9855-42fb-406a-bb31-c25036078f07 |
+| 90c70132-0ea7-4362-8ab4-aff50986d012 | tenantXXX-provider | e7210532-3d56-4eaf-9826-0711756ad3f4 |
++--------------------------------------+--------------------+--------------------------------------+
 ```
 
 Step 3 - After the networks have been identified, replace each net-id with the corresponding ID found with in *Step 2*
 ```
 openstack server create \
-   --flavor tenant99-csr1kv.small \
-   --image tenant99-csr1kv-3.16.6s  \
+   --flavor tenantXXX-csr1kv.small \
+   --image tenantXXX-csr1kv-3.16.6s  \
    --nic net-id=2c3d2f04-41ed-4c1a-956d-e57f61758f1e,v4-fixed-ip=192.168.254.10 \
-   --nic net-id=90c70132-0ea7-4362-8ab4-aff50986d012,v4-fixed-ip=172.16.99.10 \
+   --nic net-id=90c70132-0ea7-4362-8ab4-aff50986d012,v4-fixed-ip=172.16.YXX.10 \
    --nic net-id=2f25227b-80b0-4f31-b11b-9b2d8066127c,v4-fixed-ip=192.168.255.1 \
-   --security-group tenant99-allow_ssh \
-   --security-group tenant99-allow_icmp \
+   --security-group tenantXXX-allow_ssh \
+   --security-group tenantXXX-allow_icmp \
 	 --security-group default \	 
    --config-drive True \
    --file iosxe_config.txt=csr1kv-day0.txt \
@@ -598,12 +598,18 @@ openstack server create \
 ```
 
 *Note: for tenantXXX-provider replace the IPv4 address with the correct network from the tenantXXX-provider network.*
+*Note: do not use the provided flavor in the example, replace this with your tenantXXX flavors and images.*
 
 #### Additional CSR1Kv Configuration
 
 We provided some configuration to the VNF via its Day-0 configuration (csr1kv-day0.txt file), we could pass anything required via that file but in order to show how we would connect to the VNF via SSH, we can ssh to it by taking advantage of the netns command.
 
-Step 1 - Connect to the VNF via SSH
+Step 1 - Wait until VNF boots with and applied Day 0 configuration
+```
+$ sudo ip netns exec qrouter-`openstack router list | grep -e "tenant.*router" | awk '{ print $2 }'` ping 192.168.254.10
+```
+
+Step 2 - Connect to the VNF via SSH
 ```
 $ sudo ip netns exec qrouter-`openstack router list | grep -e "tenant.*router" | awk '{ print $2 }'` ssh cisco@192.168.254.10
 ```
