@@ -126,9 +126,9 @@ Access to the lab is over VPN tunnel. When you create the tunnel, VPN server wil
 
 ## Logical Topology
 
-Openstack Controller has connectivity to external-VLAN but not any Computes. Your access to Openstack cloud, which include Computes is through Controller.
+No other nodes except Openstack Controller has connectivity to external-VLAN and hence to Internet. Your access to Openstack cloud, which includes Compute nodes is through Controller.
 
-Provider data center services and customer’s hypothetical CPE connections are emulated from a dedicated server, marked in the below topology as “provider DC cloud”. Other than hosting some services, this server is not playing any other role in this session.
+Provider data center services and customer’s hypothetical CPE connections are shown to represent typical branch office access to Openstack cloud services. Branch office tasks are excluded to manage time.
 
 ![Logical Topology](./images/lab_walkthrough_connectivity_00.png)
 
