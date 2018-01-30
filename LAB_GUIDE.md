@@ -1018,144 +1018,146 @@ Last login: Tue Jan 30 10:18:58 2018 from controller
 
 ```
 
-
-
-```
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack router list | grep tenant99
-| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenant99-router  | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack router list | grep tenant99 | awk '{print $2}'
-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ip netns | grep 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
-qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
-```
-
-
-* Login to Controller node: `ssh tenantXXX@172.31.56.216`
-* Load Openstack environment variables: `source keystonerc_adminXXX`
-* Find the Compute node which is hosting your CSR1Kv rotuer
-	* `openstack server list`
-	* `openstack server show <csr1kv VM name>` or,
-	```
-	openstack server show `openstack server list | awk '{ print $4 }' | grep csr`
-	```
-
-Example: In the example below, PSL-DMZ-C-S2 (compute-2) is the host.
-
-```
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list
-+--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
-| ID                                   | Name            | Status | Networks                                                                                         | Image                        | Flavor                |
-+--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
-| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                  | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
-| 12a00eb4-5198-4fde-933c-4c6d1d047cda | tenant99-csr1kv | ACTIVE | tenant99-internet=192.168.254.6; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 | tenant99-csr1kv-3.16.6s      | tenant99-csr1kv.small |
-+--------------------------------------+-----------------+--------+--------------------------------------------------------------------------------------------------+------------------------------+-----------------------+
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server show tenant99-csr1kv
-+-------------------------------------+--------------------------------------------------------------------------------------------------+
-| Field                               | Value                                                                                            |
-+-------------------------------------+--------------------------------------------------------------------------------------------------+
-| OS-DCF:diskConfig                   | MANUAL                                                                                           |
-| OS-EXT-AZ:availability_zone         | nova                                                                                             |
-| **OS-EXT-SRV-ATTR:host**            | **PSL-DMZ-C-S2**                                                                                 |
-| OS-EXT-SRV-ATTR:hypervisor_hostname | compute-2                                                                                        |
-| OS-EXT-SRV-ATTR:instance_name       | instance-00000023                                                                                |
-| OS-EXT-STS:power_state              | Running                                                                                          |
-| OS-EXT-STS:task_state               | None                                                                                             |
-| OS-EXT-STS:vm_state                 | active                                                                                           |
-| OS-SRV-USG:launched_at              | 2018-01-25T18:52:47.000000                                                                       |
-| OS-SRV-USG:terminated_at            | None                                                                                             |
-| accessIPv4                          |                                                                                                  |
-| accessIPv6                          |                                                                                                  |
-| addresses                           | tenant99-internet=192.168.254.6; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 |
-| config_drive                        |                                                                                                  |
-| created                             | 2018-01-25T18:52:34Z                                                                             |
-| flavor                              | tenant99-csr1kv.small (1801fafb-6bce-4e88-ba78-8043bd716224)                                     |
-| hostId                              | fe5a79620cb1788e98ff96e3c47452bff3dac6dc30184c1ec7eab25b                                         |
-| id                                  | 12a00eb4-5198-4fde-933c-4c6d1d047cda                                                             |
-| image                               | tenant99-csr1kv-3.16.6s (3655b9fa-e2c5-421e-b2e1-65410288d28b)                                   |
-| key_name                            | None                                                                                             |
-| name                                | tenant99-csr1kv                                                                                  |
-| progress                            | 0                                                                                                |
-| project_id                          | 1e2b5c63d1f14091b237acf064cc9db6                                                                 |
-| properties                          |                                                                                                  |
-| security_groups                     | name='default'                                                                                   |
-|                                     | name='default'                                                                                   |
-|                                     | name='default'                                                                                   |
-| status                              | ACTIVE                                                                                           |
-| updated                             | 2018-01-25T18:52:47Z                                                                             |
-| user_id                             | 61a72633cdf0432b8c6c69c3bc444e70                                                                 |
-| volumes_attached                    |                                                                                                  |
-+-------------------------------------+--------------------------------------------------------------------------------------------------+
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
-```
-
-* Compute node of your csr1kv VM: hostname is given in the above table in the filed, "OS-EXT-SRV-ATTR:host"
-	* Note down this node name.
-
+* Trace packets on Linux Q bridge
+	* Find the associated interface on the q bridge. Refer to the 2nd neutron diagram for reference. 
+		* # `brctl show`
+		* # `brctl show  | grep <port id of cirros VM. Use first 8 digits>`
+	* Last column lists interfaces on the bridge. Find the interface with prefix, "tap"
+	* Confirm that the Compute node has that interface
+		* # `ifconfig tap<first10digits-of-port>`
+	* Monitor icmp packets: # `tcpdump -i <tap interface> icmp`
+	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
+	
 Example:
 ```
-**OS-EXT-SRV-ATTR:host             PSL-DMZ-C-S2                                                                            
-```
-
-* Find the port-ID on the router that is connected to Internet-facing network (tenantXXX-internet, subnet=192.168.254.0/24)
-	* Find the IP address of router's interface that is in tenantXXX-internet subnet.
-		* `openstack server list | grep csr`
-	* Find the port-id
-		* 'openstack port list | grep <ip address of router in subnet, tenantXXX-internet>
-		* Find the first 10 digits of the port-id. This will be used as port-ID across the linux and Openstack bridges, with different prefixes. In the below example, it is f0c682c0-a1.
-			* Note down this 10 digit number.
-Example:
-```
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep csr
-| 55056993-9d63-4e18-8ab2-e05de69317b5 | tenant99-csr1kv | ACTIVE | tenant99-internet=192.168.254.10, 172.31.57.22; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 | tenant99-csr1kv-3.16.6s      | tenant99-csr1kv.small |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack port list | grep 192.168.254.10
-| f0c682c0-a185-4f33-ab43-93c3f53ecc6b |      | fa:16:3e:42:7d:be | ip_address='192.168.254.10', subnet_id='49eaed11-788e-41dd-8823-12964c9f90e5' | ACTIVE |
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$!---alternative method---
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack port list | grep 192.168.254.10 | awk '{ print $2}'
-f0c682c0-a185-4f33-ab43-93c3f53ecc6b
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
-```
-
-* Log into the Compute node where your VM is running. This hostname is from two steps above.
-	* ssh tenantXXX@<hostname>
-```
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh tenant99@PSL-DMZ-C-S2
-tenant99@psl-dmz-c-s2's password:
-Last login: Mon Jan 29 10:58:53 2018 from controller
-[tenant99@PSL-DMZ-C-S2 ~]$
-```
-* Ensure that you landed on the right server. Check the server hostname. $ `hostname` (or, the server prompt)
-* Load environmental parameters. $ 'source keystonerc_adminXXX'
-* Ensure the linux bridge and interface of our interest is present in the server.
-	* brctl show
-	* brctl show | grep <first 10 digits of port-id>
-	* ifconfig tap<first 10 digits of port-id>
-
-```
-[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ brctl show
+[root@PSL-DMZ-C-S3 ~]# brctl show
 bridge name	bridge id		STP enabled	interfaces
-qbr07a29677-f6		8000.0a7520bbd46d	no		qvb07a29677-f6
-							tap07a29677-f6
-qbr0f359461-54		8000.7a769a1f492f	no		qvb0f359461-54
-							tap0f359461-54
-qbr197f181e-e9		8000.0abd3b2bf064	no		qvb197f181e-e9
-							tap197f181e-e9
-
-[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ brctl show | grep f0c682c0-a1
-qbrf0c682c0-a1		8000.220fad503c73	no		qvbf0c682c0-a1
-							tapf0c682c0-a1
-[tenant99@PSL-DMZ-C-S2 ~( admin99@tenant99 )]$ ifconfig tapf0c682c0-a1
-tapf0c682c0-a1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
-        inet6 fe80::fc16:3eff:fe42:7dbe  prefixlen 64  scopeid 0x20<link>
-        ether fe:16:3e:42:7d:be  txqueuelen 1000  (Ethernet)
-        RX packets 482  bytes 46773 (45.6 KiB)
+qbr3f684264-18		8000.d63e3eaad629	no		qvb3f684264-18
+							tap3f684264-18
+qbre770a957-be		8000.16a15552c0b6	no		qvbe770a957-be
+							tape770a957-be
+[root@PSL-DMZ-C-S3 ~]# brctl show  | grep tape770a957-be
+							tape770a957-be
+[root@PSL-DMZ-C-S3 ~]# ifconfig tape770a957-be
+tape770a957-be: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1450
+        inet6 fe80::fc16:3eff:fe40:6ad1  prefixlen 64  scopeid 0x20<link>
+        ether fe:16:3e:40:6a:d1  txqueuelen 1000  (Ethernet)
+        RX packets 1000  bytes 99345 (97.0 KiB)
         RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 607  bytes 49886 (48.7 KiB)
+        TX packets 1352  bytes 127404 (124.4 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+[root@PSL-DMZ-C-S3 ~]# tcpdump -i tape770a957-be icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on tape770a957-be, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 
+* Trace packets on OVS bridge
+	* Refer to neutron-2 diagram
+	* # `ovs-vsctl list-br`
+	* # `ovs-vsctl list-ports br-int | grep <first 8 digits of cirros port-id>`
+	* Verify if the interface exists. # `ifconfig qvo<10digits-of-port>`
+	* Monitor packets. # `tcpdump -i <interface-id> icmp`
+	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
 
+Example:
+```
+[root@PSL-DMZ-C-S3 ~]# ovs-vsctl list-br
+br-int
+br-prov
+br-tun
+[root@PSL-DMZ-C-S3 ~]# ovs-vsctl list-ports br-int | grep e770a957-be
+qvoe770a957-be
+[root@PSL-DMZ-C-S3 ~]# ifconfig qvoe770a957-be
+qvoe770a957-be: flags=4419<UP,BROADCAST,RUNNING,PROMISC,MULTICAST>  mtu 1450
+        inet6 fe80::44e2:65ff:fe96:c249  prefixlen 64  scopeid 0x20<link>
+        ether 46:e2:65:96:c2:49  txqueuelen 1000  (Ethernet)
+        RX packets 1010  bytes 100377 (98.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1391  bytes 132480 (129.3 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
+[root@PSL-DMZ-C-S3 ~]# tcpdump -i qvoe770a957-be icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on qvoe770a957-be, link-type EN10MB (Ethernet), capture size 262144 bytes
+```
+
+* Monitor packets on vxlan tunnel interface
+	* Refer to neutron-2 diagram
+	* Important: This is applicable only if the Compute node is not same as the Controller node (PSL-DMZ-C-S6). If your VM is running on PSL-DMZ-C-S6, please skip this subsection. As you can see in the topology diagram, vxlan tunnel interface is used for packets going from VM's on S1 though S5 Compute nodes to Internet.
+	* # `ifconfig enp14s0f0`
+	* Monitor packets. # `tcpdump -i enp14s0f0 icmp`
+	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
+
+Example:
+```
+[root@PSL-DMZ-C-S3 ~]# ifconfig enp14s0f0
+enp14s0f0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.254.213  netmask 255.255.255.0  broadcast 192.168.254.255
+        inet6 fe80::92e2:baff:feca:e804  prefixlen 64  scopeid 0x20<link>
+        ether 90:e2:ba:ca:e8:04  txqueuelen 1000  (Ethernet)
+        RX packets 867939  bytes 70984049 (67.6 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 60382  bytes 12711693 (12.1 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@PSL-DMZ-C-S3 ~]# tcpdump -i enp14s0f0 icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on enp14s0f0, link-type EN10MB (Ethernet), capture size 262144 bytes
+```
+
+* Monitor packets on Openstack router
+	* Be on the Controller node, IP=172.31.56.216, hostname=PSL-DMZ-C-S6. You may simply exit from the current ssh session to go back to Controller node. $ `exit`
+	* source keystonerc_userXXX
+	* openstack router list
+	* Find your router name space ID. $ ` ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID` `
+	* Find interface facing cirros VM. `sudo ip netns exec <qrouter-router-id> ip addr`
+	* Monitor packets on the openstack rotuer: `sudo ip netns exec <qrouter-router-id> tcpdump -i <interface-id> icmp`
+	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
+	
+Example:
+```
+[root@PSL-DMZ-C-S3 ~]# exit
+logout
+Connection to psl-dmz-c-s3 closed.
+[tenant99@PSL-DMZ-C-S6 ~]$
+[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_user99
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ openstack router list
++--------------------------------------+-----------------+--------+-------+-------------+-------+----------------------------------+
+| ID                                   | Name            | Status | State | Distributed | HA    | Project                          |
++--------------------------------------+-----------------+--------+-------+-------------+-------+----------------------------------+
+| 47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 | tenant99-router | ACTIVE | UP    | False       | False | 1e2b5c63d1f14091b237acf064cc9db6 |
++--------------------------------------+-----------------+--------+-------+-------------+-------+----------------------------------+
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID`
+qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 ip addr
+[sudo] password for tenant99:
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+34: qg-e77c253c-8b: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN qlen 1000
+    link/ether fa:16:3e:de:9c:df brd ff:ff:ff:ff:ff:ff
+    inet 172.31.57.11/24 brd 172.31.57.255 scope global qg-e77c253c-8b
+       valid_lft forever preferred_lft forever
+    inet 172.31.57.22/32 brd 172.31.57.22 scope global qg-e77c253c-8b
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fede:9cdf/64 scope link
+       valid_lft forever preferred_lft forever
+35: qr-325e6e70-ec: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UNKNOWN qlen 1000
+    link/ether fa:16:3e:65:52:29 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.254.1/24 brd 192.168.254.255 scope global qr-325e6e70-ec
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe65:5229/64 scope link
+       valid_lft forever preferred_lft forever
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ sudo ip netns exec qrouter-47ccc9d6-1544-4b13-a8c3-d7ce48eb1899 tcpdump -i qr-325e6e70-ec icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on qr-325e6e70-ec, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+```
 
 *Review the section and discuss if you have any questions or comments.*
 
