@@ -882,7 +882,7 @@ Several linux and Openstack components are involved to make the neutron networki
 
 The goal of this section is to show networking in the lab cloud. The tasks in this section will help you navigate the path from your virtual machine (VM) to External network.
 
-* In this section, you need to execute the commands from the host that is hosting your CSR1Kv router-VM. So, the first step would be to find the host that is running your CSR1Kv VM.
+* In this section, you need to execute the commands from the host that is hosting your VM, tenant-pc. So, the first step would be to find the host that is running your  VM.
 * Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also running Controller and a Compute functions).
 
 ## Topology
