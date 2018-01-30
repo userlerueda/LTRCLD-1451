@@ -605,6 +605,7 @@ openstack server create \
 
 *Note: for tenantXXX-provider replace the IPv4 address with the correct network from the tenantXXX-provider network.*
 *Note: do not use the provided flavor in the example, replace this with your tenantXXX flavors and images.*
+*Note: the reason why it states YXX is because the IPv4 address is different, YXX = XXX + 100*
 
 #### Additional CSR1Kv Configuration
 
