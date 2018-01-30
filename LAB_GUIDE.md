@@ -18,7 +18,7 @@
 	- [Horizon dashboard](#horizon-dashboard)
 - [Admin Tasks](#admin-tasks)
 	- [Scenario](#scenario)
-	- [Source `keystone_adminrc` File](#source-keystoneadminrc-file)
+	- [Source keystone_adminrc File](#source-keystoneadminrc-file)
 	- [Flavors](#flavors)
 	- [Provider Network and Subnet](#provider-network-and-subnet)
 	- [Images](#images)
@@ -191,7 +191,7 @@ Cloud owner name is Great-Cloud. All the participants are Great-Cloud’s admini
 The following diagram depicts the topology:
 ![Topolgy](./images/admin_tasks_topology_01.png) TODO: Gopal. Edit the ppt to add the image
 
-## Source `keystone_adminrc` File
+## Source keystone_adminrc File
 
 For all the commands that are executed using OpenStack CLI the first thing that need to be done is to source all the necessary variables that will allow us to authenticate with OpenStack.
 
