@@ -61,6 +61,7 @@
 ## Time Management
 * There are 6 hands-on sections, with an estimated completion time of 3 hr. 30 min.
 * Every section has estimated time to complete. This is an estimate only. Please feel free to spend as much time as you like.
+* We recommend you to take a quick break at 2 hr. mark, at 4:00PM.
 
 ## Questions
 * Questions are most welcome. We **request** you to ask questions and make the session interactive.
@@ -72,7 +73,7 @@
 * For this lab, we used Packstack installer on CentOS7.4. This is a multi-node installation, with one Controller and 6 Compute nodes. One biggest problem we encountered was copy-time-out.
 
 ## Join the Discussion at Cisco Spark
-A spark room has been created and will be kept for X days after the session. Please share any questions, comments or feedback.
+A spark room has been created and will be kept for about a week after the session. Please share any questions, comments or feedback.
 * Go to [spark](http://cs.co/ciscolivebot#LTRCLD-1451) and add your email address
 * Select Spark installed/not-installed based on whether your device (phone/laptop) has Spark or not.
 
@@ -793,17 +794,18 @@ Several linux and Openstack components are involved to make the neutron networki
 	* Multilayer L2 switch.
 * Openstack L3 agent router
 	* Openstack L3 agent.
+
 The goal of this section is to show networking in the lab cloud. The tasks in this section will help you navigate the path from your virtual machine (VM) to External network.
 
 * In this section, you need to execute the commands from the host that is hosting your CSR1Kv router-VM. So, the first step would be to find the host that is running your CSR1Kv VM.
-* Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also the Controller and a Compute node).
+* Please note that we are using Openstack’s L3 agent router to route traffic to Internet. And, this router is hosted on the Network-node, which is 172.31.56.216 (this is also running Controller and a Compute functions).
 
 ## Topology
 ![neutron-1](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-network-1.png)
 
 ## Packet Path
 
-In this below example diagram, our VM is hosted on a compute node. Here the VM is CSR1Kv router.
+In this below example diagram, our VM is hosted on a separate (other than S6 Controller) compute node. If your VM is on S6 node, traffic need not cross vxlan tunnel. Here the VM is CSR1Kv router.
 ![neutron-3](https://github.com/userlerueda/LTRCLD-1451/blob/master/images/neutron-3.png)
 
 Red dotted line represents path from CSR1Kv to Internet. If you notice, traffic goes to Network node and reaches Internet via the openstack-router. Here, Controller node is functioning as Network node.
