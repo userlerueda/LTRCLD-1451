@@ -207,7 +207,7 @@ Lets start by creating some flavors that will be required for our VNFs (Virtual 
 A flavor is required for each of the following:
 
 | flavor-name | vCPUs | vRAM (MB) | vDisk (GB) |
-|--------------|-------|-----------|------------|
+|--------------|:-------:|:-----------:|:------------:|
 | tenantXXX-csr1kv.small | 2 | 4096 | 0 |
 | tenantXXX-m1.nano | 1 | 64 | 1 |
 
