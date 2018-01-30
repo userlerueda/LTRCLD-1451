@@ -902,7 +902,7 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 
 * Login to Controller node: `ssh tenantXXX@172.31.56.216`
 * Load Openstack environment variables: `source keystonerc_adminXXX`
-* Find the node which is hosting your CSR1Kv rotuer
+* Find the Compute node which is hosting your CSR1Kv rotuer
 	* `openstack server list`
 	* `openstack server show <csr1kv VM name>` or,
 	```
@@ -957,6 +957,17 @@ Example: In the example below, PSL-DMZ-C-S2 (compute-2) is the host.
 +-------------------------------------+--------------------------------------------------------------------------------------------------+
 [tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
 ```
+
+* Compute node of your csr1kv VM: hostname is given in the above table in the filed, "OS-EXT-SRV-ATTR:host"
+	* Note down this node name.
+
+Example:
+```
+**OS-EXT-SRV-ATTR:host             PSL-DMZ-C-S2                                                                            
+```
+
+* Find the port-ID on the router that is connected to Internet-facing network (tenantXXX-internet, subnet=192.168.254.0/24)
+	* Find the IP address of 
 
 * Login to Controller node: `ssh tenantXXX@<host-name>`
 	* make sure you are in the **right host** by checking its hostname.
