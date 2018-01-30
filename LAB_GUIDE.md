@@ -232,7 +232,7 @@ A flavor is required for each of the following:
 *Note: You need to execute the procedure for all the flavors in the table. The procedure is explained for one flavor but the same procedure is valid for all of them.
 In order to create a flavor with with 1 vCPU, 64 MB of vRAM and 1 GB of vDisk with a name of tenantXXX-m1.nano available to tenantXXX, the following command would be used:
 
-* 'openstack flavor create --project <project-name> --ram <RAM in MB> --vcpus <# of VCPUs> --disk <disk size GB> --private <flavor name>`
+* 'openstack flavor create --project "project-name" --ram "RAM in MB" --vcpus "# of VCPUs" --disk "disk size GB" --private "flavor-name"`
 
 ```
 $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --private tenantXXX-m1.nano
