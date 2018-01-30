@@ -380,7 +380,7 @@ $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.
 
 ## Tenant Networks and Subnets
 
-As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv
+As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv.
 
 ### Internet Network and Subnet
 
@@ -639,7 +639,14 @@ Building configuration...
 #### Assign Floating IP to CSR1Kv
 In order for someone to be able to access CSR1Kv from the Internet, we need to assign the floating IP created before to our CSR1Kv. Lets assign the floating IP to our instance.
 
-Step 1 -
+Step 1 - Go to Project -> Compute -> Instances and click on the dropdown box to the right of the CSR1Kv instance, select **Associate Floating IP**
+![Step 1](./images/member_assign_floating_ip_step_01.png)
+
+Step 2 - Click on the drop down box and select the IPv4 address that was assigned when [Allocating the Floating IP from pool](#floating-ip-pool)
+![Step 2](./images/member_assign_floating_ip_step_02.png)
+
+Step 3 - A green notification should appear on the top-right corner indicating successful assignment of the IPv4 address to the instance
+![Step 3](./images/member_assign_floating_ip_step_03.png)
 
 ### CirrOS Instance
 
