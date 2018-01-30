@@ -28,7 +28,7 @@
 		- [Internet Network and Subnet](#internet-network-and-subnet)
 		- [Internal Network and Subnet](#internal-network-and-subnet)
 	- [OpenStack Router](#openstack-router)
-		- [Provider Network on OpenStack Router](#provider-network-on-openstack-router)
+		- [Internet Network on OpenStack Router](#internet-network-on-openstack-router)
 	- [Instances](#instances)
 		- [Security Groups](#security-groups)
 		- [CSR1Kv Instance](#csr1kv-instance)
@@ -476,7 +476,9 @@ Since the Internal network does not have connectivity to the outside world eithe
 | TenantXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
 
 ## OpenStack Router
-- tenantXX-router
+In order to allow connectivity to the Internet, OpenStack allows us to have an external network which would be connected to an OpenStack router that will do NAT as well as some other functions.
+
+Lets create an OpenStack router.
 
 Step 1 - Go to Project -> Network -> Routers and click on **Create Router**
 ![Step 1](./images/member_routers_create_step_01.png)
@@ -487,12 +489,13 @@ Step 2 - Fill in all the values for the router and click on **Create Router** bu
 Step 3 - A green notification should appear on the top-right corner indicating successful creation of the router
 ![Step 3](./images/member_routers_create_step_03.png)
 
-### Provider Network on OpenStack Router
+### Internet Network on OpenStack Router
+When creating the OpenStack router we defined the external facing interface for that router. We will need to attach the internal facing interface for our router which is called tenantXXX-internet. Lets attach that interface to the router.
 
 Step 1 - Go to Project -> Network -> Routers and click on the router that was created in the previous step, go to the Interfaces tab and click on **Add Interface**
 ![Step 1](./images/member_routers_attach_interface_internet_step_01.png)
 
-Step 2 - Select tenantXX-internet from the drop-down list of subnets and click on **Submit**
+Step 2 - Select tenantXXX-internet from the drop-down list of subnets and click on **Submit**
 ![Step 2](./images/member_routers_attach_interface_internet_step_02.png)
 
 Step 3 - A green notification should appear on the top-right corner indicating successful attach of the subnet to the router
