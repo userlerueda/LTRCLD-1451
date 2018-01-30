@@ -32,6 +32,7 @@
 	- [Instances](#instances)
 		- [Security Groups](#security-groups)
 		- [CSR1Kv Instance](#csr1kv-instance)
+			- [Additional CSR1Kv Configuration](#additional-csr1kv-configuration)
 		- [CirrOS Instance](#cirros-instance)
 	- [Allowed Address Pairs](#allowed-address-pairs)
 	- [Return Routes for OpenStack Router](#return-routes-for-openstack-router)
@@ -537,7 +538,12 @@ We will be attaching the security groups to the instance when creating the insta
 
 There are several steps required to create the instance, and there are multiple ways to do this. The suggested way is via OpenStack CLI, this will allow us to create the instance with a single command and provide all the proper IPv4 addresses.
 
-Step 1 - Issue the `openstack network list` command to find the IDs for the networks that we want to attach to CSR1Kv.
+Step 1 - Download the CSR1Kv Day 0 configuration file.
+```
+$ wget http://172.31.56.131/download/csr1kv-day0.txt
+```
+
+Step 2 - Issue the `openstack network list` command to find the IDs for the networks that we want to attach to CSR1Kv.
 ```
 $ openstack network list
 +--------------------------------------+-------------------+--------------------------------------+
@@ -551,18 +557,76 @@ $ openstack network list
 +--------------------------------------+-------------------+--------------------------------------+
 ```
 
-Step 2 - After the networks have been identified, replace each net-id with the corresponding ID found with in *Step 1*
+Step 3 - After the networks have been identified, replace each net-id with the corresponding ID found with in *Step 1*
 ```
-openstack server create --flavor tenant99-csr1kv.small --image tenant99-csr1kv-3.16.6s \
-  --nic net-id=2c3d2f04-41ed-4c1a-956d-e57f61758f1e,v4-fixed-ip=192.168.254.10 \
-	--nic net-id=90c70132-0ea7-4362-8ab4-aff50986d012,v4-fixed-ip=172.16.99.10 \
-	--nic net-id=2f25227b-80b0-4f31-b11b-9b2d8066127c,v4-fixed-ip=192.168.255.1 \
-	--security-group tenant99-allow_ssh \
-	--security-group tenant99-allow_icmp \
-	tenant99-csr1kv
+openstack server create \
+   --flavor tenant99-csr1kv.small \
+   --image tenant99-csr1kv-3.16.6s  \
+   --nic net-id=2c3d2f04-41ed-4c1a-956d-e57f61758f1e,v4-fixed-ip=192.168.254.10 \
+   --nic net-id=90c70132-0ea7-4362-8ab4-aff50986d012,v4-fixed-ip=172.16.99.10 \
+   --nic net-id=2f25227b-80b0-4f31-b11b-9b2d8066127c,v4-fixed-ip=192.168.255.1 \
+   --security-group tenant99-allow_ssh \
+   --security-group tenant99-allow_icmp \
+   --config-drive True \
+   --file iosxe_config.txt=csr1kv-day0.txt \
+   tenant99-csr1kv
 ```
 
 *Note: for tenantXX-provider replace the IPv4 address with an appropiate network from the tenantXX-provider network.*
+
+#### Additional CSR1Kv Configuration
+
+We provided some configuration to the VNF via its Day-0 configuration (csr1kv-day0.txt file), we could pass anything required via that file but in order to show how we would connect to the VNF via SSH, we can ssh to it by taking advantage of the netns command.
+
+Step 1 - Connect to the VNF via SSH
+```
+$ sudo ip netns exec qrouter-`openstack router list | grep -e "tenant.*router" | awk '{ print $2 }'` ssh cisco@192.168.254.10
+```
+
+The output would look something like this:
+```
+The authenticity of host '192.168.254.10 (192.168.254.10)' can't be established.
+RSA key fingerprint is SHA256:V7Gm+BrHaOh0fNWRr0I6pLEGZMmrSBLSKykgoQQQufI.
+RSA key fingerprint is MD5:99:e6:b8:b5:8c:8f:17:5c:de:86:71:28:7b:c4:b5:8a.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.254.10' (RSA) to the list of known hosts.
+C
+Please use password cisco to login to CSR1Kv-VNF
+Password:
+
+csr1000v-vnf#
+```
+*Notes:
+ - Make sure you aware that linux may ask you for two passwords, the first is the password for your user (required for sudo) and the other one is Password for the Device.
+ - If for some reason you did not use 192.168.254.10 or changed the username to login to the device please make adjustments to the command above.*
+
+Step 2 - Change the IPv4 address for GigabitEthernet2
+```
+configure terminal
+interface GigabitEthernet 2
+ip address 172.16.99.10 255.255.255.0
+exit
+ip route 172.16.0.0 255.255.0.0 172.16.99.1
+end
+copy running-config startup-config
+
+```
+
+It would look something like this:
+```
+csr1000v-vnf#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+csr1000v-vnf(config)#interface GigabitEthernet 2
+csr1000v-vnf(config-if)#ip address 172.16.99.10 255.255.255.0
+csr1000v-vnf(config-if)#exit
+csr1000v-vnf(config)#ip route 172.16.0.0 255.255.0.0 172.16.99.1
+csr1000v-vnf(config)#end
+csr1000v-vnf#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+```
+*Note: it is also possible to do this by getting to the NoVNC console but it will be simpler to just past the commands via ssh. Please adjust the IPv4 address to the same IPv4 address used when creating the CSR1Kv instance.*
 
 ### CirrOS Instance
 
