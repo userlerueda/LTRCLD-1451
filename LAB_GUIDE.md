@@ -70,7 +70,7 @@
 
 ## Introduction
 * Speaker intro: Luis Rueda, Gopal Naganaboyina
-* What are your expectations? Any specific areas to focus?
+* Participant current skill level, lab expectations.
 * This is OpenStack from a network admin/engineer perspective
 
 ## Lab structure
