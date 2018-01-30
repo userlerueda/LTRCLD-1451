@@ -557,7 +557,7 @@ $ openstack network list
 +--------------------------------------+-------------------+--------------------------------------+
 ```
 
-Step 3 - After the networks have been identified, replace each net-id with the corresponding ID found with in *Step 1*
+Step 3 - After the networks have been identified, replace each net-id with the corresponding ID found with in *Step 2*
 ```
 openstack server create \
    --flavor tenant99-csr1kv.small \
