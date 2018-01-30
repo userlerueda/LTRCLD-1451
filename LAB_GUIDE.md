@@ -664,7 +664,7 @@ Destination filename [startup-config]?
 Building configuration...
 [OK]
 ```
-*Note: it is also possible to do this by getting to the NoVNC console but it will be simpler to just past the commands via ssh. Please adjust the IPv4 address to the same IPv4 address used when creating the CSR1Kv instance.*
+*Note: it is also possible to do this by getting to the NoVNC console but it will be simpler to just paste the commands via ssh. Please adjust the IPv4 address to the same IPv4 address used when creating the CSR1Kv instance.*
 
 #### Assign Floating IP to CSR1Kv
 In order for someone to be able to access CSR1Kv from the Internet, we need to assign the floating IP created before to our CSR1Kv. Lets assign the floating IP to our instance.
@@ -684,7 +684,7 @@ In order to test connectivity from behind the CSR1Kv, we will be creating a Cirr
 
 This time we will launch the CirrOS VM from the horizon dashboard.
 
-Step 1 - Go to Project -> Compute -> Instances and click on **Laumch Instance**
+Step 1 - Go to Project -> Compute -> Instances and click on **Launch Instance**
 ![Step 1](./images/member_create_instance_step_01.png)
 
 Step 2 - Fill in all the details and click on **Next** button
