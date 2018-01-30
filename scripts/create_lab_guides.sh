@@ -29,6 +29,6 @@ for i in {101..130}
 do
 j=`expr ${i} + 100`
 cp ../LAB_GUIDE.md LAB_GUIDE_${i}.md
-gsed -i "s/XXX/${i}/" LAB_GUIDE_${i}.md
-gsed -i "s/YXX/${j}/" LAB_GUIDE_${i}.md
+gsed -i "s/XXX/${i}/g" LAB_GUIDE_${i}.md
+gsed -i "s/YXX/${j}/g" LAB_GUIDE_${i}.md
 done

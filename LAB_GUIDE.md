@@ -10,9 +10,12 @@
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [Openstack for network Engineers](#openstack-for-network-engineers)
+- [Intructor Led Lab (#LTRCLD-1451)](#intructor-led-lab-ltrcld-1451)
+- [Cisco Live 2018, Barcelona](#cisco-live-2018-barcelona)
 - [Welcome](#welcome)
 	- [Introduction](#introduction)
-	- [Time Management](#time-management)
+	- [Lab structure](#lab-structure)
 	- [Questions](#questions)
 	- [Openstack Installation](#openstack-installation)
 	- [Join the Discussion at Cisco Spark](#join-the-discussion-at-cisco-spark)
@@ -594,7 +597,7 @@ openstack server create \
    --nic net-id=2f25227b-80b0-4f31-b11b-9b2d8066127c,v4-fixed-ip=192.168.255.1 \
    --security-group tenantXXX-allow_ssh \
    --security-group tenantXXX-allow_icmp \
-	 --security-group default \	 
+	 --security-group default \
    --config-drive True \
    --file iosxe_config.txt=csr1kv-day0.txt \
    tenantXXX-csr1kv
