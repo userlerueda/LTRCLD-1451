@@ -937,13 +937,32 @@ PING 8.8.8.8 (8.8.8.8): 56 data bytes
 64 bytes from 8.8.8.8: seq=1 ttl=58 time=10.587 ms
 ```
 
+* Find port-ID of your cirros VM
+	* Open a new ssh window. `ssh tenantXXX@172.31.56.216`
+	* Load Openstack **member** environment variables: `source keystonerc_userXXX`
+	* Find IP address of your cirros VM: `openstack server list | grep pc`
+	* Find port id. Note this down.: `openstack port list | grep <ip address of your cirros VM>`
+
+Example:
+```
+GNAGANAB-M-J0A4:~ gnaganab$ ssh tenant99@172.31.56.216
+tenant99@172.31.56.216's password:
+Last login: Tue Jan 30 10:43:45 2018 from 172.31.56.35
+[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_user99
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ openstack server list | grep pc
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                                 | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$ openstack port list | grep 192.168.255.5
+| e770a957-be50-46c1-b90a-ec2aa90da38b |      | fa:16:3e:40:6a:d1 | ip_address='192.168.255.5', subnet_id='2bb680e4-2da0-4f51-9b52-ad41e006ad43'  | ACTIVE |
+[tenant99@PSL-DMZ-C-S6 ~( user99@tenant99 )]$
+```
+
 * SSH into the compute node of interest
 	* Open a new ssh window. `ssh tenantXXX@172.31.56.216`
-	* Load Openstack environment variables: `source keystonerc_adminXXX`
+	* Load Openstack admin environment variables: `source keystonerc_adminXXX`
 	* Find Compute node that hosts your cirros VM.
 		* `openstack server list | grep pc`
 		* `openstack server show <tenantXXX-pc>` (hostname is in the field, "OS-EXT-SRV-ATTR:host") 
-	* SSH into the compute node: `sudo ssh root@<hostname from above output>` (you may need to enter sudo password, which is cisco.123)
+	* SSH into the compute node: `ssh root@<hostname from above output>` (No need to enter root password since ssh key is copied already)
 
 Example:
 ```
@@ -990,7 +1009,7 @@ Last login: Tue Jan 30 10:18:23 2018 from 172.31.56.35
 | volumes_attached                    |                                                                     |
 +-------------------------------------+---------------------------------------------------------------------+
 [tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
-[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ sudo ssh root@PSL-DMZ-C-S3
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ ssh root@PSL-DMZ-C-S3
 [sudo] password for tenant99:
 Last failed login: Tue Jan 30 10:29:45 EST 2018 from controller on ssh:notty
 There were 6 failed login attempts since the last successful login.
