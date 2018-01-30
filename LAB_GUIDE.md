@@ -52,7 +52,15 @@
 <!-- /TOC -->
 
 ---
-
+<p align="center">
+<b>
+Openstack for network Engineers
+Intructor Led Lab (#LTRCLD-1451)
+Cisco Live 2018
+Barcelona
+</b>
+</p>
+---
 # Welcome
 
 ## Introduction
