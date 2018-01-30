@@ -967,7 +967,20 @@ Example:
 ```
 
 * Find the port-ID on the router that is connected to Internet-facing network (tenantXXX-internet, subnet=192.168.254.0/24)
-	* Find the IP address of
+	* Find the IP address of router's interface that is in tenantXXX-internet subnet.
+		* `openstack server list | grep csr`
+	* Find the port-id 
+		* 'openstack port list | grep <ip address of router in subnet, tenantXXX-internet>
+		Example:
+```
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep csr
+| 55056993-9d63-4e18-8ab2-e05de69317b5 | tenant99-csr1kv | ACTIVE | tenant99-internet=192.168.254.10, 172.31.57.22; tenant99-internal=192.168.255.1; tenant99-provider=172.16.99.10 | tenant99-csr1kv-3.16.6s      | tenant99-csr1kv.small |
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep csr | awk '{ print $2 }'
+55056993-9d63-4e18-8ab2-e05de69317b5
+```
+	* Find the first 10 digits of the port-id. This will be used as port-ID across the linux and Openstack bridges, with different prefixes. In the above example, it is 55056993-9d.
+
+
 
 * Login to Controller node: `ssh tenantXXX@<host-name>`
 	* make sure you are in the **right host** by checking its hostname.
