@@ -655,9 +655,9 @@ It would look something like this:
 csr1000v-vnf#configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
 csr1000v-vnf(config)#interface GigabitEthernet 2
-csr1000v-vnf(config-if)#ip address 172.16.99.10 255.255.255.0
+csr1000v-vnf(config-if)#ip address 172.16.YXX.10 255.255.255.0
 csr1000v-vnf(config-if)#exit
-csr1000v-vnf(config)#ip route 172.16.0.0 255.255.0.0 172.16.99.1
+csr1000v-vnf(config)#ip route 172.16.0.0 255.255.0.0 172.16.YXX.1
 csr1000v-vnf(config)#end
 csr1000v-vnf#copy running-config startup-config
 Destination filename [startup-config]?
