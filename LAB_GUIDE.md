@@ -908,7 +908,8 @@ The tasks below will navigate packet path, from CSR1Kv to Internet. This diagram
 	* Find your router name space ID: `ip netns | grep <router-id>`
 	* Find IP address of you PC VM: `openstack server list | grep <tenantXXX-pc>`
 	* Login into your PC VM: In this step, we ssh into your VM from your router. You need to enter sudo password (cisco.123) and then cirros password (gocubsgo): `sudo ip netns exec <router namespace id> ssh cirros@<ip addr of your PC>`
-	* From cirros: `ping 8.8.8.8` 
+	* From cirros:$ `ping 8.8.8.8` 
+	* Let pings go. We will be tracing these packets in the following sections. Do not close this ssh window.
 
 Example:
 ```
@@ -936,7 +937,67 @@ PING 8.8.8.8 (8.8.8.8): 56 data bytes
 64 bytes from 8.8.8.8: seq=1 ttl=58 time=10.587 ms
 ```
 
+* SSH into the compute node of interest
+	* Open a new ssh window. `ssh tenantXXX@172.31.56.216`
+	* Load Openstack environment variables: `source keystonerc_adminXXX`
+	* Find Compute node that hosts your cirros VM.
+		* `openstack server list | grep pc`
+		* `openstack server show <tenantXXX-pc>` (hostname is in the field, "OS-EXT-SRV-ATTR:host") 
+	* SSH into the compute node: `sudo ssh root@<hostname from above output>` (you may need to enter sudo password, which is cisco.123)
 
+Example:
+```
+GNAGANAB-M-J0A4:~ gnaganab$ ssh tenant99@172.31.56.216
+tenant99@172.31.56.216's password:
+Last login: Tue Jan 30 10:18:23 2018 from 172.31.56.35
+[tenant99@PSL-DMZ-C-S6 ~]$ source keystonerc_admin99
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server list | grep pc
+| 9de2e138-9d5c-49c4-8d4d-b0a981fda859 | tenant99-pc     | ACTIVE | tenant99-internal=192.168.255.5                                                                                 | tenant99-cirros-0.4.0-x86_64 | tenant99-m1.nano      |
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ openstack server show tenant99-pc
++-------------------------------------+---------------------------------------------------------------------+
+| Field                               | Value                                                               |
++-------------------------------------+---------------------------------------------------------------------+
+| OS-DCF:diskConfig                   | AUTO                                                                |
+| OS-EXT-AZ:availability_zone         | nova                                                                |
+| OS-EXT-SRV-ATTR:host                | PSL-DMZ-C-S3 <<<this one                                            |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | compute-3                                                           |
+| OS-EXT-SRV-ATTR:instance_name       | instance-00000024                                                   |
+| OS-EXT-STS:power_state              | Running                                                             |
+| OS-EXT-STS:task_state               | None                                                                |
+| OS-EXT-STS:vm_state                 | active                                                              |
+| OS-SRV-USG:launched_at              | 2018-01-28T16:16:10.000000                                          |
+| OS-SRV-USG:terminated_at            | None                                                                |
+| accessIPv4                          |                                                                     |
+| accessIPv6                          |                                                                     |
+| addresses                           | tenant99-internal=192.168.255.5                                     |
+| config_drive                        |                                                                     |
+| created                             | 2018-01-28T16:15:58Z                                                |
+| flavor                              | tenant99-m1.nano (8a116bb5-25f0-492d-8712-56b45fc8a8d9)             |
+| hostId                              | 6f5bfa46838f81f07379af4460b1caa965c5282ea76d83695d07ba2a            |
+| id                                  | 9de2e138-9d5c-49c4-8d4d-b0a981fda859                                |
+| image                               | tenant99-cirros-0.4.0-x86_64 (aaac0de7-2248-46f3-a283-775891ab888e) |
+| key_name                            | None                                                                |
+| name                                | tenant99-pc                                                         |
+| progress                            | 0                                                                   |
+| project_id                          | 1e2b5c63d1f14091b237acf064cc9db6                                    |
+| properties                          |                                                                     |
+| security_groups                     | name='tenant99-allow_ssh'                                           |
+|                                     | name='tenant99-allow_icmp'                                          |
+|                                     | name='default'                                                      |
+| status                              | ACTIVE                                                              |
+| updated                             | 2018-01-28T16:16:10Z                                                |
+| user_id                             | 61a72633cdf0432b8c6c69c3bc444e70                                    |
+| volumes_attached                    |                                                                     |
++-------------------------------------+---------------------------------------------------------------------+
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$
+[tenant99@PSL-DMZ-C-S6 ~( admin99@tenant99 )]$ sudo ssh root@PSL-DMZ-C-S3
+[sudo] password for tenant99:
+Last failed login: Tue Jan 30 10:29:45 EST 2018 from controller on ssh:notty
+There were 6 failed login attempts since the last successful login.
+Last login: Tue Jan 30 10:18:58 2018 from controller
+[root@PSL-DMZ-C-S3 ~]#
+
+```
 
 
 
