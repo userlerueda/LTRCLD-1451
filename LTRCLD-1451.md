@@ -7,14 +7,14 @@
 
 ## VPN credentials
 * VPN client: Use Cisco VPN Any Connect app on MS Windows laptop
-* VPN server IP address:
+* VPN server IP address: Proctor will provide on site
 * Username: `cisco`
 * Password: `cisco.123`
 
 ## 3 tabs in your browser
 * Tab-1: this page
 * Tab-2: Lab guide as per the table below. Click the **right** link :-)
-* Tab-3: Topology diagrams for ready [reference](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md)
+* Tab-3: Topology diagrams for ready (right click and "open link in new tab") [reference](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md)
 
 ## Most critical table of this session
 
