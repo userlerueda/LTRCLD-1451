@@ -487,7 +487,6 @@ Step 4 - Fill in all the values for the subnet details (pool is comma separated)
 ![Step 4](./images/member_network_internet_create_step_04.png)
 
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
-![Step 5](./images/member_network_internet_create_step_05.png)
 
 #### Internal Network and Subnet
 
