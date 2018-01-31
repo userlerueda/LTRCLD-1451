@@ -3,7 +3,7 @@
 ## Username
 
 * Usernames are preassigned and labguides are customised.
-* Please use the **right** lab guide!
+* Please use the **correct** lab guide!
 
 ## VPN credentials
 * VPN client: Use Cisco VPN Any Connect app on MS Windows laptop
@@ -13,7 +13,7 @@
 
 ## 3 tabs in your browser
 * Tab-1: this page
-* Tab-2: Lab guide as per the table below. Click the **right** link :-)
+* Tab-2: Lab guide as per the table below. Click the **correct** link :-)
 * Tab-3: Topology diagrams for ready (right click and "open link in new tab") [reference](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md)
 
 ## Most critical table of this session
