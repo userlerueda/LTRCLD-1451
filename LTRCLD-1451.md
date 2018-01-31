@@ -1,10 +1,5 @@
 # LTRCLD-1451: Openstack For Network Engineers
 
-## Username
-
-* Usernames are preassigned
-* Please use the **correct** username
-
 ## VPN credentials
 * VPN client: Use Cisco VPN Any Connect app on MS Windows laptop
 * VPN server IP address: Proctor will provide on site
@@ -16,7 +11,7 @@
 * Tab-2: [Lab guide](https://github.com/userlerueda/LTRCLD-1451/blob/master/LAB_GUIDE.md) (right click and "open link in new tab")
 * Tab-3: Topology diagrams for ready (right click and "open link in new tab") [reference](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md)
 
-## Most critical table of this session
+## Your username and credentials
 
 | Participant Name | Linux Username | Openstack Admin Username | Openstack Member Username | Password	| VM Username Password |
 | ---------------- | -------------- | ------------------------ | ------------------------- | -------- | -------------------- |
