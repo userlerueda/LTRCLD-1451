@@ -234,6 +234,8 @@ In order to create a flavor with with 1 vCPU, 64 MB of vRAM and 1 GB of vDisk wi
 
 * `openstack flavor create --project <project-name> --ram <RAM in MB> --vcpus <# of VCPUs> --disk <disk size GB> --private <flavor-name>`
 
+Example:
+
 ```
 $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --private tenantXXX-m1.nano
 +----------------------------+--------------------------------------+
@@ -252,7 +254,22 @@ $ openstack flavor create --project tenantXXX --ram 64 --vcpus 1 --disk 1 --priv
 | vcpus                      | 1                                    |
 +----------------------------+--------------------------------------+
 
-openstack flavor create --project tenantXXX --ram 4096 --vcpus 2 --disk 0 --private tenantXXX-csr1kv.small
+$ openstack flavor create --project tenantXXX --ram 4096 --vcpus 2 --disk 0 --private tenantXXX-csr1kv.small
++----------------------------+--------------------------------------+
+| Field                      | Value                                |
++----------------------------+--------------------------------------+
+| OS-FLV-DISABLED:disabled   | False                                |
+| OS-FLV-EXT-DATA:ephemeral  | 0                                    |
+| disk                       | 0                                    |
+| id                         | 23089d44-9c54-4a4f-8ba9-8872091c1662 |
+| name                       | tenantXXX-csr1kv.small              |
+| os-flavor-access:is_public | False                                |
+| properties                 |                                      |
+| ram                        | 4096                                 |
+| rxtx_factor                | 1.0                                  |
+| swap                       |                                      |
+| vcpus                      | 2                                    |
++----------------------------+--------------------------------------+
 ```
 
 *Note: there are many other options that can be specified, these options can be explored by executing `openstack flavor create --help` command*
