@@ -345,10 +345,16 @@ Next you will find the steps to upload the image either via Horizon or OpenStack
 
 *Note: You need to execute the procedure for all the images in the table. The procedure is explained for one image but the same procedure is valid for all of them.*
 
-The files can be downloaded from this [link](http://172.31.56.131/download/) and from the command line they can be downloaded using wget (e.g. `wget http://172.31.56.131/download/cirros-0.4.0-x86_64-disk.img` and `wget http://172.31.56.131/download/csr3.16.6s.qcow2`)
+The files can be downloaded from this [link](http://172.31.56.131/download/) and then copied to Controller or, using the command line from the Controller directly.
+* `wget http://172.31.56.131/download/cirros-0.4.0-x86_64-disk.img`
+* `wget http://172.31.56.131/download/csr3.16.6s.qcow2`
 
 Upload image using single OpenStack CLI command:
 ```
+$ openstack image list
+
+$
+
 $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0.4.0-x86_64-disk.img tenantXXX-cirros-0.4.0-x86_64
 +------------------+------------------------------------------------------+
 | Field            | Value                                                |
@@ -361,7 +367,7 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 | id               | 51b8a82f-339a-4fb9-89f5-79a557321510                 |
 | min_disk         | 0                                                    |
 | min_ram          | 0                                                    |
-| name             | tenantXXX-cirros-0.4.0-x86_64                         |
+| name             | tenantXXX-cirros-0.4.0-x86_64                        |
 | owner            | 1e2b5c63d1f14091b237acf064cc9db6                     |
 | protected        | False                                                |
 | schema           | /v2/schemas/image                                    |
@@ -372,6 +378,31 @@ $ openstack image create --project tenantXXX --disk-format qcow2 --file cirros-0
 | virtual_size     | None                                                 |
 | visibility       | private                                              |
 +------------------+------------------------------------------------------+
+
+$ openstack image create --project tenantXXX --disk-format qcow2 --file csr3.16.6s.qcow2 tenantXXX-csr3.16.6s
++------------------+------------------------------------------------------+
+| Field            | Value                                                |
++------------------+------------------------------------------------------+
+| checksum         | 92c7a731cdcd450db69e8215d50fef8e                     |
+| container_format | bare                                                 |
+| created_at       | 2018-01-31T10:19:08Z                                 |
+| disk_format      | qcow2                                                |
+| file             | /v2/images/c393db31-8ae6-402e-a2d1-202adb81cb10/file |
+| id               | c393db31-8ae6-402e-a2d1-202adb81cb10                 |
+| min_disk         | 0                                                    |
+| min_ram          | 0                                                    |
+| name             | tenant126-csr3.16.6s                                 |
+| owner            | 3a36bcb96d194ff7a6aa14b199485f32                     |
+| protected        | False                                                |
+| schema           | /v2/schemas/image                                    |
+| size             | 1323696128                                           |
+| status           | active                                               |
+| tags             |                                                      |
+| updated_at       | 2018-01-31T10:19:14Z                                 |
+| virtual_size     | None                                                 |
+| visibility       | shared                                               |
++------------------+------------------------------------------------------+
+[tenant126@PSL-DMZ-C-S6 ~( admin126@tenant126 )]$
 ```
 
 Verify that you have both images just like in the following output:
