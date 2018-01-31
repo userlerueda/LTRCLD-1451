@@ -1,15 +1,21 @@
 # LTRCLD-1451: Openstack For Network Engineers
 
-## VPN credentials
-* VPN client: Use Cisco VPN Any Connect app on MS Windows laptop
-* VPN server IP address: Proctor will provide on site
-* Username: `cisco`
-* Password: `cisco.123`
+## 3 steps for a good beginning
+* Know your username (refer to the table below)
+* Open three tabs in your browser as per instructions below
+* Note down VPN IP and credentials
 
 ## 3 tabs in your browser
 * Tab-1: this page
 * Tab-2: [Lab guide](https://github.com/userlerueda/LTRCLD-1451/blob/master/LAB_GUIDE.md) (right click and "open link in new tab")
 * Tab-3: Topology diagrams for ready (right click and "open link in new tab") [reference](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md)
+
+## VPN credentials
+* This is reference info for later section
+* VPN client: Use Cisco VPN Any Connect app on MS Windows laptop
+* VPN server IP address: Proctor will provide on site
+* Username: `cisco`
+* Password: `cisco.123`
 
 ## Your username and credentials
 
