@@ -50,6 +50,7 @@
 			- [CirrOS Instance](#cirros-instance)
 		- [Allowed Address Pairs](#allowed-address-pairs)
 		- [Return Routes for OpenStack Router](#return-routes-for-openstack-router)
+	- [Summary](#summary)
 - [Neutron Intensive Tasks](#neutron-intensive-tasks)
 	- [Topology](#topology)
 	- [Packet Path](#packet-path)
@@ -927,6 +928,15 @@ $ openstack router show tenantXXX-router
 ```
 
 *Review the section and discuss if you have any questions or comments.*
+
+## Summary
+
+By now you will realize that we have completed the topology that was proposed at the beginning of the [section](#scenario).
+
+From the dashboard, go to Project -> Network -> Network Topology, click on the Graph tab and Toggle Labels to on.
+
+You should be able to see something similar to the below diagram.
+![OpenStack Network Topology](./images/scenario_network_topology.png)
 
 ---
 
