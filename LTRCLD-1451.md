@@ -18,7 +18,7 @@
 
 ## Most critical table of this session
 
-| Participant Name | Linux Username | Openstack Admin Username | Openstack Member Username | Password	| VM Username/Password | Labguide |
+| Participant Name | Linux Username | Openstack Admin Username | Openstack Member Username | Password	| VM Username Password | Labguide |
 | ---------------- | -------------- | ------------------------ | ------------------------- | -------- | -------------------- | -------- |
 | 	Maarten	Sneekes	 | 	tenant101	 | 	admin101	 | 	user101	 | 	cisco.123	 | 	cisco/cisco	 | 	[Lab guide 101](https://github.com/userlerueda/LTRCLD-1451/blob/master/LAB_GUIDE-101.md)	 |
 | 	Catalin	Iatan	 | 	tenant102	 | 	admin102	 | 	user102	 | 	cisco.124	 | 	cisco/cisco	 | 	[Lab guide 102](https://github.com/userlerueda/LTRCLD-1451/blob/master/LAB_GUIDE-102.md)	 |
