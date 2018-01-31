@@ -8,7 +8,7 @@
 ## 3 tabs in your browser
 * Tab-1: this page
 * Tab-2: [Lab guide](https://github.com/userlerueda/LTRCLD-1451/blob/master/LAB_GUIDE.md) (right click and "open link in new tab")
-* Tab-3: Topology diagrams for ready (right click and "open link in new tab") [reference](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md)
+* Tab-3: [Topology diagrams](https://github.com/userlerueda/LTRCLD-1451/blob/master/topology.md) for ready reference
 
 ## VPN credentials
 * This is reference info for later section
