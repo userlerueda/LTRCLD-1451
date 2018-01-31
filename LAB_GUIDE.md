@@ -29,27 +29,27 @@
 - [Openstack Cloud High Level View](#openstack-cloud-high-level-view)
 	- [Command Line Interface (CLI)](#command-line-interface-cli)
 	- [Horizon dashboard](#horizon-dashboard)
-- [Admin Tasks](#admin-tasks)
-	- [Scenario](#scenario)
-	- [Source keystone_adminrc File](#source-keystoneadminrc-file)
-	- [Flavors](#flavors)
-	- [Provider Network and Subnet](#provider-network-and-subnet)
-	- [Images](#images)
-	- [Floating IP Pool](#floating-ip-pool)
-- [Tenant Tasks](#tenant-tasks)
-	- [Tenant Networks and Subnets](#tenant-networks-and-subnets)
-		- [Internet Network and Subnet](#internet-network-and-subnet)
-		- [Internal Network and Subnet](#internal-network-and-subnet)
-	- [OpenStack Router](#openstack-router)
-		- [Internet Network on OpenStack Router](#internet-network-on-openstack-router)
-	- [Instances](#instances)
-		- [Security Groups](#security-groups)
-		- [CSR1Kv Instance](#csr1kv-instance)
-			- [Additional CSR1Kv Configuration](#additional-csr1kv-configuration)
-			- [Assign Floating IP to CSR1Kv](#assign-floating-ip-to-csr1kv)
-		- [CirrOS Instance](#cirros-instance)
-	- [Allowed Address Pairs](#allowed-address-pairs)
-	- [Return Routes for OpenStack Router](#return-routes-for-openstack-router)
+- [Scenario](#scenario)
+	- [Admin Tasks](#admin-tasks)
+		- [Source keystone_adminrc File](#source-keystoneadminrc-file)
+		- [Flavors](#flavors)
+		- [Provider Network and Subnet](#provider-network-and-subnet)
+		- [Images](#images)
+		- [Floating IP Pool](#floating-ip-pool)
+	- [Tenant Tasks](#tenant-tasks)
+		- [Tenant Networks and Subnets](#tenant-networks-and-subnets)
+			- [Internet Network and Subnet](#internet-network-and-subnet)
+			- [Internal Network and Subnet](#internal-network-and-subnet)
+		- [OpenStack Router](#openstack-router)
+			- [Internet Network on OpenStack Router](#internet-network-on-openstack-router)
+		- [Instances](#instances)
+			- [Security Groups](#security-groups)
+			- [CSR1Kv Instance](#csr1kv-instance)
+				- [Additional CSR1Kv Configuration](#additional-csr1kv-configuration)
+				- [Assign Floating IP to CSR1Kv](#assign-floating-ip-to-csr1kv)
+			- [CirrOS Instance](#cirros-instance)
+		- [Allowed Address Pairs](#allowed-address-pairs)
+		- [Return Routes for OpenStack Router](#return-routes-for-openstack-router)
 - [Neutron Intensive Tasks](#neutron-intensive-tasks)
 	- [Topology](#topology)
 	- [Packet Path](#packet-path)
@@ -195,10 +195,7 @@ Use command line interface (CLI) and Horizon dashboard and try to get a overall 
 
 ---
 
-# Admin Tasks
-*Estimated time to complete: 45 min.*
-
-## Scenario
+# Scenario
 
 In this section, you would assume the role of an administrator of an OpenStack cloud. The goal is to create all the necessary elements for your users to be able to later create a virtual machine and make some basic verifications. This exercise exposes typical OpenStack admin environment.
 
@@ -211,7 +208,10 @@ In this section, you would assume the role of an administrator of an OpenStack c
 The following diagram depicts the topology:
 ![Topolgy](./images/admin_tasks_topology_01.png)
 
-## Source keystone_adminrc File
+## Admin Tasks
+*Estimated time to complete: 45 min.*
+
+### Source keystone_adminrc File
 
 For all the commands that are executed using OpenStack CLI the first thing that need to be done is to source all the necessary variables that will allow us to authenticate with OpenStack.
 
@@ -219,7 +219,7 @@ For all the commands that are executed using OpenStack CLI the first thing that 
 $ source ~/keystonerc_adminXXX
 ```
 
-## Flavors
+### Flavors
 Lets start by creating some flavors that will be required for our VNFs (Virtual Machines).
 
 A flavor is required for each of the following:
@@ -276,7 +276,7 @@ $ openstack flavor create --project tenantXXX --ram 4096 --vcpus 2 --disk 0 --pr
 
 *Note: Replace XXX with your POD number. You will have this in your handout page*
 
-## Provider Network and Subnet
+### Provider Network and Subnet
 
 Lets start by creating one provider network using the admin user, Only the admin users will have administrative control over the OpenStack Cloud network.
 
@@ -331,7 +331,7 @@ Step 4 - Fill in all the values for the subnet details (pool is comma separated)
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/admin_network_provider_create_05.png)
 
-## Images
+### Images
 
 We need to create the following images in glance.
 
@@ -385,7 +385,7 @@ $ openstack image list
 ```
 *Note: you may see more images from other tenants.*
 
-## Floating IP Pool
+### Floating IP Pool
 
 We will be assigning a floating IP for our CSR1Kv, in order to do so we first need to create one. Lets create a floating IP for later assignment to CSR1Kv.
 
@@ -416,7 +416,7 @@ $ openstack floating ip create --project tenantXXX --floating-ip-address 172.31.
 
 ---
 
-# Tenant Tasks
+## Tenant Tasks
 *Estimated time to complete: 90 min.*
 We will now be working as a regular user of the tenant (no longer as admin).
 
@@ -424,11 +424,11 @@ For Horizon Dashboard, sign out of the adminXXX user, and login as userXXX now.
 
 For OpenStack CLI, source keystone_userXXX file, the prompt should be: `[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]#`
 
-## Tenant Networks and Subnets
+### Tenant Networks and Subnets
 
 As a tenant user we will need to create two networks, one that connects CSR1Kv to the Internet and the other one that will connect the internal VM to CSR1Kv.
 
-### Internet Network and Subnet
+#### Internet Network and Subnet
 
 Lets start by creating the Internet network.
 
@@ -453,7 +453,7 @@ Step 4 - Fill in all the values for the subnet details (pool is comma separated)
 Step 5 - A green notification should appear on the top-right corner indicating successful creation of the network and subnet
 ![Step 5](./images/member_network_internet_create_step_05.png)
 
-### Internal Network and Subnet
+#### Internal Network and Subnet
 
 Lets create now the Internal Network. This time we will do it via OpenStack CLI.
 
@@ -526,7 +526,7 @@ Since the Internal network does not have connectivity to the outside world, the 
 |-----------|------------------|---------------|---------------------------------|
 | TenantXXX | 192.168.255.0/24 | 192.168.255.1 | 192.168.255.2 - 192.168.255.254 |
 
-## OpenStack Router
+### OpenStack Router
 In order to allow connectivity to the Internet, OpenStack allows us to have an external network which would be connected to an OpenStack router that will do NAT as well as some other functions.
 
 Lets create an OpenStack router.
@@ -540,7 +540,7 @@ Step 2 - Fill in all the values for the router and click on **Create Router** bu
 Step 3 - A green notification should appear on the top-right corner indicating successful creation of the router
 ![Step 3](./images/member_routers_create_step_03.png)
 
-### Internet Network on OpenStack Router
+#### Internet Network on OpenStack Router
 When creating the OpenStack router we defined the external facing interface for that router. We will need to attach the internal facing interface for our router which is called tenantXXX-internet. Lets attach that interface to the router.
 
 Step 1 - Go to Project -> Network -> Routers and click on the router that was created in the previous step, go to the Interfaces tab and click on **Add Interface**
@@ -552,9 +552,9 @@ Step 2 - Select tenantXXX-internet from the drop-down list of subnets and click 
 Step 3 - A green notification should appear on the top-right corner indicating successful attach of the subnet to the router
 ![Step 3](./images/member_routers_attach_interface_internet_step_03.png)
 
-## Instances
+### Instances
 
-### Security Groups
+#### Security Groups
 
 In order for our CSR1Kv instance to work properly, we have to create a security group and allow all inbound traffic that is desired. For the purpose of our lab, we will create multiple security groups so that they can be easily identifiable.
 
@@ -588,7 +588,7 @@ Step 7 - A green notification should appear on the top-right corner indicating s
 
 We will be attaching the security groups to the instance when creating the instance.
 
-### CSR1Kv Instance
+#### CSR1Kv Instance
 
 There are several steps required to create the instance, and there are multiple ways to do this. The suggested way is via OpenStack CLI, this will allow us to create the instance with a single command and provide all the proper IPv4 addresses.
 
@@ -634,7 +634,7 @@ openstack server create \
 *Note: do not use the provided flavor in the example, replace this with your tenantXXX flavors and images.*
 *Note: the reason why it states YXX is because the IPv4 address is different, YXX = XXX + 100*
 
-#### Additional CSR1Kv Configuration
+##### Additional CSR1Kv Configuration
 
 We provided some configuration to the VNF via its Day-0 configuration (csr1kv-day0.txt file), we could pass anything required via that file but in order to show how we would connect to the VNF via SSH, we can ssh to it by taking advantage of the netns command.
 
@@ -693,7 +693,7 @@ Building configuration...
 ```
 *Note: it is also possible to do this by getting to the NoVNC console but it will be simpler to just paste the commands via ssh. Please adjust the IPv4 address to the same IPv4 address used when creating the CSR1Kv instance.*
 
-#### Assign Floating IP to CSR1Kv
+##### Assign Floating IP to CSR1Kv
 In order for someone to be able to access CSR1Kv from the Internet, we need to assign the floating IP created before to our CSR1Kv. Lets assign the floating IP to our instance.
 
 Step 1 - Go to Project -> Compute -> Instances and click on the dropdown box to the right of the CSR1Kv instance, select **Associate Floating IP**
@@ -705,7 +705,7 @@ Step 2 - Click on the drop down box and select the IPv4 address that was assigne
 Step 3 - A green notification should appear on the top-right corner indicating successful assignment of the IPv4 address to the instance
 ![Step 3](./images/member_assign_floating_ip_step_03.png)
 
-### CirrOS Instance
+#### CirrOS Instance
 
 In order to test connectivity from behind the CSR1Kv, we will be creating a CirrOS instance that will act as our PC in the topology.
 
@@ -735,7 +735,7 @@ Step 7 - Add the security groups and click on **Launch Instance** button
 Step 8 - A green notification should appear on the top-right corner indicating successful creation of the instance
 ![Step 8](./images/member_create_instance_step_08.png)
 
-## Allowed Address Pairs
+### Allowed Address Pairs
 
 Now lets go to CirrOS console and try to execute a ping from it to the CSR1Kv interface (`ping 192.168.255.1`).
 
@@ -863,7 +863,7 @@ $ openstack port show 32be354d-010e-4182-b72e-bfa587732aa7
 
 *Note: Don't forget to repeat for the other two ports*
 
-## Return Routes for OpenStack Router
+### Return Routes for OpenStack Router
 After setting the allowed address pairs, you will notice that you are able to ping the tenantXXX-internet IPv4 address of the CSR1kv, however you are not able to ping the IPv4 address of tenantXXX-internet's default gateway (which is OpenStack's router), why ?
 
 If you execute the following command you will notice that the line for routes is blank:
@@ -1173,8 +1173,8 @@ listening on enp14s0f0, link-type EN10MB (Ethernet), capture size 262144 bytes
 
 * Monitor packets on Openstack router
 	* Be on the Controller node, IP=172.31.56.216, hostname=PSL-DMZ-C-S6. You may simply exit from the current ssh session to go back to Controller node. `exit`
-	* source keystonerc_userXXX
-	* openstack router list
+	* `source keystonerc_userXXX`
+	* `openstack router list`
 	* Find your router name space ID.
 ```
 ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID`
@@ -1285,9 +1285,9 @@ Please note that a typical production NFV system or Openstack cloud includes com
 	* `brctl show`
 	* `ip netns`
 	* `openstack network list | awk '{ print $2 }'`
-		* print only second column of the output, "openstack network list".
+		* print only second column of the output, `openstack network list`.
 	* `openstack network list | grep external | awk '{ print $2 }'`
-		* print network-id of the network named, "external"
+		* print network-id of the network named, `external`
 Example:
 ```
 [tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]$ openstack network list | awk '{ print $2 }'
