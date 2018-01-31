@@ -597,7 +597,7 @@ Step 1 - Download the CSR1Kv Day 0 configuration file.
 $ wget http://172.31.56.131/download/csr1kv-day0.txt
 ```
 
-Step 2 - Issue the `openstack network list` command to find the IDs for the networks that we want to attach to CSR1Kv.
+Step 2 - Execute the `openstack network list` command to find the IDs for the networks that we want to attach to CSR1Kv.
 ```
 $ openstack network list
 +--------------------------------------+--------------------+--------------------------------------+
@@ -606,12 +606,15 @@ $ openstack network list
 | 06ca5380-84eb-46b1-b0db-8fa038f72998 | external           | 9b34213c-eff1-4008-a387-d08ee49b5ee0 |
 | 2c3d2f04-41ed-4c1a-956d-e57f61758f1e | tenantXXX-internet | 49eaed11-788e-41dd-8823-12964c9f90e5 |
 | 2f25227b-80b0-4f31-b11b-9b2d8066127c | tenantXXX-internal | 2bb680e4-2da0-4f51-9b52-ad41e006ad43 |
-| 631e32e7-8e1f-42fb-a927-ec1d7dc31293 | tenant-net         | f57b9855-42fb-406a-bb31-c25036078f07 |
 | 90c70132-0ea7-4362-8ab4-aff50986d012 | tenantXXX-provider | e7210532-3d56-4eaf-9826-0711756ad3f4 |
 +--------------------------------------+--------------------+--------------------------------------+
 ```
 
-Step 3 - After the networks have been identified, replace each net-id with the corresponding ID found with in *Step 2*
+Step 3 - Execute the `openstack flavor list` command to find the name of the flavor to be used in the command in **Step 5**
+
+Step 4 - Execute the `openstack image list` command to find the name of the image to be used in the command in **Step 5**
+
+Step 5 - After the networks have been identified, replace each net-id with the corresponding ID found with in **Step 2**
 ```
 openstack server create \
    --flavor tenantXXX-csr1kv.small \
@@ -1169,10 +1172,13 @@ listening on enp14s0f0, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 
 * Monitor packets on Openstack router
-	* Be on the Controller node, IP=172.31.56.216, hostname=PSL-DMZ-C-S6. You may simply exit from the current ssh session to go back to Controller node. $ `exit`
+	* Be on the Controller node, IP=172.31.56.216, hostname=PSL-DMZ-C-S6. You may simply exit from the current ssh session to go back to Controller node. `exit`
 	* source keystonerc_userXXX
 	* openstack router list
-	* Find your router name space ID. $ ` ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID` `
+	* Find your router name space ID.
+```
+ip netns | grep `openstack router list | awk '{print $2}' | grep -v ID`
+```
 	* Find interface facing cirros VM. `sudo ip netns exec <qrouter-router-id> ip addr`
 	* Monitor packets on the openstack rotuer: `sudo ip netns exec <qrouter-router-id> tcpdump -i <interface-id> icmp`
 	* Tcpdump should display the ping packets. If you don't see them, make sure your ping packets are still going on the other window.
