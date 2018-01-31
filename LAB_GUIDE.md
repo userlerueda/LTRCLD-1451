@@ -455,6 +455,10 @@ We will now be working as a regular user of the tenant (no longer as admin).
 For Horizon Dashboard, sign out of the adminXXX user, and login as userXXX now.
 
 For OpenStack CLI, source keystone_userXXX file, the prompt should be: `[tenantXXX@PSL-DMZ-C-S6 ~( adminXXX@tenantXXX )]#`
+```
+[tenant126@PSL-DMZ-C-S6 ~( admin126@tenant126 )]$ source keystonerc_user126
+[tenant126@PSL-DMZ-C-S6 ~( user126@tenant126 )]$
+```
 
 ### Tenant Networks and Subnets
 
